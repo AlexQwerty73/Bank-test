@@ -1,7 +1,7 @@
 import React from 'react';
 import { Footer, Header } from './components';
 
-export const Layout = ({children}) => {
+export const Layout = ({ children }) => {
    return (
       <>
          <Header />

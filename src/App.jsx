@@ -1,7 +1,8 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Layout } from './components/';
+import { HomePage } from './pages';
 
-const  App =()=> {
+const App = () => {
   return (
     <div className="App">
 
@@ -9,9 +10,9 @@ const  App =()=> {
 
         <Route path='/' element={<Layout />}>
 
-          
+          <Route index element={<HomePage />} />
 
-          <Route path='*'/>
+          <Route path='*' />
         </Route>
 
       </Routes>
