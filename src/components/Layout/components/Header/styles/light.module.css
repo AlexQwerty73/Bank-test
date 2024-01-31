@@ -30,6 +30,7 @@
    display: flex;
    margin: 0;
    padding: 0;
+   font-weight: bold;
 }
 
 .menu__item {
@@ -39,4 +40,39 @@
 
 .menu__item a {
    color: #333;
+}
+
+
+.chechBox {
+   position: relative;
+   appearance: none;
+   width: 40px;
+   height: 20px;
+   border-radius: 20px;
+   outline: none;
+   cursor: pointer;
+   transition: background-color 0.3s;
+   border: 1px solid #333;
+   background-color: #333; 
+}
+
+.chechBox::before {
+   content: '';
+   position: absolute;
+   top: 50%;
+   left: 5px;
+   transform: translateY(-50%);
+   width: 16px;
+   height: 16px;
+   background-color: #fff;
+   border-radius: 50%;
+   transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.chechBox:checked::before {
+   right: calc(100% - 2px);
+   transform: translateY(-50%) translateX(100%);
+   background-color: #333;
+   transition-delay: 0.1s;
+   transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
