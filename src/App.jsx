@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Layout } from './components/';
-import { HomePage } from './pages';
+import { HomePage, NotFoundPage } from './pages';
 
 const App = () => {
   return (
@@ -12,7 +12,7 @@ const App = () => {
 
           <Route index element={<HomePage />} />
 
-          <Route path='*' />
+          <Route path='*' element={<NotFoundPage />}/>
         </Route>
 
       </Routes>
