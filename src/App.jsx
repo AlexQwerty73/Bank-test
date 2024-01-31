@@ -4,6 +4,15 @@ const  App =()=> {
   return (
     <div className="App">
 
+      <Routes>
+
+        <Route path='/'>
+
+          <Route path='*'/>
+        </Route>
+
+      </Routes>
+
     </div>
   );
 }
