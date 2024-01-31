@@ -1,8 +1,42 @@
+
 .header {
-   background-color: #f4f4f4;
+   background-color: #eee;
    color: #333;
+   padding: 1rem;
 }
 
 .nav {
-   border-bottom: 1px solid #ddd;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.leftPart {
+   display: flex;
+   align-items: center;
+}
+
+.rightPart {
+   display: flex;
+   align-items: center;
+}
+
+.chechBox {
+   margin-right: 1rem;
+}
+
+.menu {
+   list-style: none;
+   display: flex;
+   margin: 0;
+   padding: 0;
+}
+
+.menu__item {
+   margin-right: 1rem;
+   color: #333;
+}
+
+.menu__item a {
+   color: #333;
 }
