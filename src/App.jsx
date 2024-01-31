@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { Layout } from './components/';
 
 const  App =()=> {
   return (
@@ -6,7 +7,7 @@ const  App =()=> {
 
       <Routes>
 
-        <Route path='/'>
+        <Route path='/' element={<Layout />}>
 
           
 
