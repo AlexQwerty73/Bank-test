@@ -21,4 +21,4 @@ export const exchangeRateApi = createApi({
    }),
 });
 
-export const { useGetCartQuery, useAddProductToCartMutation } = exchangeRateApi;
+export const { useGetExchangeRateApiQuery } = exchangeRateApi;

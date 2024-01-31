@@ -10,7 +10,7 @@ export const cardsApi = createApi({
    baseQuery: fetchBaseQuery({ baseUrl }),
 
    endpoints: (build) => ({
-      getProducts: build.query({
+      getCards: build.query({
          query: (id = '') => `${resource}/${id}`,
          providesTags: (result) => [
             ...(result || []).map(({ id }) => ({ type: typeTag, id })),
@@ -18,7 +18,7 @@ export const cardsApi = createApi({
          ],
       }),
 
-      addProducts: build.mutation({
+      addCard: build.mutation({
          query: (body) => ({
             url: resource,
             method: 'POST',
@@ -27,7 +27,7 @@ export const cardsApi = createApi({
          invalidatesTags: [{ type: typeTag, id: 'LIST' }],
       }),
 
-      updateProducts: build.mutation({
+      updateCard: build.mutation({
          query: (body) => ({
             url: `${resource}/${body.id}`,
             method: 'PUT',
@@ -38,4 +38,4 @@ export const cardsApi = createApi({
    }),
 });
 
-export const { useAddProductsMutation, useGetProductsQuery, useUpdateProductsMutation } = cardsApi;
+export const { useAddCardMutation, useGetCardsQuery, useUpdateCardMutation } = cardsApi;
