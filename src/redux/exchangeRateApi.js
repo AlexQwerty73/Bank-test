@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const baseUrl = 'http://localhost:3001/';
 
 const typeTag = 'ExchangeRate';
-const src = 'exchangeRate';
+const resource = 'exchangeRate';
 
 export const exchangeRateApi = createApi({
    reducerPath: 'exchangeRateApi',
