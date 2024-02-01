@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import {  Route, Routes,  } from 'react-router-dom';
 import { Layout } from './components/';
 import { HomePage, NotFoundPage } from './pages';
 
@@ -12,7 +12,7 @@ const App = () => {
 
           <Route index element={<HomePage />} />
 
-          <Route path='*' element={<NotFoundPage />}/>
+          <Route path='*' element={<NotFoundPage />} />
         </Route>
 
       </Routes>
