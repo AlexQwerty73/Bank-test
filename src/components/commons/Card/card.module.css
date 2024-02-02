@@ -1,0 +1,83 @@
+.card {
+   width: 300px;
+   height: 188px;
+   padding: 15px;
+   border: 1px solid #ccc;
+   background: #662d91;
+   border-radius: 20px;
+   position: relative;
+   transform-style: preserve-3d;
+   transition: transform 0.5s;
+   cursor: pointer;
+}
+
+.card:hover {
+   transform: rotateY(180deg);
+}
+
+.frontSide,
+.backSide {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   backface-visibility: hidden;
+}
+
+.frontSide {
+   z-index: 2;
+   transform: rotateY(0deg);
+   padding: 15px;
+}
+
+.backSide {
+   transform: rotateY(180deg);
+   background: #662d91;
+   border-radius: 20px;
+}
+
+
+.cardTop {
+   display: flex;
+   justify-content: space-between;
+   font-size: 16px;
+}
+
+.bankName {
+   font-weight: bold;
+}
+
+.cardMiddleTop {
+   position: absolute;
+   top: 90px;
+   font-size: 19px;
+   letter-spacing: 4px;
+
+   display: flex;
+   justify-content: center;
+}
+
+.cardMiddleBottom {
+   position: absolute;
+   top: 120px;
+   left: 155px;
+   letter-spacing: 4px;
+   font-size: 15px;
+}
+
+.cardBottom {
+   position: absolute;
+   right: 15px;
+   bottom: 15px;
+   font-weight: bold;
+   font-size: 19px;
+}
+
+.cvv {
+   position: absolute;
+   bottom: 15px;
+   right: 20px;
+   font-size: 20px;
+   letter-spacing: 3px;
+}
