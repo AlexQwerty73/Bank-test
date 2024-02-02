@@ -1,0 +1,60 @@
+.exchangeRateContainer {
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   padding: 20px;
+   border: 1px solid #333;
+   border-radius: 8px;
+   margin: 20px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+   background-color: #222;
+   color: #fff;
+}
+
+.exchangeRateTitle {
+   font-size: 24px;
+   margin-bottom: 16px;
+}
+
+.exchangeRateList {
+   list-style: none;
+   padding: 0;
+}
+
+.exchangeRateItem {
+   background-color: #333;
+   padding: 16px;
+   margin-bottom: 12px;
+   border-radius: 8px;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+   cursor: pointer;
+   transition: transform .5s;
+}
+
+.exchangeRateItem:hover {
+   transform: scale(1.05);
+}
+
+.currencyPair {
+   font-size: 20px;
+   margin-bottom: 8px;
+}
+
+.exchangeRateValue {
+   font-size: 16px;
+   margin: 8px 0;
+   color: #ccc;
+}
+
+.rightPanel {
+   flex-shrink: 0;
+   padding-left: 20px;
+   border-left: 1px solid #555;
+}
+
+.loadingMessage,
+.errorMessage {
+   font-size: 18px;
+   margin-top: 20px;
+}

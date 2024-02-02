@@ -1,10 +1,11 @@
 import React from 'react';
+import { ExchangeRate } from '../../components';
 
 export const HomePage = () => {
    return (
       <div className='homePage'>
          <div className="container">
-            <h2>home</h2>
+            <ExchangeRate />
          </div>
       </div>
    );
