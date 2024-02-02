@@ -1,0 +1,32 @@
+.footer {
+   margin-top: 70px;
+   background-color: #333;
+   color: white;
+   padding: 20px 0;
+   text-align: center;
+}
+
+.footer a {
+   color: white;
+}
+
+.footerContent {
+   display: flex;
+   justify-content: space-around;
+}
+
+.email,
+.phoneNumber,
+.socialIcons {
+   display: flex;
+   flex-direction: column;
+   gap: 20px;
+}
+
+.socialIcons * {
+   width: 50px;
+}
+
+.copyRight {
+   margin-top: 100px;
+}
