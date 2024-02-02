@@ -19,6 +19,7 @@ export const Header = () => {
                      <li className={styles.menu__item}><NavLink to={`/${userId}/cards`}>Cards</NavLink></li>
                      <li className={styles.menu__item}><NavLink to={`/${userId}/transactions`}>Transactions</NavLink></li>
                      <li className={styles.menu__item}><NavLink to={`/${userId}/profile`}>Profile</NavLink></li>
+                     <li className={styles.menu__item}><NavLink to={`/login`}>Log in</NavLink></li>
                   </ul>
                </div>
             </nav>
