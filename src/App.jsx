@@ -16,6 +16,7 @@ const App = () => {
 
           <Route path=':userId/'>
             <Route path='cards/' element={<CardsPage />}/>
+            <Route path='create-card'/>
           </Route>
 
           <Route path='*' element={<NotFoundPage />} />
