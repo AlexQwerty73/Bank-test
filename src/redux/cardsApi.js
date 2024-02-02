@@ -18,6 +18,15 @@ export const cardsApi = createApi({
          ],
       }),
 
+      getCardsByUserId: build.query({
+         query: (userId) => `${resource}?userId=${userId}`, 
+         providesTags: (result, error, userId) => [
+           { type: 'Card', id: userId },
+           { type: 'Card', id: 'LIST' },
+         ],
+       }),
+       
+
       addCard: build.mutation({
          query: (body) => ({
             url: resource,
@@ -38,4 +47,4 @@ export const cardsApi = createApi({
    }),
 });
 
-export const { useAddCardMutation, useGetCardsQuery, useUpdateCardMutation } = cardsApi;
+export const { useAddCardMutation, useGetCardsByUserIdQuery, useGetCardsQuery, useUpdateCardMutation } = cardsApi;

@@ -9,7 +9,7 @@ export const CardCreationBlock = () => {
       cvv: 'XXX',
       currency: 'USD',
       type: 'VISA',
-      expiryDate: 'XX/XX'
+      expiryDate: 'XXXX-XX-XX'
 
    }
    return (

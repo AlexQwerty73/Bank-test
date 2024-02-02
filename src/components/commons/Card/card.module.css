@@ -9,6 +9,7 @@
    transform-style: preserve-3d;
    transition: transform 0.5s;
    cursor: pointer;
+   color: white;
 }
 
 .card:hover {
@@ -51,11 +52,17 @@
 .cardMiddleTop {
    position: absolute;
    top: 90px;
+   left: 20px;
    font-size: 19px;
    letter-spacing: 4px;
 
    display: flex;
    justify-content: center;
+   align-items: center;
+}
+
+.number {
+   margin: 0 auto;
 }
 
 .cardMiddleBottom {
