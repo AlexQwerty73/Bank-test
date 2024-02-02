@@ -1,6 +1,6 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { Layout } from './components/';
-import { HomePage, LoginPage, NotFoundPage } from './pages';
+import { CardsPage, HomePage, LoginPage, NotFoundPage } from './pages';
 
 const App = () => {
   return (
@@ -13,6 +13,10 @@ const App = () => {
 
           <Route index element={<HomePage />} />
           <Route path='/login' element={<LoginPage />} />
+
+          <Route path=':userId/'>
+            <Route path='cards/' element={<CardsPage />}/>
+          </Route>
 
           <Route path='*' element={<NotFoundPage />} />
         </Route>
