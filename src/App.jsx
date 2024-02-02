@@ -1,6 +1,6 @@
-import {  Route, Routes,  } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { Layout } from './components/';
-import { HomePage, NotFoundPage } from './pages';
+import { HomePage, LoginPage, NotFoundPage } from './pages';
 
 const App = () => {
   return (
@@ -9,8 +9,10 @@ const App = () => {
       <Routes>
 
         <Route path='/' element={<Layout />}>
+          <Route path="null/*" element={<Navigate to="/login" />} />
 
           <Route index element={<HomePage />} />
+          <Route path='/login' element={<LoginPage />} />
 
           <Route path='*' element={<NotFoundPage />} />
         </Route>

@@ -13,6 +13,7 @@
          "name": "Alex",
          "surname": "Niom",
          "email": "alex@gmail.com",
+         "password": "alex",
          "createdAt": "2024-01-27T12:00:00Z",
          "lastLogin": "2024-01-27T15:30:00Z"
       }
@@ -24,6 +25,7 @@
          "number": "0000111122223333",
          "expiryDate": "2024-12-31",
          "cvv": "123",
+         "pin": "1111",
          "balance": 1000.0,
          "currency": "USD",
          "history": [
@@ -31,13 +33,15 @@
                "date": "2024-01-27T14:30:00Z",
                "type": "purchase",
                "amount": 50.0,
-               "description": "Online shopping"
+               "description": "Online shopping",
+               "location": ""
             },
             {
                "date": "2024-01-28T09:15:00Z",
                "type": "deposit",
                "amount": 200.0,
-               "description": "Deposit from user"
+               "description": "Deposit from user",
+               "location": ""
             }
          ]
       }
