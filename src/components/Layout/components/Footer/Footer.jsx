@@ -10,10 +10,10 @@ export const Footer = () => {
                <div className={styles.contactInfo}>
                   <div className={styles.email}>
                      <span>Email:</span>
-                     <a href="mailto:info@yourcompany.com">info@yourcompany.com</a>
-                     <a href="mailto:info@yourcompany.com">info@yourcompany.com</a>
-                     <a href="mailto:info@yourcompany.com">info@yourcompany.com</a>
-                     <a href="mailto:info@yourcompany.com">info@yourcompany.com</a>
+                     <a href="mailto:info@yourcompany.com">info@somecompany.com</a>
+                     <a href="mailto:info@yourcompany.com">info@somecompany.com</a>
+                     <a href="mailto:info@yourcompany.com">info@somecompany.com</a>
+                     <a href="mailto:info@yourcompany.com">info@somecompany.com</a>
                   </div>
                </div>
                <div className={styles.contactInfo}>
