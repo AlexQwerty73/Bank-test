@@ -1,6 +1,7 @@
 .cardData {
    display: flex;
    justify-content: space-between;
+   align-items: center;
    padding: 20px;
    margin: 50px 20px 20px;
    border: 1px solid #333;
@@ -18,7 +19,7 @@
 .rightPart {
    flex: 1;
    display: flex;
-   justify-content: flex-end;
+   justify-content: center;
 }
 
 .data {

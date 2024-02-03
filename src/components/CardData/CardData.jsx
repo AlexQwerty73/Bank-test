@@ -16,7 +16,7 @@ export const CardData = ({ card }) => {
 
       const newCardData = {
          ...card,
-         item: newData
+         [item]: newData
       }
 
       if (cvv !== cvvEdit) {
