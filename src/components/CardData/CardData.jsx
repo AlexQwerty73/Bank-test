@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './cardData.module.css';
-import { Card, Img } from '../commons';
+import { Card, EditBtn, Img } from '../commons';
 import { convertToNumberCartFormat } from '../../utils';
 import { useUpdateCardMutation } from '../../redux';
 
@@ -12,6 +12,7 @@ export const CardData = ({ card }) => {
    const [cvvEdit, setCvvEdit] = useState(cvv);
 
    const onClickHandler = (item, newData) => {
+      console.log('click!');
       setIsCvvEdit(!isCvvEdit);
 
       const newCardData = {
@@ -58,13 +59,9 @@ export const CardData = ({ card }) => {
                      }
 
                   </div>
-                  <div className={styles.btnEdit} onClick={() => onClickHandler('cvv', cvvEdit)}>
-                     {
-                        isCvvEdit
-                           ? <Img folder='common' img='done.png' alt='done' />
-                           : <Img folder='common' img='edit-pencil.png' alt='Edit button' />
-                     }
-                  </div>
+                  
+                  <EditBtn isEdit={isCvvEdit} onClick={() => onClickHandler('cvv', cvvEdit)} />
+
                </div>
 
                <div className={styles.data__item}>
