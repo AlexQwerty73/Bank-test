@@ -8,8 +8,8 @@ export const Cards = ({ cards }) => {
       <div className={styles.cards}>
          {
             cards.map(card =>
-               <Link to={`${card.number}`}>
-                  <Card key={card.id} card={card} />
+               <Link key={card.id} to={`${card.number}`}>
+                  <Card  card={card} />
                </Link>
             )
          }

@@ -4,3 +4,4 @@ export * from './LoginForm';
 export * from './ExchangeRate'
 export * from './CardCreationBlock';
 export * from './Cards';
+export * from './CardData';

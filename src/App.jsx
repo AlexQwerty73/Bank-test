@@ -1,6 +1,6 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { Layout } from './components/';
-import { CardsPage, HomePage, LoginPage, NotFoundPage } from './pages';
+import { CardPage, CardsPage, HomePage, LoginPage, NotFoundPage } from './pages';
 
 const App = () => {
   return (
@@ -19,8 +19,9 @@ const App = () => {
 
             <Route path='create-card/' />  {/*  */}
 
-            <Route path='cards/' element={<CardsPage />} >
-              <Route path=':cardNumber/' />
+            <Route path='cards/'>
+              <Route index element={<CardsPage />} />
+              <Route path=':cardNumber/' element={<CardPage />} />
 
               <Route path='*' element={<NotFoundPage />} />
             </Route>
