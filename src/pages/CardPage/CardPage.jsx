@@ -8,7 +8,6 @@ export const CardPage = () => {
 
    const { data: cardData = [], isLoading, error } = useGetCardByNumberQuery(cardNumber);
    const card = cardData[0];
-   console.log(card);
 
    return (
       <div className='cardPage'>

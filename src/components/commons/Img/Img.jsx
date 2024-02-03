@@ -1,7 +1,7 @@
 import React from 'react';
 
-export const Img = ({folder, img, alt = ''}) => {
+export const Img = ({ folder, img, alt = '' }) => {
    return (
-      <img src={`./imgs/${folder}/${img}`} alt={alt}/>
+      <img src={`/imgs/${folder}/${img}`} alt={alt} style={{ width: '100%' }} />
    );
 };
