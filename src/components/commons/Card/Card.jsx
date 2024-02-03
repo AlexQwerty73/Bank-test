@@ -9,7 +9,7 @@ export const Card = ({ card }) => {
    const cardNumber = number.split('').map((char, i) => char + `${(i + 1) % 4 === 0 && i + 1 !== 16 ? ' ' : ''}`);
   
    return (
-      <div onClick={() => setIsActive(!isActive)} className={`${styles.card} ${isActive ? 'active' : ''}`}>
+      <div  onClick={() => setIsActive(!isActive)} className={`${styles.card} ${isActive ? 'active' : ''}`}>
          <div className={styles.frontSide}>
             <div className={styles.cardTop}>
                <div className={styles.bankName}>BankName</div>

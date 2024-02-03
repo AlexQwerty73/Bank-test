@@ -13,13 +13,21 @@ const App = () => {
 
           <Route index element={<HomePage />} />
           <Route path='/login' element={<LoginPage />} />
+          <Route path='create-user/' /> {/*  */}
 
           <Route path=':userId/'>
-            <Route path='cards/' element={<CardsPage />} />
+
             <Route path='create-card/' />  {/*  */}
+
+            <Route path='cards/' element={<CardsPage />} >
+              <Route path=':cardNumber/' />
+
+              <Route path='*' element={<NotFoundPage />} />
+            </Route>
+
+            <Route path='*' element={<NotFoundPage />} />
           </Route>
 
-          <Route path='create-user/' /> {/*  */}
 
           <Route path='*' element={<NotFoundPage />} />
         </Route>

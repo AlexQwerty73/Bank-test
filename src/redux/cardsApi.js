@@ -26,6 +26,14 @@ export const cardsApi = createApi({
          ],
        }),
        
+      getCardByNumber: build.query({
+         query: (number) => `${resource}?number=${number}`, 
+         providesTags: (result) => [
+            ...(result || []).map(({ id }) => ({ type: typeTag, id })),
+            { type: typeTag, id: 'LIST' },
+         ],
+       }),
+       
 
       addCard: build.mutation({
          query: (body) => ({
@@ -47,4 +55,4 @@ export const cardsApi = createApi({
    }),
 });
 
-export const { useAddCardMutation, useGetCardsByUserIdQuery, useGetCardsQuery, useUpdateCardMutation } = cardsApi;
+export const { useAddCardMutation,useGetCardByNumberQuery, useGetCardsByUserIdQuery, useGetCardsQuery, useUpdateCardMutation } = cardsApi;
