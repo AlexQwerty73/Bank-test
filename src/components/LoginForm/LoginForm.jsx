@@ -4,11 +4,13 @@ import s from './loginForm.module.css';
 import { saveToLocalStorage } from '../../utils';
 import { useUserByEmail } from '../../hooks/';
 import { getFormError } from './getFormError';
+import { useUpdateUserMutation } from '../../redux';
 
 export const LoginForm = () => {
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
    const [error, setError] = useState('');
+   const [updateUser] = useUpdateUserMutation();
 
    const navigate = useNavigate();
    const userData = useUserByEmail(email);
@@ -19,6 +21,14 @@ export const LoginForm = () => {
       if (userData && isPasswordOk) {
          saveToLocalStorage('userId', userData.id);
          navigate('/');
+
+         const newUserData = {
+            ...userData,
+            lastLogin: new Date().toISOString(),
+         }
+         
+         updateUser(newUserData);
+         
       } else {
          setError(getFormError(email, password, userData, isPasswordOk));
       }

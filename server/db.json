@@ -315,7 +315,20 @@
       "email": "alex@gmail.com",
       "password": "alex",
       "createdAt": "2024-01-27T12:00:00Z",
-      "lastLogin": "2024-01-27T15:30:00Z"
+      "lastLogin": "2024-01-27T15:30:00Z",
+      "address": "123 Main St, City",
+      "phone": "+1234567890"
+    },
+    {
+      "id": "abcd",
+      "name": "John",
+      "surname": "Doe",
+      "email": "john.doe@gmail.com",
+      "password": "john",
+      "createdAt": "2024-01-28T08:45:00Z",
+      "lastLogin": "2024-01-28T12:20:00Z",
+      "address": "456 Oak St, Town",
+      "phone": "+9876543210"
     }
   ],
   "cards": [

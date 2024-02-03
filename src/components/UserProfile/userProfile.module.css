@@ -1,0 +1,31 @@
+.profilePage {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   padding: 20px;
+   border: 1px solid #333;
+   border-radius: 8px;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+   background-color: #232323;
+   color: #fff;
+   transition: background-color 0.3s, color 0.3s;
+   margin: 50px 20px 20px;
+}
+
+.userData {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+   margin-top: 20px;
+}
+
+h1 {
+   font-size: 1.5rem;
+   color: #fff;
+   margin-bottom: 10px;
+}
+
+p {
+   font-size: 1rem;
+   margin: 5px 0;
+}
