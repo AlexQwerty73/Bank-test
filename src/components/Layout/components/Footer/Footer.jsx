@@ -6,10 +6,11 @@ export const Footer = () => {
    return (
       <footer className={styles.footer}>
          <div className='container'>
+            <hr />
             <div className={styles.footerContent}>
                <div className={styles.contactInfo}>
                   <div className={styles.email}>
-                     <span>Email:</span>
+                     {/* <span>Email:</span> */}
                      <a href="mailto:info@yourcompany.com">info@somecompany.com</a>
                      <a href="mailto:info@yourcompany.com">info@somecompany.com</a>
                      <a href="mailto:info@yourcompany.com">info@somecompany.com</a>
@@ -18,7 +19,7 @@ export const Footer = () => {
                </div>
                <div className={styles.contactInfo}>
                   <div className={styles.phoneNumber}>
-                     <span>Phone:</span>
+                     {/* <span>Phone:</span> */}
                      <a href="tel:+123456789">+1 (234) 567-89</a>
                      <a href="tel:+123456789">+1 (234) 567-89</a>
                      <a href="tel:+123456789">+1 (234) 567-89</a>
@@ -31,8 +32,9 @@ export const Footer = () => {
                   <a href='https://www.messenger.com/'><Img folder='icon' img='messenger.png' /></a>
                </div>
             </div>
+            <hr />
             <div className={styles.copyRight}>
-               &copy; 2024 Some Company. All rights reserved.
+               <p>&copy; 2024 Some Company. All rights reserved.</p>
             </div>
          </div>
       </footer>
