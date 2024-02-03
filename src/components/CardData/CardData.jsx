@@ -19,7 +19,10 @@ export const CardData = ({ card }) => {
          [item]: newData
       }
 
-      if (cvv !== cvvEdit) {
+      if (cvvEdit.length !== 3 && !/^\d{3}$/.test(newData)) {
+         setCvvEdit(cvv);
+         console.log('CVV should have exactly 3 numeric digits');
+      } else if (cvv !== cvvEdit) {
          updateCard(newCardData).unwrap();
          console.log(newCardData);
       }
