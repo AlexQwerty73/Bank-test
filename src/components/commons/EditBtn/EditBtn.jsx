@@ -4,7 +4,6 @@ import styles from './editBtn.module.css'
 
 export const EditBtn = ({ isEdit, onClick }) => {
    const handleClick = () => {
-      console.log('EditBtn clicked!');
       onClick();
    };
    

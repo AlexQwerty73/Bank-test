@@ -316,7 +316,7 @@
       "password": "alex",
       "createdAt": "2024-01-27T12:00:00Z",
       "lastLogin": "2024-02-03T20:32:56.202Z",
-      "address": "123 Main St, City",
+      "address": " 123 Main St, City",
       "phone": "+1234567890"
     },
     {
@@ -337,7 +337,7 @@
       "userId": "23rf",
       "number": "0000111122223333",
       "expiryDate": "2024-12-31",
-      "cvv": "111",
+      "cvv": "114",
       "pin": "1111",
       "balance": 1000,
       "type": "VISA",
@@ -364,7 +364,7 @@
       "userId": "23rf",
       "number": "1111222233334444",
       "expiryDate": "2025-12-31",
-      "cvv": "213",
+      "cvv": "887",
       "pin": "1111",
       "balance": 200,
       "type": "VISA",
