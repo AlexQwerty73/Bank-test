@@ -10,11 +10,11 @@ export const HeroSection = () => {
             <h2>Welcome to Our Bank</h2>
             <p>Get access to a wide range of financial services and opportunities.</p>
 
-            <button className={styles.btn}>
-               <Link to='/create-user'>
-               Create new account!
-               </Link>
-            </button>
+            <Link to='/create-user'>
+               <button className={styles.btn}>
+                  Create new account!
+               </button>
+            </Link>
          </div>
          <div className={styles.bg}>
             <Img folder='home' img='home-mbg.jpg' />

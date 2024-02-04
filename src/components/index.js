@@ -7,3 +7,4 @@ export * from './Cards';
 export * from './CardData';
 export * from './UserProfile';
 export * from './HeroSection';
+export * from './FeaturesSection';
