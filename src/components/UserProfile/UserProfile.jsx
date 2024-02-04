@@ -41,14 +41,6 @@ export const UserProfile = ({ user }) => {
 
                <hr className={styles.hr} />
 
-               <LineCreatedAt createdAt={createdAt} />
-
-               <hr className={styles.hr} />
-
-               <LineLastLogin lastLogin={lastLogin} />
-
-               <hr className={styles.hr} />
-
                <LineAddress
                   onUserEditChange={onUserEditChange}
                   saveNewData={saveNewData}
@@ -66,6 +58,14 @@ export const UserProfile = ({ user }) => {
                   userEdit={userEdit}
                   phone={phone}
                />
+               <hr className={styles.hr} />
+
+               <LineCreatedAt createdAt={createdAt} />
+
+               <hr className={styles.hr} />
+
+               <LineLastLogin lastLogin={lastLogin} />
+
 
                <hr className={styles.hr} />
 
