@@ -32,15 +32,16 @@ export const UserProfile = ({ user }) => {
 
             <div className={styles.userData}>
 
-               <div className={styles.p}>
+               <div className={styles.line}>
                   <div className={styles.leftPart}>
                      <strong>Email:</strong>
-
-                     {
-                        isEditObj.email
-                           ? <input value={userEdit.email} onChange={e => onUserEditChange('email', e.target.value)} />
-                           : email
-                     }
+                     <div className={styles.itemData}>
+                        {
+                           isEditObj.email
+                              ? <input className={styles.input} value={userEdit.email} onChange={e => onUserEditChange('email', e.target.value)} />
+                              : email
+                        }
+                     </div>
                   </div>
                   <div className={styles.rightPart}>
                      <EditBtn
@@ -49,36 +50,42 @@ export const UserProfile = ({ user }) => {
                      />
                   </div>
                </div>
-               <hr />
+               <hr className={styles.hr} />
 
-               <div className={styles.p}>
+               <div className={styles.line}>
                   <div className={styles.leftPart}>
                      <strong>Created At:</strong>
-                     {formatDateTime(createdAt)}
+                     <div className={styles.itemData}>
+                        {formatDateTime(createdAt)}
+                     </div>
                   </div>
                   <div className={styles.rightPart}>
                   </div>
                </div>
-               <hr />
+               <hr className={styles.hr} />
 
-               <div className={styles.p}>
+               <div className={styles.line}>
                   <div className={styles.leftPart}>
                      <strong>Last Login:</strong>
-                     {formatDateTime(lastLogin)}
+                     <div className={styles.itemData}>
+                        {formatDateTime(lastLogin)}
+                     </div>
                   </div>
                   <div className={styles.rightPart}>
                   </div>
                </div>
-               <hr />
+               <hr className={styles.hr} />
 
-               <div className={styles.p}>
+               <div className={styles.line}>
                   <div className={styles.leftPart}>
                      <strong>Address:</strong>
-                     {
-                        isEditObj.address
-                           ? <input value={userEdit.address} onChange={e => onUserEditChange('address', e.target.value)} />
-                           : address
-                     }
+                     <div className={styles.itemData}>
+                        {
+                           isEditObj.address
+                              ? <input className={styles.input} value={userEdit.address} onChange={e => onUserEditChange('address', e.target.value)} />
+                              : address
+                        }
+                     </div>
                   </div>
                   <div className={styles.rightPart}>
                      <EditBtn
@@ -88,15 +95,17 @@ export const UserProfile = ({ user }) => {
                   </div>
                </div>
 
-               <hr />
-               <div className={styles.p}>
+               <hr className={styles.hr} />
+               <div className={styles.line}>
                   <div className={styles.leftPart}>
                      <strong>Phone:</strong>
-                     {
-                        isEditObj.phone
-                           ? <input value={userEdit.phone} onChange={e => onUserEditChange('phone', e.target.value)} />
-                           : phone
-                     }
+                     <div className={styles.itemData}>
+                        {
+                           isEditObj.phone
+                              ? <input className={styles.input} value={userEdit.phone} onChange={e => onUserEditChange('phone', e.target.value)} />
+                              : phone
+                        }
+                     </div>
                   </div>
                   <div className={styles.rightPart}>
                      <EditBtn
@@ -105,7 +114,7 @@ export const UserProfile = ({ user }) => {
                      />
                   </div>
                </div>
-               <hr />
+               <hr className={styles.hr} />
 
             </div>
 

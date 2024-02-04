@@ -23,7 +23,7 @@
    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
-.p {
+.line {
    display: flex;
    justify-content: space-between;
    align-items: center;
@@ -33,21 +33,32 @@
 .leftPart {
    flex: 1;
    color: #a0b9e9;
+   display: flex;
+   align-items: center;
+   position: relative;
 }
 
 .rightPart {
    margin-left: 10px;
 }
 
-input {
-   width: 100%;
-   padding: 8px;
-   margin-top: 5px;
-   border: 1px solid #61dafb;
-   color: #1c2a3a;
+.itemData {
+   position: absolute;
+   left: 100px;
 }
 
-hr {
+.input {
+   width: 100%;
+   border-radius: 20px;
+   padding: 10px 15px;
+   font-size: 14px;
+   margin-top: 5px;
+   border: 1px solid #61dafb;
+   color: #a0b9e9;
+   background: #1c2a3a;
+}
+
+.hr {
    border: 0.5px solid #1c2a3a;
    margin: 15px 0;
 }
