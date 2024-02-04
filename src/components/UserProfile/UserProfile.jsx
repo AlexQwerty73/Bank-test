@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import styles from './userProfile.module.css';
-import { formatDateTime } from '../../utils';
-import { EditBtn } from '../commons';
 import { useUpdateUserMutation } from '../../redux';
+import { LineEmail, LineCreatedAt, LineLastLogin, LineAddress, LinePhone } from './components';
 
 export const UserProfile = ({ user }) => {
    const [updateUserData] = useUpdateUserMutation();
@@ -32,88 +31,42 @@ export const UserProfile = ({ user }) => {
 
             <div className={styles.userData}>
 
-               <div className={styles.line}>
-                  <div className={styles.leftPart}>
-                     <strong>Email:</strong>
-                     <div className={styles.itemData}>
-                        {
-                           isEditObj.email
-                              ? <input className={styles.input} value={userEdit.email} onChange={e => onUserEditChange('email', e.target.value)} />
-                              : email
-                        }
-                     </div>
-                  </div>
-                  <div className={styles.rightPart}>
-                     <EditBtn
-                        isEdit={isEditObj.email}
-                        onClick={() => saveNewData('email')}
-                     />
-                  </div>
-               </div>
-               <hr className={styles.hr} />
-
-               <div className={styles.line}>
-                  <div className={styles.leftPart}>
-                     <strong>Created At:</strong>
-                     <div className={styles.itemData}>
-                        {formatDateTime(createdAt)}
-                     </div>
-                  </div>
-                  <div className={styles.rightPart}>
-                  </div>
-               </div>
-               <hr className={styles.hr} />
-
-               <div className={styles.line}>
-                  <div className={styles.leftPart}>
-                     <strong>Last Login:</strong>
-                     <div className={styles.itemData}>
-                        {formatDateTime(lastLogin)}
-                     </div>
-                  </div>
-                  <div className={styles.rightPart}>
-                  </div>
-               </div>
-               <hr className={styles.hr} />
-
-               <div className={styles.line}>
-                  <div className={styles.leftPart}>
-                     <strong>Address:</strong>
-                     <div className={styles.itemData}>
-                        {
-                           isEditObj.address
-                              ? <input className={styles.input} value={userEdit.address} onChange={e => onUserEditChange('address', e.target.value)} />
-                              : address
-                        }
-                     </div>
-                  </div>
-                  <div className={styles.rightPart}>
-                     <EditBtn
-                        isEdit={isEditObj.address}
-                        onClick={() => saveNewData('address')}
-                     />
-                  </div>
-               </div>
+               <LineEmail
+                  onUserEditChange={onUserEditChange}
+                  saveNewData={saveNewData}
+                  isEditObj={isEditObj}
+                  userEdit={userEdit}
+                  email={email}
+               />
 
                <hr className={styles.hr} />
-               <div className={styles.line}>
-                  <div className={styles.leftPart}>
-                     <strong>Phone:</strong>
-                     <div className={styles.itemData}>
-                        {
-                           isEditObj.phone
-                              ? <input className={styles.input} value={userEdit.phone} onChange={e => onUserEditChange('phone', e.target.value)} />
-                              : phone
-                        }
-                     </div>
-                  </div>
-                  <div className={styles.rightPart}>
-                     <EditBtn
-                        isEdit={isEditObj.phone}
-                        onClick={() => saveNewData('phone')}
-                     />
-                  </div>
-               </div>
+
+               <LineCreatedAt createdAt={createdAt} />
+
+               <hr className={styles.hr} />
+
+               <LineLastLogin lastLogin={lastLogin} />
+
+               <hr className={styles.hr} />
+
+               <LineAddress
+                  onUserEditChange={onUserEditChange}
+                  saveNewData={saveNewData}
+                  isEditObj={isEditObj}
+                  userEdit={userEdit}
+                  address={address}
+               />
+
+               <hr className={styles.hr} />
+
+               <LinePhone
+                  onUserEditChange={onUserEditChange}
+                  saveNewData={saveNewData}
+                  isEditObj={isEditObj}
+                  userEdit={userEdit}
+                  phone={phone}
+               />
+
                <hr className={styles.hr} />
 
             </div>
