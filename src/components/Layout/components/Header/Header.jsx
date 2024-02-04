@@ -1,14 +1,17 @@
 import React from 'react';
 import { Logo } from '../../../commons/';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { loadFromLocalStorage } from '../../../../utils'
 import styles from './dark.module.css';
 
 export const Header = () => {
    const userId = loadFromLocalStorage('userId');
-
+   const location = useLocation();
+   const isHomePage = location.pathname === '/';
+ 
    return (
-      <header className={styles.header}>
+     <header className={`${styles.header} ${isHomePage ? styles.transparentHeader : ''}`}>
+     
          <div className="container">
             <nav className={styles.nav}>
                <div className="leftPart">

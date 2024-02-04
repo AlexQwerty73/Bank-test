@@ -3,7 +3,14 @@
    color: #fff;
    padding: 1rem;
    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
-   margin-bottom: 50px;
+   /* margin-bottom: 50px; */
+}
+
+.transparentHeader {
+   background-color: rgba(34, 34, 34, 0.6);
+   position: absolute;
+   z-index: 1000;
+   width: 100%;
 }
 
 .nav {

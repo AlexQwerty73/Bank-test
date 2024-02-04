@@ -1,0 +1,24 @@
+import React from 'react';
+import styles from './heroSection.module.css';
+import { Img } from '../commons';
+import { Link } from 'react-router-dom';
+
+export const HeroSection = () => {
+   return (
+      <section className={styles.heroSection}>
+         <div className={styles.heroContent}>
+            <h2>Welcome to Our Bank</h2>
+            <p>Get access to a wide range of financial services and opportunities.</p>
+
+            <button className={styles.btn}>
+               <Link to='/create-user'>
+               Create new account!
+               </Link>
+            </button>
+         </div>
+         <div className={styles.bg}>
+            <Img folder='home' img='home-mbg.jpg' />
+         </div>
+      </section>
+   );
+};

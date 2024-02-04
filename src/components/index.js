@@ -6,3 +6,4 @@ export * from './CardCreationBlock';
 export * from './Cards';
 export * from './CardData';
 export * from './UserProfile';
+export * from './HeroSection';
