@@ -10,6 +10,8 @@
    background-position: center;
    background-repeat: no-repeat;
    overflow: hidden;
+
+   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
 }
 
 .heroContent {
@@ -65,5 +67,6 @@
    right: 0;
    bottom: 0;
    left: 0;
-   background: rgba(0, 0, 0, 0.75);
+   background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6));
+
 }
