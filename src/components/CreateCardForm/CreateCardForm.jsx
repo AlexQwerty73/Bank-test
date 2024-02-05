@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import styles from './createCardForm.module.css';
-import { generateCVV, generateCardNumber, generateExpiryDate } from '../../utils';
+import { generateCVV, generateCardNumber, generateExpiryDate, loadFromLocalStorage } from '../../utils';
+import { useAddCardMutation } from '../../redux';
+import { useParams } from 'react-router-dom';
 
 export const CreateCardForm = () => {
+   const [addCard] = useAddCardMutation();
+   const {userId} = useParams();
+   const localData = loadFromLocalStorage('userId');
+   const checkedUserId = userId === localData ? localData : '';
+
    const [formData, setFormData] = useState({
-      userId: "",
+      userId: checkedUserId,
       number: generateCardNumber(),
       expiryDate: generateExpiryDate(),
       cvv: generateCVV(),
@@ -22,7 +29,7 @@ export const CreateCardForm = () => {
 
    const handleSubmit = (e) => {
       e.preventDefault();
-      // Ваш код для відправки даних на сервер або збереження в базу даних
+      addCard(formData);
    };
 
    return (

@@ -315,7 +315,7 @@
       "email": "alex@gmail.com",
       "password": "alex",
       "createdAt": "2024-01-27T12:00:00Z",
-      "lastLogin": "2024-02-04T10:51:59.740Z",
+      "lastLogin": "2024-02-05T20:29:41.648Z",
       "address": " 123 Main St, City",
       "phone": "+1234567890"
     },
@@ -342,6 +342,7 @@
       "balance": 1000,
       "type": "VISA",
       "currency": "USD",
+      "category": "debit",
       "history": [
         {
           "date": "2024-01-27T14:30:00Z",
@@ -369,6 +370,7 @@
       "balance": 200,
       "type": "VISA",
       "currency": "EUR",
+      "category": "debit",
       "history": [
         {
           "date": "2024-01-28T09:15:00Z",
@@ -389,6 +391,7 @@
       "balance": 1500,
       "type": "VISA",
       "currency": "UAH",
+      "category": "debit",
       "history": [
         {
           "date": "2024-04-28T09:15:00Z",
