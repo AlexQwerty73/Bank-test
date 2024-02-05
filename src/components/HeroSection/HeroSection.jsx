@@ -17,7 +17,7 @@ export const HeroSection = () => {
             </Link>
          </div>
          <div className={styles.bg}>
-            <Img folder='home' img='home-mbg.jpg' />
+            {/* <Img folder='home' img='home-mbg.jpg' /> */}
          </div>
       </section>
    );

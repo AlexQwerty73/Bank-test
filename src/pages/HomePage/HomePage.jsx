@@ -6,13 +6,15 @@ export const HomePage = () => {
    return (
       <div className='homePage'>
          <HeroSection />
-         <div className="container">
-            <FeaturesSection />
+
+         <div className={styles.bg1}>
+            <div className="container">
+               <FeaturesSection />
+            </div>
          </div>
+
          <div className="container">
             <CardCreationBlock />
-         </div>
-         <div className="container">
             <ExchangeRate />
          </div>
       </div>
