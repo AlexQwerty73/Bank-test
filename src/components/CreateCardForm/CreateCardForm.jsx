@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import styles from './createCardForm.module.css';
 import { generateCVV, generateCardNumber, generateExpiryDate, loadFromLocalStorage } from '../../utils';
 import { useAddCardMutation } from '../../redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export const CreateCardForm = () => {
+   const navigate = useNavigate();
    const [addCard] = useAddCardMutation();
-   const {userId} = useParams();
+   const { userId } = useParams();
    const localData = loadFromLocalStorage('userId');
    const checkedUserId = userId === localData ? localData : '';
 
@@ -19,7 +20,8 @@ export const CreateCardForm = () => {
       balance: 0,
       type: "",
       currency: "",
-      history: []
+      category: "",
+      history: [],
    });
 
    const handleInputChange = (e) => {
@@ -27,17 +29,29 @@ export const CreateCardForm = () => {
       setFormData({ ...formData, [name]: value });
    };
 
+   const validateForm = () => {
+      if (formData.pin.length !== 4 || !/^\d+$/.test(formData.pin)) {
+         alert('PIN must contain 4 digits!');
+         return false;
+      }
+      return true;
+   };
+
    const handleSubmit = (e) => {
       e.preventDefault();
-      addCard(formData);
+      if (validateForm()) {
+         addCard(formData);
+         navigate(`/${checkedUserId}/cards`);
+      }
    };
 
    return (
       <form className={styles.createCardForm} onSubmit={handleSubmit}>
 
-         <label>
+         <label className={styles.label}>
             PIN:
             <input
+               className={styles.input}
                type="text"
                name="pin"
                value={formData.pin}
@@ -46,9 +60,10 @@ export const CreateCardForm = () => {
             />
          </label>
 
-         <label>
+         <label className={styles.label}>
             Card Category:
             <select
+               className={styles.select}
                name="category"
                value={formData.category}
                onChange={handleInputChange}
@@ -60,9 +75,10 @@ export const CreateCardForm = () => {
             </select>
          </label>
 
-         <label>
+         <label className={styles.label}>
             Card Type:
             <select
+               className={styles.select}
                name="type"
                value={formData.type}
                onChange={handleInputChange}
@@ -74,9 +90,10 @@ export const CreateCardForm = () => {
             </select>
          </label>
 
-         <label>
+         <label className={styles.label}>
             Currency:
             <select
+               className={styles.select}
                name="currency"
                value={formData.currency}
                onChange={handleInputChange}
@@ -89,7 +106,7 @@ export const CreateCardForm = () => {
             </select>
          </label>
 
-         <button type="submit">Create Card</button>
+         <button className={styles.button} type="submit">Create Card</button>
       </form>
    );
 };

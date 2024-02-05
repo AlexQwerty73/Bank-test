@@ -401,6 +401,19 @@
           "location": ""
         }
       ]
+    },
+    {
+      "id": "29a0",
+      "userId": "23rf",
+      "number": "8235597135481645",
+      "expiryDate": "2029-02-31",
+      "cvv": "427",
+      "pin": "1243",
+      "balance": 0,
+      "type": "MASTERCARD",
+      "currency": "UAH",
+      "category": "debit",
+      "history": []
     }
   ]
 }
