@@ -4,3 +4,6 @@ export * from './removeKeyFromLocalStorage';
 export * from './convertDateFormat';
 export * from './convertToNumberCartFormat';
 export * from './formatDateTime';
+export * from './generateCVV';
+export * from './generateCardNumber';
+export * from './generateExpiryDate';
