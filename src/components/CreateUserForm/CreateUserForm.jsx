@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import styles from './createUserForm.module.css';
+import { validateForm } from './validateForm';
+import { useAddUserMutation } from '../../redux';
 
 export const CreateUserForm = () => {
+   const [addUser] = useAddUserMutation();
    const [formData, setFormData] = useState({
       name: "",
       surname: "",
       email: "",
       password: "",
       address: "",
-      phone: ""
+      phone: "",
+      createdAt: new Date().toISOString(),
+      lastLogin: new Date().toISOString(),
    });
 
    const handleInputChange = (e) => {
@@ -18,7 +23,9 @@ export const CreateUserForm = () => {
 
    const handleSubmit = (e) => {
       e.preventDefault();
-      
+      if (validateForm(formData)) {
+         addUser(formData);
+      }
    };
 
    return (
@@ -81,7 +88,7 @@ export const CreateUserForm = () => {
          <label>
             Phone:
             <input
-               type="text"
+               type="tel"
                name="phone"
                value={formData.phone}
                onChange={handleInputChange}
