@@ -70,3 +70,15 @@
    color: #ff6347;
    margin-top: 10px;
 }
+
+.link {
+   display: block;
+   margin-top: 10px;
+   color: #4caf50; 
+   text-decoration: none; 
+   font-size: 14px; 
+}
+
+.link:hover {
+   color: #45a049; 
+}
