@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetCardByNumberQuery } from '../../redux';
-import styles from './CardTransactionsPage.module.css'; // Імпортуйте стилі
+import styles from './CardTransactionsPage.module.css';
 
 export const CardTransactionsPage = () => {
    const { cardNumber } = useParams();
