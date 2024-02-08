@@ -1,8 +1,9 @@
 import React from 'react';
 import { Cards } from '../../components';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { loadFromLocalStorage } from '../../utils';
 import { useGetCardsByUserIdQuery } from '../../redux';
+import styles from './cardsPage.module.css';
 
 export const CardsPage = () => {
    const { userId } = useParams();
@@ -10,18 +11,21 @@ export const CardsPage = () => {
    const { data: cardsData, isLoading, error } = useGetCardsByUserIdQuery(userId);
 
    const isUser = userId === localStorUserId;
-
    const cards = isUser ? cardsData : [];
 
    return (
       <div className='cardsPage'>
-         {
-            isLoading
-               ? <p>Loading ...</p>
-               : error ?
-                  <p>Error: {error}</p>
-                  : <Cards cards={cards} />
-         }
+         <div className={styles.content}>
+            {isLoading && <p>Loading ...</p>}
+            {error && <p>Error: {error}</p>}
+            {!cardsData || cardsData.length === 0 ? (
+               <Link to={`/${userId}/create-card`}>
+                  <button className={styles.btn}>Create new card!</button>
+               </Link>
+            ) : (
+              <Cards cards={cards} />
+            )}
+         </div>
       </div>
    );
 };
