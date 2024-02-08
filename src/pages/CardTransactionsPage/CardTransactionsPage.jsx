@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetCardByNumberQuery } from '../../redux';
 import styles from './CardTransactionsPage.module.css';
+import { SelectedTransaction } from '../../components';
 
 export const CardTransactionsPage = () => {
    const { cardNumber } = useParams();
@@ -32,17 +33,8 @@ export const CardTransactionsPage = () => {
                </li>
             ))}
          </ul>
-         {selectedTransaction && (
-            <div className={styles.selectedTransaction}>
-               <h3>Selected Transaction</h3>
-               <div>Date: {selectedTransaction.date}</div>
-               <div>Amount: {selectedTransaction.amount}</div>
-               <div>Type: {selectedTransaction.type}</div>
-               <div>Description: {selectedTransaction.description}</div>
-               <div>Location: {selectedTransaction.location}</div>
-               <button onClick={handleCloseTransaction}>Close</button>
-            </div>
-         )}
+         
+         {selectedTransaction && <SelectedTransaction card={card} selectedTransaction={selectedTransaction} handleCloseTransaction={handleCloseTransaction}/>}
       </div>
    );
 };

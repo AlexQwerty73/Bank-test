@@ -345,16 +345,16 @@
       "category": "debit",
       "history": [
         {
-          "date": "2024-01-27T14:30:00Z",
-          "type": "purchase",
-          "amount": 50,
-          "description": "Online shopping",
-          "location": ""
+          "date": "2024-04-28T09:15:00Z",
+          "type": "deposit",
+          "amount": "1200",
+          "description": "Deposit from user",
+          "location": "Str 15/3"
         },
         {
-          "date": "2024-01-28T09:15:00Z",
+          "date": "2024-04-28T09:13:00Z",
           "type": "deposit",
-          "amount": 200,
+          "amount": "50",
           "description": "Deposit from user",
           "location": ""
         }

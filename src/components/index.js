@@ -10,3 +10,4 @@ export * from './HeroSection';
 export * from './FeaturesSection';
 export * from './CreateCardForm';
 export * from './CreateUserForm';
+export * from './SelectedTransaction';
