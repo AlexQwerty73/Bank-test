@@ -12,8 +12,6 @@ export const CreateUserForm = () => {
       password: "",
       address: "",
       phone: "",
-      createdAt: new Date().toISOString(),
-      lastLogin: new Date().toISOString(),
    });
 
    const handleInputChange = (e) => {
@@ -24,7 +22,11 @@ export const CreateUserForm = () => {
    const handleSubmit = (e) => {
       e.preventDefault();
       if (validateForm(formData)) {
-         addUser(formData);
+         addUser({
+            ...formData,
+            createdAt: new Date().toISOString(),
+            lastLogin: new Date().toISOString(),
+         });
       }
    };
 
