@@ -26,6 +26,7 @@ export const SelectedTransaction = ({ card, selectedTransaction, handleCloseTran
    };
 
    const handleCancel = () => {
+      setIsEditing(false);
       setEditedTransaction(selectedTransaction);
    };
 
@@ -38,12 +39,6 @@ export const SelectedTransaction = ({ card, selectedTransaction, handleCloseTran
       <div className={styles.selectedTransaction}>
          <h3>Selected Transaction</h3>
          <div>
-            <div>
-               Date: {isEditing ? <input type="text" name="date" value={editedTransaction.date} onChange={handleChange} /> : selectedTransaction.date}
-            </div>
-            <div>
-               Amount: {isEditing ? <input type="text" name="amount" value={editedTransaction.amount} onChange={handleChange} /> : selectedTransaction.amount}
-            </div>
             <div>
                Type: {isEditing ? <input type="text" name="type" value={editedTransaction.type} onChange={handleChange} /> : selectedTransaction.type}
             </div>
