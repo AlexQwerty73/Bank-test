@@ -315,7 +315,7 @@
       "email": "alex@gmail.com",
       "password": "alex",
       "createdAt": "2024-01-27T12:00:00Z",
-      "lastLogin": "2024-02-05T20:29:41.648Z",
+      "lastLogin": "2024-02-08T15:26:09.861Z",
       "address": " 123 Main St, City",
       "phone": "+1234567890"
     },
@@ -401,19 +401,6 @@
           "location": ""
         }
       ]
-    },
-    {
-      "id": "29a0",
-      "userId": "23rf",
-      "number": "8235597135481645",
-      "expiryDate": "2029-02-31",
-      "cvv": "427",
-      "pin": "1243",
-      "balance": 0,
-      "type": "MASTERCARD",
-      "currency": "UAH",
-      "category": "debit",
-      "history": []
     }
   ]
 }

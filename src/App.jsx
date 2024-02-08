@@ -17,7 +17,7 @@ const App = () => {
 
           <Route path=':userId/'>
 
-            <Route path='create-card/' element={<CreateCardPage />} />  {/*  */}
+            <Route path='create-card/' element={<CreateCardPage />} /> 
             <Route path='profile/' element={<UserProfilePage />} />
 
             <Route path='cards/'>
