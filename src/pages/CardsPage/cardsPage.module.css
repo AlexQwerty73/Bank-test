@@ -13,3 +13,11 @@
 .btn:hover {
    background-color: #4f9f53;
 }
+
+
+.content {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+}

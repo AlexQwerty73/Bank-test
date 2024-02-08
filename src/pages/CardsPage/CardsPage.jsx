@@ -15,6 +15,7 @@ export const CardsPage = () => {
 
    return (
       <div className='cardsPage'>
+         <div className="container">
          <div className={styles.content}>
             {isLoading && <p>Loading ...</p>}
             {error && <p>Error: {error}</p>}
@@ -23,8 +24,9 @@ export const CardsPage = () => {
                   <button className={styles.btn}>Create new card!</button>
                </Link>
             ) : (
-              <Cards cards={cards} />
+               <Cards cards={cards} />
             )}
+         </div>
          </div>
       </div>
    );
