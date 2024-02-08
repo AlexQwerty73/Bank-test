@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom'; 
+import { useNavigate, Link } from 'react-router-dom';
 import s from './loginForm.module.css';
 import { saveToLocalStorage } from '../../utils';
 import { useUserByEmail } from '../../hooks/';
@@ -48,7 +48,7 @@ export const LoginForm = () => {
             Увійти
          </button>
          {error && <div className={s.errorWindow}>{error}</div>}
-         <Link to="/create-account" className={s.link}>Створити новий акаунт</Link>
+         <Link to="/create-user" className={s.link}>Створити новий акаунт</Link>
       </form>
    );
 };

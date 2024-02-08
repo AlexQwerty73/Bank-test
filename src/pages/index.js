@@ -6,3 +6,5 @@ export * from './CardPage';
 export * from './UserProfilePage';
 export * from './CreateCardPage';
 export * from './CreateUserPage';
+export * from './TransactionsPage';
+export * from './CardTransactionsPage';

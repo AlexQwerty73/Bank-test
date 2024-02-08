@@ -1,6 +1,6 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { CreateUserForm, Layout } from './components/';
-import { CardPage, CardsPage, CreateCardPage, HomePage, LoginPage, NotFoundPage, UserProfilePage } from './pages';
+import { CardPage, CardTransactionsPage, CardsPage, CreateCardPage, HomePage, LoginPage, NotFoundPage, TransactionsPage, UserProfilePage } from './pages';
 
 const App = () => {
   return (
@@ -19,6 +19,10 @@ const App = () => {
 
             <Route path='create-card/' element={<CreateCardPage />} />
             <Route path='profile/' element={<UserProfilePage />} />
+            <Route path='transactions/'>
+              <Route index element={<TransactionsPage />}/>
+              <Route path=':cardNumber/' element={<CardTransactionsPage />} />{/*  */}
+            </Route>
 
             <Route path='cards/'>
               <Route index element={<CardsPage />} />

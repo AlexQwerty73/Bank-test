@@ -8,6 +8,8 @@ import { store } from './redux/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
+alert('1 - переробити стилі, 2 -калькулятор кредитів/депозитів(у валюті різні %), 3 - більше перевірок, 4 - переказ грошей + на різні валюти ')
+
 root.render(
   <React.StrictMode>
     <BrowserRouter>

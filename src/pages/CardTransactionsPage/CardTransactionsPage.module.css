@@ -1,0 +1,78 @@
+.cardTransactionsPage {
+   max-width: 600px;
+   margin: 0 auto;
+   padding: 20px;
+}
+
+.cardTransactionsPage h2 {
+   font-size: 24px;
+   margin-bottom: 20px;
+}
+
+.cardTransactionsPage p {
+   font-size: 16px;
+   margin-bottom: 10px;
+}
+
+.cardTransactionsPage ul {
+   list-style-type: none;
+   padding: 0;
+}
+
+.cardTransactionsPage ul li {
+   margin-bottom: 10px;
+   cursor: pointer;
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+   transition: background-color 0.3s;
+}
+
+.cardTransactionsPage ul li:hover {
+   background-color: #f0f0f0;
+}
+
+.cardTransactionsPage ul li div {
+   margin-bottom: 5px;
+}
+
+.cardTransactionsPage ul li div:first-child {
+   font-weight: bold;
+}
+
+.cardTransactionsPage .selectedTransaction {
+   position: fixed;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   background-color: #ffffff;
+   padding: 20px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+   z-index: 1000;
+}
+
+
+.cardTransactionsPage .selectedTransaction h3 {
+   font-size: 20px;
+   margin-bottom: 10px;
+}
+
+.cardTransactionsPage .selectedTransaction div {
+   margin-bottom: 5px;
+}
+
+.cardTransactionsPage button {
+   background-color: #4caf50;
+   color: #ffffff;
+   padding: 10px 15px;
+   border: none;
+   border-radius: 4px;
+   cursor: pointer;
+   font-size: 16px;
+   transition: background-color 0.3s;
+}
+
+.cardTransactionsPage button:hover {
+   background-color: #45a049;
+}
