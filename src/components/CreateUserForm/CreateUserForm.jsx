@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import styles from './createUserForm.module.css';
 import { validateForm } from './validateForm';
 import { useAddUserMutation } from '../../redux';
+import { useNavigate } from 'react-router-dom';
+import { saveToLocalStorage } from '../../utils';
 
 export const CreateUserForm = () => {
+   const navigate = useNavigate();
    const [addUser] = useAddUserMutation();
    const [formData, setFormData] = useState({
       name: "",
@@ -19,22 +22,27 @@ export const CreateUserForm = () => {
       setFormData({ ...formData, [name]: value });
    };
 
-   const handleSubmit = (e) => {
+   const handleSubmit = async (e) => {
       e.preventDefault();
       if (validateForm(formData)) {
-         addUser({
+         const response = await addUser({
             ...formData,
             createdAt: new Date().toISOString(),
             lastLogin: new Date().toISOString(),
          });
+
+         const userId = response.data.id;
+         saveToLocalStorage('userId', userId);
+         navigate('/');
       }
    };
 
    return (
-      <form className={styles.createUserForm} onSubmit={handleSubmit}>
-         <label>
+      <form className={styles.createForm} onSubmit={handleSubmit}>
+         <label className={styles.label}>
             Name:
             <input
+               className={styles.input}
                type="text"
                name="name"
                value={formData.name}
@@ -43,9 +51,10 @@ export const CreateUserForm = () => {
             />
          </label>
 
-         <label>
+         <label className={styles.label}>
             Surname:
             <input
+               className={styles.input}
                type="text"
                name="surname"
                value={formData.surname}
@@ -54,9 +63,10 @@ export const CreateUserForm = () => {
             />
          </label>
 
-         <label>
+         <label className={styles.label}>
             Email:
             <input
+               className={styles.input}
                type="email"
                name="email"
                value={formData.email}
@@ -65,9 +75,10 @@ export const CreateUserForm = () => {
             />
          </label>
 
-         <label>
+         <label className={styles.label}>
             Password:
             <input
+               className={styles.input}
                type="password"
                name="password"
                value={formData.password}
@@ -76,9 +87,10 @@ export const CreateUserForm = () => {
             />
          </label>
 
-         <label>
+         <label className={styles.label}>
             Address:
             <input
+               className={styles.input}
                type="text"
                name="address"
                value={formData.address}
@@ -87,9 +99,10 @@ export const CreateUserForm = () => {
             />
          </label>
 
-         <label>
+         <label className={styles.label}>
             Phone:
             <input
+               className={styles.input}
                type="tel"
                name="phone"
                value={formData.phone}
@@ -98,7 +111,7 @@ export const CreateUserForm = () => {
             />
          </label>
 
-         <button type="submit">Create User</button>
+         <button className={styles.button} type="submit">Create User</button>
       </form>
    );
 };

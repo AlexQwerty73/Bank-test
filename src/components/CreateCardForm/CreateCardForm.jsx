@@ -41,7 +41,7 @@ export const CreateCardForm = () => {
       e.preventDefault();
       if (validateForm()) {
          addCard(formData);
-         navigate(`/${checkedUserId}/cards`);
+         navigate(`/`);
       }
    };
 
