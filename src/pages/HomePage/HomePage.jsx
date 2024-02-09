@@ -13,8 +13,13 @@ export const HomePage = () => {
             </div>
          </div>
 
+         <div className={styles.bg2}>
+            <div className="container">
+               <Calculator />
+            </div>
+         </div>
+
          <div className="container">
-            <Calculator />
             <CardCreationBlock />
             <ExchangeRate />
          </div>

@@ -55,7 +55,7 @@ export const Calculator = () => {
    return (
       <div className={styles.calculator}>
          <div className={styles.input_group}>
-            <h2>Input Data</h2>
+            <h2>Deposit calculator</h2>
             <div>
                <label>
                   Amount:
@@ -80,11 +80,9 @@ export const Calculator = () => {
                   </select>
                </label>
             </div>
-            <div>
-               <label className={styles.checkbox_label}>
-                  <input type="checkbox" checked={taxDeducted} onChange={(e) => setTaxDeducted(e.target.checked)} />
-                  Deduct Tax (20%)
-               </label>
+            <div className={styles.checkbox_label}>
+               Deduct Tax (20%)
+               <input type="checkbox" className={styles.checkbox_custom} checked={taxDeducted} onChange={(e) => setTaxDeducted(e.target.checked)} />
             </div>
          </div>
          <div className={styles.result_container}>
@@ -92,12 +90,17 @@ export const Calculator = () => {
             {result && (
                <div>
                   <p className={styles.result_item}>Amount: {result.amount} {currency}</p>
+                  <hr />
                   <p className={styles.result_item}>Profit: {result.profit} {currency}</p>
+                  <hr />
                   <p className={styles.result_item}>Annual Interest Rate: {result.annualInterestRate}%</p>
+                  <hr />
                   <p className={styles.result_item}>Total: {result.total} {currency}</p>
+                  <hr />
                </div>
             )}
          </div>
       </div>
+
    );
 };
