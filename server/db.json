@@ -376,8 +376,8 @@
           "date": "2024-01-28T09:15:00Z",
           "type": "remittance",
           "amount": 200,
-          "description": "",
-          "location": ""
+          "description": "Deposit from user3",
+          "location": "home"
         }
       ]
     },
