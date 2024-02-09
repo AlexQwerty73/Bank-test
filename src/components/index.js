@@ -11,3 +11,4 @@ export * from './FeaturesSection';
 export * from './CreateCardForm';
 export * from './CreateUserForm';
 export * from './SelectedTransaction';
+export * from './Calculator';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { CardCreationBlock, ExchangeRate, FeaturesSection, HeroSection } from '../../components';
+import { Calculator, CardCreationBlock, ExchangeRate, FeaturesSection, HeroSection } from '../../components';
 import styles from './homePage.module.css';
 
 export const HomePage = () => {
@@ -14,6 +14,7 @@ export const HomePage = () => {
          </div>
 
          <div className="container">
+            <Calculator />
             <CardCreationBlock />
             <ExchangeRate />
          </div>
