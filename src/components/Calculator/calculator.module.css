@@ -1,7 +1,7 @@
 .calculator {
    display: flex;
    justify-content: center;
-   align-items: center;
+   align-items: flex-start;
    padding: 50px 0;
 }
 
@@ -12,16 +12,16 @@
    background-color: #fff;
    border-radius: 15px;
    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
-
-.result_container {
-   margin-left: 20px;
+   margin: 0 10px;
+   display: flex;
+   flex-direction: column;
 }
 
 .input_group h2,
 .result_container h2 {
    margin-bottom: 20px;
    color: #333;
+   text-align: center;
 }
 
 .range_input,
@@ -71,11 +71,6 @@
    cursor: pointer;
 }
 
-
-.select_input {
-   cursor: pointer;
-}
-
 .checkbox_label {
    display: flex;
    align-items: center;
@@ -86,9 +81,6 @@
    margin-top: 15px;
    color: #333;
 }
-
-
-
 
 .checkbox_custom {
    margin-left: 10px;
@@ -102,6 +94,7 @@
    border: 2px solid #333;
    background-color: #fff;
    transition: background-color 0.3s, border-color 0.3s;
+   flex-shrink: 0;
 }
 
 .checkbox_custom:checked {

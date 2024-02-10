@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { InputGroup, ResultContainer } from './components';
 import styles from './calculator.module.css';
 
 export const Calculator = () => {
    const [amount, setAmount] = useState(1000);
    const [months, setMonths] = useState(3);
    const [currency, setCurrency] = useState('UAH');
-   const [taxDeducted, setTaxDeducted] = useState(false);
+   const [taxDeducted, setTaxDeducted] = useState(true);
    const [result, setResult] = useState(null);
+   const minAmount = currency === 'UAH' ? 1000 : 100;
 
    useEffect(() => {
       calculateDeposit();
    }, [amount, months, currency, taxDeducted]);
 
    const calculateDeposit = () => {
-      if (amount < 1000 || months < 3 || months > 24) {
+      if (amount < minAmount || months < 3 || months > 24) {
          setResult('Please enter valid data.');
          return;
       }
@@ -41,66 +43,32 @@ export const Calculator = () => {
          }
       }
 
-      const interest = (amount * interestRate * months) / 1200 * (taxDeducted ? 1 - 0.2 : 1);
+      let annualInterestRate = interestRate * (taxDeducted ? 0.8 : 1);
+      const interest = (amount * annualInterestRate * months) / 1200;
       const total = amount + interest;
 
       setResult({
          amount: amount,
          profit: interest.toFixed(2),
-         annualInterestRate: interestRate,
+         annualInterestRate: annualInterestRate.toFixed(2),
          total: total.toFixed(2)
       });
    };
 
    return (
       <div className={styles.calculator}>
-         <div className={styles.input_group}>
-            <h2>Deposit calculator</h2>
-            <div>
-               <label>
-                  Amount: {amount} {currency}
-                  <input className={styles.range_input} type="range" min="1000" max="100000" step="100" value={amount} onChange={(e) => setAmount(parseInt(e.target.value))} />
-
-               </label>
-            </div>
-            <div>
-               <label>
-                  Term (months): {months} months
-                  <input className={styles.range_input} type="range" min="3" max="24" value={months} onChange={(e) => setMonths(parseInt(e.target.value))} />
-
-               </label>
-            </div>
-            <div>
-               <label>
-                  Currency:
-                  <select className={styles.select_input} value={currency} onChange={(e) => setCurrency(e.target.value)}>
-                     <option value="UAH">UAH</option>
-                     <option value="USD">USD</option>
-                     <option value="EUR">EUR</option>
-                  </select>
-               </label>
-            </div>
-            <div className={styles.checkbox_label}>
-               Deduct Tax (20%)
-               <input type="checkbox" className={styles.checkbox_custom} checked={taxDeducted} onChange={(e) => setTaxDeducted(e.target.checked)} />
-            </div>
-         </div>
-         <div className={styles.result_container}>
-            <h2>Output Data</h2>
-            {result && (
-               <div>
-                  <p className={styles.result_item}>Amount: {result.amount} {currency}</p>
-                  <hr />
-                  <p className={styles.result_item}>Profit: {result.profit} {currency}</p>
-                  <hr />
-                  <p className={styles.result_item}>Annual Interest Rate: {result.annualInterestRate}%</p>
-                  <hr />
-                  <p className={styles.result_item}>Total: {result.total} {currency}</p>
-                  <hr />
-               </div>
-            )}
-         </div>
+         <InputGroup
+            months={months}
+            amount={amount}
+            currency={currency}
+            minAmount={minAmount}
+            taxDeducted={taxDeducted}
+            setAmount={setAmount}
+            setMonths={setMonths}
+            setCurrency={setCurrency}
+            setTaxDeducted={setTaxDeducted}
+         />
+         <ResultContainer result={result} currency={currency} />
       </div>
-
    );
 };
