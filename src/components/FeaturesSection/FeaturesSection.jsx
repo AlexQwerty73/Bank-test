@@ -3,44 +3,27 @@ import styles from './FeaturesSection.module.css';
 import { Img } from '../commons';
 
 export const FeaturesSection = () => {
+   const features = [
+      { title: 'Convenient Service', img: 'service.png' },
+      { title: 'Data Security', img: 'security.png' },
+      { title: 'Flexibility', img: 'flexibility.png' },
+      { title: '24/7 Customer Support', img: 'support.png' },
+      { title: 'Mobile Banking', img: 'mobile.png' },
+      { title: 'Financial Planning Tools', img: 'planning.png' },
+   ];
+
    return (
       <section className={styles.featuresSection}>
-         <div className={styles.feature}>
-            <div className={styles.featureContent}>
-               <div className={styles.featureIcon}>
-                  <Img folder='featuresSection' img='service.png' />
+         {features.map((feature, index) => (
+            <div className={styles.feature} key={index}>
+               <div className={styles.featureContent}>
+                  <div className={styles.featureIcon}>
+                     <Img folder='featuresSection' img={feature.img} />
+                  </div>
+                  <h3 className={styles.h3}>{feature.title}</h3>
                </div>
-               <h3 className={styles.h3}>Convenient Service</h3>
             </div>
-         </div>
-
-         <div className={styles.feature}>
-            <div className={styles.featureContent}>
-               <div className={styles.featureIcon}>
-                  <Img folder='featuresSection' img='security.png' />
-               </div>
-               <h3 className={styles.h3}>Data Security</h3>
-            </div>
-         </div>
-
-         <div className={styles.feature}>
-            <div className={styles.featureContent}>
-               <div className={styles.featureIcon}>
-                  <Img folder='featuresSection' img='flexibility.png' />
-               </div>
-               <h3 className={styles.h3}>Flexibility</h3>
-            </div>
-         </div>
-
-         <div className={styles.feature}>
-            <div className={styles.featureContent}>
-               <div className={styles.featureIcon}>
-                  <Img folder='featuresSection' img='support.png' />
-               </div>
-               <h3 className={styles.h3}>24/7 Customer Support</h3>
-            </div>
-         </div>
-
+         ))}
       </section>
    );
 };

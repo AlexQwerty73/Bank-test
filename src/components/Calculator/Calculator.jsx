@@ -58,16 +58,16 @@ export const Calculator = () => {
             <h2>Deposit calculator</h2>
             <div>
                <label>
-                  Amount:
+                  Amount: {amount} {currency}
                   <input className={styles.range_input} type="range" min="1000" max="100000" step="100" value={amount} onChange={(e) => setAmount(parseInt(e.target.value))} />
-                  {amount} {currency}
+
                </label>
             </div>
             <div>
                <label>
-                  Term (months):
+                  Term (months): {months} months
                   <input className={styles.range_input} type="range" min="3" max="24" value={months} onChange={(e) => setMonths(parseInt(e.target.value))} />
-                  {months} months
+
                </label>
             </div>
             <div>
