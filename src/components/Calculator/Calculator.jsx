@@ -10,6 +10,13 @@ export const Calculator = () => {
    const [result, setResult] = useState(null);
    const minAmount = currency === 'UAH' ? 1000 : 100;
 
+   const resultLabels = {
+      amount: 'Amount',
+      profit: 'Profit',
+      annualInterestRate: 'Annual Interest',
+      total: 'Total'
+   };
+
    useEffect(() => {
       calculateDeposit();
    }, [amount, months, currency, taxDeducted]);
@@ -68,7 +75,7 @@ export const Calculator = () => {
             setCurrency={setCurrency}
             setTaxDeducted={setTaxDeducted}
          />
-         <ResultContainer result={result} currency={currency} />
+         <ResultContainer result={result} resultLabels={resultLabels} currency={currency} />
       </div>
    );
 };
