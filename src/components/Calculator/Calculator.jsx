@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { InputGroup, ResultContainer } from './components';
 import styles from './calculator.module.css';
 
 export const Calculator = () => {
@@ -9,13 +8,6 @@ export const Calculator = () => {
    const [taxDeducted, setTaxDeducted] = useState(true);
    const [result, setResult] = useState(null);
    const minAmount = currency === 'UAH' ? 1000 : 100;
-
-   const resultLabels = {
-      amount: 'Amount',
-      profit: 'Profit',
-      annualInterestRate: 'Annual Interest',
-      total: 'Total'
-   };
 
    useEffect(() => {
       calculateDeposit();
@@ -50,32 +42,99 @@ export const Calculator = () => {
          }
       }
 
-      let annualInterestRate = interestRate * (taxDeducted ? 0.8 : 1);
-      const interest = (amount * annualInterestRate * months) / 1200;
+      const interest = (amount * interestRate * months) / 1200;
       const total = amount + interest;
+      const tax = interest * 0.2;
 
       setResult({
          amount: amount,
          profit: interest.toFixed(2),
-         annualInterestRate: annualInterestRate.toFixed(2),
-         total: total.toFixed(2)
+         annualInterestRate: interestRate.toFixed(2),
+         annualInterestRateAfterTax: (interestRate * 0.8).toFixed(2),
+         total: total.toFixed(2),
+         tax: tax.toFixed(2),
+         totalAfterTax: (total - tax).toFixed(2)
       });
    };
 
    return (
       <div className={styles.calculator}>
-         <InputGroup
-            months={months}
-            amount={amount}
-            currency={currency}
-            minAmount={minAmount}
-            taxDeducted={taxDeducted}
-            setAmount={setAmount}
-            setMonths={setMonths}
-            setCurrency={setCurrency}
-            setTaxDeducted={setTaxDeducted}
-         />
-         <ResultContainer result={result} resultLabels={resultLabels} currency={currency} />
+         <div className={styles.input_group}>
+            <h2>Deposit Calculator</h2>
+            <div>
+               <label>
+                  Amount: {amount} {currency}
+                  <input
+                     className={styles.range_input}
+                     type="range"
+                     min={minAmount}
+                     max="10000000"
+                     step="100"
+                     value={amount}
+                     onChange={(e) => setAmount(parseInt(e.target.value))}
+                  />
+               </label>
+            </div>
+            <div>
+               <label>
+                  Term (months): {months} months
+                  <input
+                     className={styles.range_input}
+                     type="range"
+                     min="3"
+                     max="24"
+                     value={months}
+                     onChange={(e) => setMonths(parseInt(e.target.value))}
+                  />
+               </label>
+            </div>
+            <div>
+               <label>
+                  Currency:
+                  <select className={styles.select_input} value={currency} onChange={(e) => setCurrency(e.target.value)}>
+                     <option value="UAH">UAH</option>
+                     <option value="USD">USD</option>
+                     <option value="EUR">EUR</option>
+                  </select>
+               </label>
+            </div>
+         </div>
+         <div className={styles.result_container}>
+            {result && (
+               <>
+                  <div className="total">
+                     <h3>Ви отримаєте</h3>
+                     <h1>{!taxDeducted ? result.total : result.totalAfterTax} {currency}</h1>
+                     <label>
+                        розрахувати з урахуванням податків
+                        <input type="checkbox" className={styles.checkbox_custom} checked={taxDeducted} onChange={(e) => setTaxDeducted(e.target.checked)} />
+                     </label>
+                  </div>
+
+                  <hr />
+
+                  <div className="amout">
+                     <p>Вклали</p>
+                     <h3>{result.amount} {currency}</h3>
+                  </div>
+
+                  <div>
+                     <p>Процентна ставка</p>
+                     <h3>{result.annualInterestRate} % річних</h3>
+                  </div>
+
+                  <div>
+                     <p>Процентна ставка після сплати податків</p>
+                     <h3>{result.annualInterestRateAfterTax} % річних</h3>
+                  </div>
+
+                  <div>
+                     <p>Утримано податку</p>
+                     <h3>{result.tax} {currency}</h3>
+                  </div>
+               </>
+            )}
+         </div>
       </div>
    );
 };

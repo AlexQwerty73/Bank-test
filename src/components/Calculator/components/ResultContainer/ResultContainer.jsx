@@ -4,7 +4,6 @@ import styles from '../../calculator.module.css';
 export const ResultContainer = ({ result, resultLabels, currency }) => {
    return (
       <div className={styles.result_container}>
-         <h2>Output Data</h2>
          {result && (
             <div>
                {Object.entries(result).map(([key, value]) => (
