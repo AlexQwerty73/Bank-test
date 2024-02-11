@@ -1,49 +1,52 @@
 .cardCreationBlock {
    display: flex;
-   justify-content: space-around;
+   justify-content: center;
    align-items: center;
-   padding: 20px;
-   margin: 0 20px;
-   border-radius: 10px;
-   color: white;
+   padding: 40px;
+   margin-top: 50px;
+   margin-bottom: 50px;
+   border-radius: 12px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   color: #333;
 }
 
 .left {
+   flex: 1;
+   padding: 0 20px;
+   text-align: center;
+}
+
+.right {
+   flex: 1;
    display: flex;
-   flex-direction: column;
    justify-content: center;
+   align-items: center;
 }
 
 .title {
-   font-size: 24px;
-   font-weight: bold;
-   margin-bottom: 10px;
+   font-size: 2.5rem;
+   margin-bottom: 20px;
    color: #333;
 }
 
 .description {
-   font-size: 16px;
-   margin-bottom: 20px;
+   font-size: 1.5rem;
+   margin-bottom: 40px;
    color: #555;
 }
 
-
 .createCardButton {
-   background-color: #4caf50;
-   color: white;
-   padding: 10px 20px;
+   display: inline-block;
+   padding: 16px 32px;
+   border: none;
+   border-radius: 8px;
+   background-color: #007bff;
+   color: #fff;
+   font-size: 1.5rem;
    text-decoration: none;
-   border-radius: 5px;
-   font-size: 16px;
    transition: background-color 0.3s;
 }
 
 .createCardButton:hover {
-   background-color: #45a049;
-}
-
-.right {
-   display: flex;
-   align-items: center;
-   justify-content: center;
+   background-color: #0056b3;
 }
