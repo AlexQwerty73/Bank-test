@@ -4,19 +4,18 @@
    border-radius: 30px;
    max-width: 900px;
    margin: 0 auto;
-   display: flex;
-   justify-content: center;
-   align-items: center;
 }
 
 .calc_conainer {
    display: flex;
    flex-direction: column;
    margin: 0;
+   padding: 20px 50px;
 }
 
 .input_group {
    padding-right: 20px;
+   width: 45%;
 }
 
 
@@ -63,7 +62,7 @@ input[type="number"]::-webkit-outfer-spin-button {
    padding: 30px 20px 10px;
    font-size: 18px;
    width: 100%;
-   margin-bottom: 30px;
+   margin: 20px 0;
 }
 
 
@@ -88,6 +87,8 @@ input[type="number"]::-webkit-outfer-spin-button {
    color: red;
    font-size: 14px;
    margin-top: 5px;
+   position: absolute;
+   bottom: -50px;
 }
 
 .checkbox_custom {

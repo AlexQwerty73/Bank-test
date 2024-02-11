@@ -83,8 +83,7 @@ export const Calculator = () => {
                         onChange={(e) => setAmount(parseInt(e.target.value))}
                      />
                      <span className={styles.input_currency_span}>{currency}</span>
-                     {inputError && <p className={styles.error}>{inputError}</p>}
-
+                  {inputError && <p className={styles.error}>{inputError}</p>}
                   </label>
 
                   <label className={styles.input_label}>
@@ -122,7 +121,7 @@ export const Calculator = () => {
                            <h3>You will get</h3>
                            <h1>{!taxDeducted ? result.total : result.totalAfterTax} {currency}</h1>
                            <label>
-                              розрахувати з урахуванням податків
+                              Calculate with taxes
                               <input type="checkbox" className={styles.checkbox_custom} checked={taxDeducted} onChange={(e) => setTaxDeducted(e.target.checked)} />
                            </label>
                         </div>
@@ -130,22 +129,22 @@ export const Calculator = () => {
                         <hr className={styles.hr} />
 
                         <div className={styles.data_item}>
-                           <p>Вклали</p>
+                           <p>Invested</p>
                            <h3>{result.amount} {currency}</h3>
                         </div>
 
                         <div className={styles.data_item}>
-                           <p>Процентна ставка</p>
-                           <h3>{result.annualInterestRate} % річних</h3>
+                           <p>Interest Rate</p>
+                           <h3>{result.annualInterestRate} % annually</h3>
                         </div>
 
                         <div className={styles.data_item}>
-                           <p>Процентна ставка після сплати податків</p>
+                           <p>Interest Rate after taxes</p>
                            <h3>{result.annualInterestRateAfterTax} %</h3>
                         </div>
 
                         <div className={styles.data_item}>
-                           <p>Утримано податку</p>
+                           <p>Tax withheld</p>
                            <h3>{result.tax} {currency}</h3>
                         </div>
                      </>
