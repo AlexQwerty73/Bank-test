@@ -52,7 +52,7 @@ const ExchangeRateChart = ({ history, currency }) => {
       }
    };
 
-   return <canvas id="exchangeRateChart" width="600" height="250"></canvas>;
+   return <canvas id="exchangeRateChart" width="700%" height="300%"></canvas>;
 };
 
 export default ExchangeRateChart;

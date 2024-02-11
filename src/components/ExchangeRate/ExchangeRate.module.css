@@ -2,10 +2,10 @@
    display: flex;
    justify-content: space-around;
    align-items: center;
-   padding: 20px;
+   padding: 40px 10px;
    border: 1px solid #333;
    border-radius: 8px;
-   margin: 20px;
+   margin: 5px;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
    background-color: #222;
    color: #fff;
@@ -57,4 +57,9 @@
 .errorMessage {
    font-size: 18px;
    margin-top: 20px;
+}
+
+.detailsLink {
+   color: #aadd;
+   text-decoration: underline;
 }

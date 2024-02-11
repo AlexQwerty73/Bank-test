@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useGetExchangeRateApiQuery } from '../../redux';
 import styles from './ExchangeRate.module.css';
 import ExchangeRateChart from './ExchangeRateChart';
@@ -37,8 +38,8 @@ export const ExchangeRate = () => {
                   <p className={styles.exchangeRateValue}>Buy: {exchangeRate.eurToUah.buy}</p>
                   <p className={styles.exchangeRateValue}>Sell: {exchangeRate.eurToUah.sell}</p>
                </li>
-
             </ul>
+            <Link to="/exchange-rate-details" className={styles.detailsLink}>View all exchange rates</Link>
          </div>
          <div className={styles.rightPanel}>
             <ExchangeRateChart
