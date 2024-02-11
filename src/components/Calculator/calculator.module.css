@@ -1,91 +1,181 @@
 .calculator {
+   background: whitesmoke;
+   padding: 50px;
+   border-radius: 30px;
+   max-width: 900px;
+   margin: 0 auto;
    display: flex;
    justify-content: center;
-   align-items: flex-start;
-   padding: 50px 0;
+   align-items: center;
 }
 
-.input_group,
-.result_container {
-   width: 48%;
-   padding: 30px;
-   background-color: #fff;
-   border-radius: 15px;
-   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-   margin: 0 10px;
+.calc_conainer {
    display: flex;
    flex-direction: column;
+   margin: 0;
 }
 
-.input_group h2,
-.result_container h2 {
-   margin-bottom: 20px;
-   color: #333;
-   text-align: center;
+.input_group {
+   padding-right: 20px;
 }
 
-.range_input,
-.select_input {
-   margin-top: 10px;
-   margin-bottom: 20px;
-   width: calc(100% - 20px);
-   padding: 10px;
-   border-radius: 8px;
-   border: 1px solid #ccc;
-   background-color: #f5f5f5;
-   color: #333;
-   font-size: 16px;
+
+.content {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-around;
+   width: 100%;
+   margin: 0;
+}
+
+.header {
+   font-size: 40px;
+   font-weight: bold;
+   margin-bottom: 30px;
+}
+
+.input_label {
+   position: relative;
+}
+
+.input_amount_span,
+.input_currency_span,
+.due_date,
+.select_input_currency_span {
+   position: absolute;
+   color: rgba(0, 0, 0, 0.6);
+   font-size: 14px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outfer-spin-button {
+   -webkit-appearance: none;
+   margin: 0;
+}
+
+.number_input,
+.select_input,
+.input_range_box {
+
+   border: 1px solid rgb(0, 0, 0);
+   height: 64px;
+   border-radius: 10px;
+   padding: 30px 20px 10px;
+   font-size: 18px;
+   width: 100%;
+   margin-bottom: 30px;
+}
+
+
+.number_input:focus,
+.select_input:focus {
+   outline: none;
+   border: 1px solid green;
+}
+
+.input_amount_span,
+.select_input_currency_span {
+   top: -25px;
+   left: 20px;
+}
+
+.input_currency_span {
+   right: 20px;
+   top: -7px;
+}
+
+.error {
+   color: red;
+   font-size: 14px;
+   margin-top: 5px;
+}
+
+.checkbox_custom {
+   margin-left: 5px;
+}
+
+.input_range_box {
+   position: relative;
+   background: white;
+}
+
+.input_range_box::before {
+   position: absolute;
+   content: attr(data-min) ' mon.';
+   font-size: 12px;
+   bottom: -20px;
+   left: 0;
+}
+
+.input_range_box::after {
+   position: absolute;
+   content: attr(data-max)' mon.';
+   font-size: 12px;
+   bottom: -20px;
+   right: 0;
+}
+
+.due_date,
+.range_value,
+.range_input {
+   position: absolute;
+}
+
+.due_date {
+   top: 5px;
 }
 
 .range_input {
-   -webkit-appearance: none;
+   left: 0;
+   bottom: -5px;
    width: 100%;
-   height: 20px;
-   background: linear-gradient(to right, #00b4db, #0083b0);
+   height: 0;
+   -webkit-appearance: none;
+   appearance: none;
+   background: white;
    outline: none;
-   border-radius: 10px;
-   cursor: pointer;
 }
 
 .range_input::-webkit-slider-thumb {
    -webkit-appearance: none;
    appearance: none;
-   width: 30px;
-   height: 30px;
+   width: 15px;
+   height: 15px;
+   background: rgb(255, 255, 255);
+   border: 3.5px solid red;
    border-radius: 50%;
-   background: #fff;
-   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
    cursor: pointer;
+   margin-top: -10px;
 }
 
-.range_input::-moz-range-thumb {
-   width: 30px;
-   height: 30px;
-   border-radius: 50%;
-   background: #fff;
-   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-   cursor: pointer;
+
+
+
+
+
+.result_container {
+   padding-left: 20px;
 }
 
-.select_input {
-   cursor: pointer;
+.total h3 {
+   font-size: 24px;
 }
 
-.checkbox_label {
-   display: flex;
-   align-items: center;
+.total h1 {
+   font-size: 35px;
+}
+
+.total label {
    margin-bottom: 20px;
-}
-
-.result_item {
-   margin-top: 15px;
-   color: #333;
+   display: flex;
+   justify-content: center;
+   align-items: center;
 }
 
 .checkbox_custom {
    margin-left: 10px;
-   width: 24px;
-   height: 24px;
+   width: 20px;
+   height: 20px;
    position: relative;
    appearance: none;
    cursor: pointer;
@@ -115,4 +205,17 @@
 
 .checkbox_custom:checked::after {
    opacity: 1;
+}
+
+.hr {
+   margin-bottom: 20px;
+}
+
+.data_item {
+   margin-bottom: 10px;
+}
+
+.total label,
+.data_item p {
+   color: rgba(0, 0, 0, 0.6);
 }
