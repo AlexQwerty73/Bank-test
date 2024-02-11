@@ -33,19 +33,21 @@ export const CardTransactionsPage = () => {
    };
 
    return (
-      <div className={styles.cardTransactionsPage}>
-         <h2>Card Transactions</h2>
-         <p>Card Number: {card?.number}</p>
-         <ul>
-            {card[0]?.history?.map(transaction => (
-               <li key={transaction.date} onClick={() => handleTransactionClick(transaction)} className={styles.transaction}>
-                  <div>Date: {formatDate(transaction.date)}</div>
-                  <div>Amount: {transaction.amount}</div>
-               </li>
-            ))}
-         </ul>
+      <div className="container">
+         <div className={styles.cardTransactionsPage}>
+            <h2>Card Transactions</h2>
+            <p>Card Number: {card?.number}</p>
+            <ul>
+               {card[0]?.history?.map(transaction => (
+                  <li key={transaction.date} onClick={() => handleTransactionClick(transaction)} className={styles.transaction}>
+                     <div>Date: {formatDate(transaction.date)}</div>
+                     <div>Amount: {transaction.amount}</div>
+                  </li>
+               ))}
+            </ul>
 
-         {selectedTransaction && <SelectedTransaction card={card} selectedTransaction={selectedTransaction} handleCloseTransaction={handleCloseTransaction} />}
+            {selectedTransaction && <SelectedTransaction card={card} selectedTransaction={selectedTransaction} handleCloseTransaction={handleCloseTransaction} />}
+         </div>
       </div>
    );
 };
