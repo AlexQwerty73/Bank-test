@@ -1,6 +1,6 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { CreateUserForm, Layout } from './components/';
-import { CardPage, CardTransactionsPage, CardsPage, CreateCardPage, HomePage, LoginPage, NotFoundPage, TransactionsPage, UserProfilePage } from './pages';
+import { CardPage, CardTransactionsPage, CardsPage, CreateCardPage, ExchangeRatePage, HomePage, LoginPage, NotFoundPage, TransactionsPage, UserProfilePage } from './pages';
 
 const App = () => {
   return (
@@ -14,13 +14,14 @@ const App = () => {
           <Route index element={<HomePage />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='create-user/' element={<CreateUserForm />} />
+          <Route path='exchange-rate/' element={<ExchangeRatePage />} />
 
           <Route path=':userId/'>
 
             <Route path='create-card/' element={<CreateCardPage />} />
             <Route path='profile/' element={<UserProfilePage />} />
             <Route path='transactions/'>
-              <Route index element={<TransactionsPage />}/>
+              <Route index element={<TransactionsPage />} />
               <Route path=':cardNumber/' element={<CardTransactionsPage />} />{/*  */}
             </Route>
 

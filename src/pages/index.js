@@ -8,3 +8,4 @@ export * from './CreateCardPage';
 export * from './CreateUserPage';
 export * from './TransactionsPage';
 export * from './CardTransactionsPage';
+export * from './ExchangeRatePage';

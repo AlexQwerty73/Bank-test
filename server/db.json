@@ -1,6 +1,7 @@
 {
   "exchangeRate": {
     "usdToUah": {
+    "name":"USDTOUAH",
       "buy": 37.3,
       "sell": 37.8,
       "history": [
@@ -127,6 +128,7 @@
       ]
     },
     "uahToUsd": {
+      "name":"UAHTOUSD",
       "buy": 0.0265,
       "sell": 0.0275,
       "history": [
@@ -163,6 +165,7 @@
       ]
     },
     "eurToUah": {
+      "name":"EURTOUAH",
       "buy": 41.15,
       "sell": 40.65,
       "history": [
@@ -199,6 +202,7 @@
       ]
     },
     "uahToEur": {
+      "name":"UAHTOEUR",
       "buy": 0.0245,
       "sell": 0.0255,
       "history": [
@@ -235,6 +239,7 @@
       ]
     },
     "eurToUsd": {
+      "name":"EURTOUSD",
       "buy": 0.95,
       "sell": 0.89,
       "history": [
@@ -271,6 +276,7 @@
       ]
     },
     "usdToEur": {
+      "name":"USDTOEUR",
       "buy": 1.1,
       "sell": 1.15,
       "history": [
@@ -450,7 +456,7 @@
           "date": "2024-04-21T09:13:00Z",
           "type": "deposit",
           "amount": "50",
-          "description": "Deposit from user",
+          "description": "Deposit from user2e2e2",
           "location": ""
         },
         {
