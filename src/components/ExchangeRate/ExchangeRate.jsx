@@ -8,7 +8,7 @@ import { findRecentData } from '../../utils';
 export const ExchangeRate = () => {
    const [selectedCurrency, setSelectedCurrency] = useState('usdToUah');
    const { data: exchangeRate, error, isLoading } = useGetExchangeRateApiQuery();
-   const filteredHistory = findRecentData(exchangeRate[selectedCurrency].history, '90');
+   let filteredHistory = [];
 
    if (isLoading) {
       return <p className={styles.loadingMessage}>Loading...</p>;
@@ -17,6 +17,10 @@ export const ExchangeRate = () => {
    if (error) {
       console.error('Error fetching exchange rates:', error);
       return <p className={styles.errorMessage}>Error: {error.message}</p>;
+   }
+
+   if (exchangeRate && exchangeRate[selectedCurrency] && exchangeRate[selectedCurrency].history) {
+      filteredHistory = findRecentData(exchangeRate[selectedCurrency].history, '90');
    }
 
    return (
@@ -29,16 +33,24 @@ export const ExchangeRate = () => {
                   onClick={() => setSelectedCurrency('usdToUah')}
                >
                   <h3 className={styles.currencyPair}>USD &#8646; UAH</h3>
-                  <p className={styles.exchangeRateValue}>Buy: {exchangeRate.usdToUah.buy}</p>
-                  <p className={styles.exchangeRateValue}>Sell: {exchangeRate.usdToUah.sell}</p>
+                  {exchangeRate && exchangeRate.usdToUah && (
+                     <>
+                        <p className={styles.exchangeRateValue}>Buy: {exchangeRate.usdToUah.buy}</p>
+                        <p className={styles.exchangeRateValue}>Sell: {exchangeRate.usdToUah.sell}</p>
+                     </>
+                  )}
                </li>
                <li
                   className={styles.exchangeRateItem}
                   onClick={() => setSelectedCurrency('eurToUah')}
                >
                   <h3 className={styles.currencyPair}>EUR &#8646; UAH</h3>
-                  <p className={styles.exchangeRateValue}>Buy: {exchangeRate.eurToUah.buy}</p>
-                  <p className={styles.exchangeRateValue}>Sell: {exchangeRate.eurToUah.sell}</p>
+                  {exchangeRate && exchangeRate.eurToUah && (
+                     <>
+                        <p className={styles.exchangeRateValue}>Buy: {exchangeRate.eurToUah.buy}</p>
+                        <p className={styles.exchangeRateValue}>Sell: {exchangeRate.eurToUah.sell}</p>
+                     </>
+                  )}
                </li>
             </ul>
             <Link to="/exchange-rate" className={styles.detailsLink}>View all exchange rates</Link>

@@ -56,7 +56,7 @@ export const Calculator = () => {
 
       setResult({
          amount: amount,
-         profit: interest.toFixed(2),
+         profit: interest.toFixed(2) ,
          annualInterestRate: interestRate.toFixed(2),
          annualInterestRateAfterTax: (interestRate * 0.8).toFixed(2),
          total: total.toFixed(2),

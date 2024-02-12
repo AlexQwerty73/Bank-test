@@ -1,5 +1,4 @@
 export const findRecentData = (history, days) => {
-   console.log(days);
    if (days === 'all') {
       return [...history].sort((a, b) => new Date(a.date) - new Date(b.date));
    }
