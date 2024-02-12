@@ -69,10 +69,10 @@ export const ExchangeRatesSection = ({ data }) => {
                      <option value={'all'}>All</option>
                   </select>
                   <ul className={styles.view}>
-                     <li className={styles.view__item}>
+                     <li className={`${styles.view__item} ${viewType === 'table' ? styles.active : ''}`}>
                         <button onClick={() => setViewType('table')}>Table</button>
                      </li>
-                     <li className={styles.view__item}>
+                     <li className={`${styles.view__item} ${viewType === 'graph' ? styles.active : ''}`}>
                         <button onClick={() => setViewType('graph')}>Graph</button>
                      </li>
                   </ul>
@@ -83,7 +83,7 @@ export const ExchangeRatesSection = ({ data }) => {
                <div className={styles.content}>
                   <div className={styles.table}>
                      {viewType === 'graph' ? (
-                        <ExchangeRateChart width='1000px' height='500px' history={findRecentData(data[selectedExchangeCurrency]?.history || [], selectedDays)} currency={selectedExchangeCurrency} />
+                        <ExchangeRateChart width='900px' height='600px' history={findRecentData(data[selectedExchangeCurrency]?.history || [], selectedDays)} currency={selectedExchangeCurrency} />
                      ) : (
                         renderTable(data[selectedExchangeCurrency])
                      )}
