@@ -1,8 +1,38 @@
 import React, { useState } from 'react';
 import styles from './ExchangeRatesSection.module.css';
+import { formatDateTime } from '../../utils';
 
 export const ExchangeRatesSection = ({ data }) => {
-   const [selectedExchangeCurrency, setSelectedExchangeCurrency] = useState('uahToUsd');
+   const [selectedExchangeCurrency, setSelectedExchangeCurrency] = useState('usdToUah');
+   const [selectedDays, setSelectedDays] = useState(7);
+
+   const handleDaysChange = (event) => {
+      setSelectedDays(parseInt(event.target.value));
+   }
+
+   const findRecentData = (history) => {
+      if (selectedDays === 'all') return history;
+
+      const today = new Date().toISOString().split('T')[0];
+      let newHistory = [];
+      let currentDate = new Date(today);
+
+      const maxDays = history.length;
+
+      do {
+         const foundDay = history.find(day => day.date === currentDate.toISOString().split('T')[0]);
+         if (foundDay) {
+            newHistory.push(foundDay);
+         }
+         currentDate.setDate(currentDate.getDate() - 1);
+      } while (newHistory.length < parseInt(selectedDays) && newHistory.length < maxDays);
+
+      return newHistory;
+   }
+
+
+
+
 
    const exchangeRateItem = ([key, exchangeCurrency]) => {
       const currencyPair = exchangeCurrency.name.split('TO');
@@ -15,8 +45,9 @@ export const ExchangeRatesSection = ({ data }) => {
          </li>);
    };
 
-   const renderTabel = ([key, exchangeCurrency]) => {
+   const renderTable = ([key, exchangeCurrency]) => {
       const history = exchangeCurrency.history;
+      const recentData = findRecentData(history);
 
       return (
          <table>
@@ -27,9 +58,9 @@ export const ExchangeRatesSection = ({ data }) => {
                   <td>Sell</td>
                </tr>
                {
-                  history.map((day, i) => (
+                  recentData.map((day, i) => (
                      <tr key={i}>
-                        <td>{day.date}</td>
+                        <td>{formatDateTime(day.date)}</td>
                         <td>{day.buy}</td>
                         <td>{day.sell}</td>
                      </tr>
@@ -40,12 +71,22 @@ export const ExchangeRatesSection = ({ data }) => {
       )
    }
 
+
    return (
       <div className={styles.exchangeRatesSection}>
          <div className='container'>
 
             <div className={styles.exchangeRates}>
                <div className={styles.sideBar}>
+                  <select className={styles.daysSelect} onChange={handleDaysChange}>
+                     <option value={7}>Last 7 days</option>
+                     <option value={10}>Last 10 days</option>
+                     <option value={30}>Last 30 days</option>
+                     <option value={90}>Last 90 days</option>
+                     <option value={180}>Last 180 days</option>
+                     <option value={365}>Last year</option>
+                     <option value={'all'}>All</option>
+                  </select>
                   <ul className={styles.view}>
                      <li className={styles.view__item}><button>Table</button></li>
                      <li className={styles.view__item}><button>Graph</button></li>
@@ -59,7 +100,7 @@ export const ExchangeRatesSection = ({ data }) => {
                <div className={styles.content}>
                   <div className={styles.table}>
                      {
-                        renderTabel(Object.entries(data).find(([key]) => key === selectedExchangeCurrency))
+                        renderTable(Object.entries(data).find(([key]) => key === selectedExchangeCurrency))
                      }
                   </div>
                </div>
