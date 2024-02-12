@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import { useGetExchangeRateApiQuery } from '../../redux';
 import styles from './ExchangeRate.module.css';
 import ExchangeRateChart from './ExchangeRateChart';
+import { findRecentData } from '../../utils';
 
 export const ExchangeRate = () => {
    const [selectedCurrency, setSelectedCurrency] = useState('usdToUah');
    const { data: exchangeRate, error, isLoading } = useGetExchangeRateApiQuery();
+   const filteredHistory = findRecentData(exchangeRate[selectedCurrency].history, '90');
 
    if (isLoading) {
       return <p className={styles.loadingMessage}>Loading...</p>;
@@ -39,11 +41,11 @@ export const ExchangeRate = () => {
                   <p className={styles.exchangeRateValue}>Sell: {exchangeRate.eurToUah.sell}</p>
                </li>
             </ul>
-            <Link to="/exchange-rate-details" className={styles.detailsLink}>View all exchange rates</Link>
+            <Link to="/exchange-rate" className={styles.detailsLink}>View all exchange rates</Link>
          </div>
          <div className={styles.rightPanel}>
             <ExchangeRateChart
-               history={exchangeRate[selectedCurrency].history}
+               history={filteredHistory}
                currency={selectedCurrency}
             />
          </div>

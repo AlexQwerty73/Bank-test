@@ -1,32 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './ExchangeRatesSection.module.css';
-import { formatDateTime } from '../../utils';
+import { findRecentData, formatDateTime } from '../../utils';
+import ExchangeRateChart from '.././ExchangeRate/ExchangeRateChart';
 
 export const ExchangeRatesSection = ({ data }) => {
    const [selectedExchangeCurrency, setSelectedExchangeCurrency] = useState('usdToUah');
    const [selectedDays, setSelectedDays] = useState('7');
+   const [viewType, setViewType] = useState('table');
+
+   useEffect(() => {
+      console.log(selectedDays);
+   }, [selectedDays]);
 
    const handleDaysChange = (event) => {
-      setSelectedDays(event.target.value);
-   }
-
-   const findRecentData = (history) => {
-      if (selectedDays === 'all') {
-         return [...history].sort((a, b) => new Date(b.date) - new Date(a.date));
-      }
-
-      const endDate = new Date();
-      const startDate = new Date();
-      startDate.setDate(endDate.getDate() - parseInt(selectedDays) + 1);
-
-      const recentData = history.filter(day => {
-         const dayDate = new Date(day.date);
-         return dayDate >= startDate && dayDate <= endDate;
-      });
-
-      return recentData.sort((a, b) => new Date(b.date) - new Date(a.date));
-   }
-
+      const days = event.target.value;
+      setSelectedDays(days);
+   };
 
    const exchangeRateItem = ([key, exchangeCurrency]) => {
       const currencyPair = exchangeCurrency.name.split('TO');
@@ -40,9 +29,9 @@ export const ExchangeRatesSection = ({ data }) => {
       );
    };
 
-   const renderTable = ([key, exchangeCurrency]) => {
+   const renderTable = (exchangeCurrency) => {
       const history = exchangeCurrency.history;
-      const recentData = findRecentData(history);
+      const recentData = findRecentData(history, selectedDays).reverse();
 
       return (
          <table>
@@ -52,19 +41,18 @@ export const ExchangeRatesSection = ({ data }) => {
                   <td>Buy</td>
                   <td>Sell</td>
                </tr>
-               {
-                  recentData.map((day, i) => (
-                     <tr key={i}>
-                        <td>{formatDateTime(day.date)}</td>
-                        <td>{day.buy}</td>
-                        <td>{day.sell}</td>
-                     </tr>
-                  ))
-               }
+               {recentData.map((day, i) => (
+                  <tr key={i}>
+                     <td>{formatDateTime(day.date)}</td>
+                     <td>{day.buy}</td>
+                     <td>{day.sell}</td>
+                  </tr>
+               ))}
             </tbody>
          </table>
       );
    };
+
 
    return (
       <div className={styles.exchangeRatesSection}>
@@ -81,16 +69,24 @@ export const ExchangeRatesSection = ({ data }) => {
                      <option value={'all'}>All</option>
                   </select>
                   <ul className={styles.view}>
-                     <li className={styles.view__item}><button>Table</button></li>
-                     <li className={styles.view__item}><button>Graph</button></li>
+                     <li className={styles.view__item}>
+                        <button onClick={() => setViewType('table')}>Table</button>
+                     </li>
+                     <li className={styles.view__item}>
+                        <button onClick={() => setViewType('graph')}>Graph</button>
+                     </li>
                   </ul>
                   <ul className={styles.exchange}>
-                     {Object.entries(data).map(exchangeRate => exchangeRateItem(exchangeRate))}
+                     {Object.entries(data).map(exchangeRateItem)}
                   </ul>
                </div>
                <div className={styles.content}>
                   <div className={styles.table}>
-                     {renderTable(Object.entries(data).find(([key]) => key === selectedExchangeCurrency))}
+                     {viewType === 'graph' ? (
+                        <ExchangeRateChart width='1000px' height='500px' history={findRecentData(data[selectedExchangeCurrency]?.history || [], selectedDays)} currency={selectedExchangeCurrency} />
+                     ) : (
+                        renderTable(data[selectedExchangeCurrency])
+                     )}
                   </div>
                </div>
             </div>

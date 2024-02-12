@@ -7,3 +7,4 @@ export * from './formatDateTime';
 export * from './generateCVV';
 export * from './generateCardNumber';
 export * from './generateExpiryDate';
+export * from './findRecentData';

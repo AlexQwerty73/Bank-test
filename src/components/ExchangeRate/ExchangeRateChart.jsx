@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 
-const ExchangeRateChart = ({ history, currency }) => {
+const ExchangeRateChart = ({ history, currency, width = '700%', height = '300%' }) => {
    const chartRef = useRef(null);
 
    useEffect(() => {
@@ -52,7 +52,7 @@ const ExchangeRateChart = ({ history, currency }) => {
       }
    };
 
-   return <canvas id="exchangeRateChart" width="700%" height="300%"></canvas>;
+   return <canvas id="exchangeRateChart" width={width} height={height}></canvas>;
 };
 
 export default ExchangeRateChart;
