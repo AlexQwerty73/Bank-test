@@ -83,7 +83,7 @@ export const Calculator = () => {
                         onChange={(e) => setAmount(parseInt(e.target.value))}
                      />
                      <span className={styles.input_currency_span}>{currency}</span>
-                  {inputError && <p className={styles.error}>{inputError}</p>}
+                     {inputError && <p className={styles.error}>{inputError}</p>}
                   </label>
 
                   <label className={styles.input_label}>

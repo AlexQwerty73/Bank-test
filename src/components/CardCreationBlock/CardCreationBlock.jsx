@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './CardCreationBlock.module.css';
-import { Card } from '../commons';
+import { Card, Img } from '../commons';
 import { loadFromLocalStorage } from '../../utils';
 
 export const CardCreationBlock = () => {
@@ -26,7 +26,9 @@ export const CardCreationBlock = () => {
          </div>
 
          <div className={styles.right}>
-            <Card card={card} />
+            <div className={styles.img}>
+               <Img folder='home' img='cards-v4.png' />
+            </div>
          </div>
       </div>
    );
