@@ -23,7 +23,7 @@
 }
 
 .heroContent h2 {
-   font-size: 3rem;
+   font-size: 3.5rem;
    font-weight: bold;
    margin-bottom: 2%;
    font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -40,9 +40,9 @@
    padding: 25px 40px;
    font-size: 20px;
    border-radius: 50px;
-   background: rgb(17, 119, 17);
+   background: rgb(23, 158, 23);
    color: whitesmoke;
-   box-shadow: 0, 0, 10px, 5px rgb(163, 220, 77);
+   box-shadow: 0 0 5px rgb(23, 158, 23);
    font-weight: bold;
    border: none;
    transition: .5s;
@@ -50,7 +50,7 @@
 
 .btn:hover {
    cursor: pointer;
-   background: rgb(163, 220, 77);
-   color: #222;
+   background: rgb(153, 255, 0);
+   color: black;
    transform: scale(0.95);
 }
