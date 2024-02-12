@@ -1,7 +1,7 @@
 {
   "exchangeRate": {
     "usdToUah": {
-    "name":"USDTOUAH",
+      "name": "USDTOUAH",
       "buy": 37.3,
       "sell": 37.8,
       "history": [
@@ -101,6 +101,11 @@
           "sell": 37
         },
         {
+          "date": "2020-01-19",
+          "buy": 28,
+          "sell": 27.8
+        },
+        {
           "date": "2024-01-20",
           "buy": 37.1,
           "sell": 36.2
@@ -148,7 +153,7 @@
       ]
     },
     "uahToUsd": {
-      "name":"UAHTOUSD",
+      "name": "UAHTOUSD",
       "buy": 0.0265,
       "sell": 0.0275,
       "history": [
@@ -185,7 +190,7 @@
       ]
     },
     "eurToUah": {
-      "name":"EURTOUAH",
+      "name": "EURTOUAH",
       "buy": 41.15,
       "sell": 40.65,
       "history": [
@@ -222,7 +227,7 @@
       ]
     },
     "uahToEur": {
-      "name":"UAHTOEUR",
+      "name": "UAHTOEUR",
       "buy": 0.0245,
       "sell": 0.0255,
       "history": [
@@ -259,7 +264,7 @@
       ]
     },
     "eurToUsd": {
-      "name":"EURTOUSD",
+      "name": "EURTOUSD",
       "buy": 0.95,
       "sell": 0.89,
       "history": [
@@ -296,7 +301,7 @@
       ]
     },
     "usdToEur": {
-      "name":"USDTOEUR",
+      "name": "USDTOEUR",
       "buy": 1.1,
       "sell": 1.15,
       "history": [
