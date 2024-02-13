@@ -12,8 +12,16 @@ export const CardData = ({ card }) => {
    const [editData, setEditData] = useState({ cvv, pin });
 
    const onClickHandler = (label) => {
-      setIsEdit({ ...isEdit, [label]: !isEdit[label] })
-      updateCard({ ...card, [label]: editData[label] }).unwrap();
+      setIsEdit({ ...isEdit, [label]: !isEdit[label] });
+      if (label === 'cvv') {
+         const isValidCvv = editData.cvv.length === 3 && /^\d{3}$/.test(editData.cvv);
+         if (!isValidCvv) {
+            setEditData({ ...editData, cvv });
+            console.log('CVV should have exactly 3 numeric digits');
+            return;
+         }
+         if (cvv !== editData.cvv || pin !== editData.pin) updateCard({ ...card, [label]: editData[label] }).unwrap();
+      }
    };
 
    const onVisibleChange = () => {
