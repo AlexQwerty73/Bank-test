@@ -7,8 +7,8 @@ import { Card, EditBtn } from '../commons';
 export const CardData = ({ card }) => {
    const { number, expiryDate, cvv, balance, type, currency, pin } = card;
    const [updateCard] = useUpdateCardMutation();
-   const [isCvvEdit, setIsCvvEdit] = useState(false);
-   const [cvvEdit, setCvvEdit] = useState(cvv);
+   const [isEdit, setIsEdit] = useState({ cvv: false, pin: false })
+   const [editData, setEditData] = useState({ cvv, pin })
 
    const onClickHandler = () => {
       setIsCvvEdit(!isCvvEdit);
@@ -21,7 +21,9 @@ export const CardData = ({ card }) => {
       if (cvv !== cvvEdit) updateCard({ ...card, cvv: cvvEdit }).unwrap();
    };
 
-   const renderDataItem = (label, value, isEditable = false) => (
+
+
+   const renderDataItem = (label, value, isEditable = false, isShow = true) => (
       <div className={styles.data__item}>
          <div className={styles.item__data}>
             <h3 className={styles.h3}>{label}</h3>
