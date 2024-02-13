@@ -5,7 +5,7 @@ import { useUpdateCardMutation } from '../../redux';
 import { Card, EditBtn } from '../commons';
 
 export const CardData = ({ card }) => {
-   const { number, expiryDate, cvv, balance, type, currency } = card;
+   const { number, expiryDate, cvv, balance, type, currency, pin } = card;
    const [updateCard] = useUpdateCardMutation();
    const [isCvvEdit, setIsCvvEdit] = useState(false);
    const [cvvEdit, setCvvEdit] = useState(cvv);
@@ -44,9 +44,9 @@ export const CardData = ({ card }) => {
                {renderDataItem('Number:', convertToNumberCartFormat(number))}
                {renderDataItem('Expiry date:', expiryDate.split('-').reverse().join(' '))}
                {renderDataItem('CVV:', cvv, true)}
-               {renderDataItem('Balance:', balance)}
-               {renderDataItem('Currency:', currency)}
+               {renderDataItem('Balance:', `${balance} ${currency}`)}
                {renderDataItem('Type:', type)}
+               {renderDataItem('Pin:', pin)}
             </div>
          </div>
          <div className={styles.rightPart}>
