@@ -1,0 +1,47 @@
+.faq {
+   padding: 100px 20px;
+}
+
+.title {
+   font-size: 24px;
+   font-weight: bold;
+   color: #333;
+   margin-bottom: 20px;
+}
+
+.faqList {
+   display: grid;
+   grid-gap: 20px;
+}
+
+.dialog {
+   display: flex;
+   flex-direction: column;
+   max-width: 70%;
+   margin: 20px auto;
+   opacity: 0;
+   transition: opacity 0.5s ease;
+}
+
+.visible {
+   opacity: 1;
+}
+
+
+.cloud {
+   background-color: #f0f0f0;
+   border-radius: 15px;
+   padding: 15px;
+   margin-bottom: 15px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   font-size: 16px;
+   color: #333;
+}
+
+.cloud:nth-child(odd) {
+   align-self: flex-start;
+}
+
+.cloud:nth-child(even) {
+   align-self: flex-end;
+}
