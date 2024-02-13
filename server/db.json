@@ -341,7 +341,7 @@
   "deposit": {
     "minMonths": 3,
     "maxMonths": 24,
-    "tax": 0.2,
+    "tax": 0.19,
     "UAH": {
       "minAmount": 1000,
       "maxAmount": 10000000,

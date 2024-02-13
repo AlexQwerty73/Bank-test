@@ -50,7 +50,7 @@ export const Calculator = () => {
          return;
       }
 
-      const interest = (amount * interestRate) / 100 / 12 * Number(months);
+      const interest = ((amount * (interestRate / 100)) / 12) * Number(months);
       const total = amount + interest;
       const tax = interest * depositData.tax;
 
