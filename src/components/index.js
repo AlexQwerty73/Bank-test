@@ -13,3 +13,4 @@ export * from './CreateUserForm';
 export * from './SelectedTransaction';
 export * from './Calculator';
 export * from './ExchangeRatesSection';
+export * from './SecurityInfo';
