@@ -473,7 +473,7 @@
       "userId": "23rf",
       "number": "0000111122223333",
       "expiryDate": "2024-12-31",
-      "cvv": "114",
+      "cvv": "356",
       "pin": "1111",
       "balance": 1000,
       "type": "VISA",
@@ -565,6 +565,19 @@
           "location": ""
         }
       ]
+    },
+    {
+      "id": "d8f8",
+      "userId": "23rf",
+      "number": "7293627519387125",
+      "expiryDate": "2029-02-31",
+      "cvv": "999",
+      "pin": "0874",
+      "balance": 0,
+      "type": "VISA",
+      "currency": "UAH",
+      "category": "debit",
+      "history": []
     }
   ]
 }
