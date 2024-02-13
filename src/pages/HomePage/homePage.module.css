@@ -9,6 +9,6 @@
 }
 
 .bg {
-   background: rgb(97, 67, 133);
-   background: linear-gradient(120deg, rgba(97, 67, 133, 1) 0%, rgba(81, 99, 149, 1) 100%);
+   background: rgb(103, 5, 155);
+   background: linear-gradient(150deg, rgba(103, 5, 155, 1) 10%, rgba(0, 25, 131, 1) 100%);
 }
