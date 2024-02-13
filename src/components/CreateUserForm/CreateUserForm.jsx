@@ -44,7 +44,6 @@ export const CreateUserForm = () => {
       <form className={styles.createForm} onSubmit={handleSubmit}>
          {Object.entries(formData).map(([fieldName, fieldValue]) => (
             <label key={fieldName} className={styles.label}>
-               {fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}:
                <input
                   className={styles.input}
                   type={fieldName === 'password' ? 'password' : 'text'}
@@ -53,6 +52,7 @@ export const CreateUserForm = () => {
                   onChange={handleInputChange}
                   required
                />
+               <h3> {fieldName.charAt(0).toUpperCase() + fieldName.slice(1)} </h3>
             </label>
          ))}
          <button className={styles.button} type="submit">Create User</button>
