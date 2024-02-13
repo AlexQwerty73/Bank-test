@@ -24,8 +24,13 @@ export const CardData = ({ card }) => {
       }
    };
 
-   const onVisibleChange = () => {
-      setIsVisible({ ...isVisible, pin: !isVisible.pin });
+   const onVisibleChange = (label) => {
+      if (isVisible[label] === false) {
+         setTimeout(() => {
+            setIsVisible({ ...isVisible, [label]: false });
+         }, 5000);
+      }
+      setIsVisible({ ...isVisible, [label]: !isVisible[label] });
    };
 
 
@@ -42,7 +47,7 @@ export const CardData = ({ card }) => {
             </div>
             <div className={styles.btns}>
                <div className={styles.btn}>
-                  {isShow && <VisibleBtn isVisible={isVisible.pin} onClick={onVisibleChange} />}
+                  {isShow && <VisibleBtn isVisible={isVisible.pin} onClick={() => onVisibleChange(label.toLowerCase())} />}
                </div>
                <div className={styles.btn}>
                   {isEditable && <EditBtn isEdit={isEdit[label.toLowerCase()]} onClick={() => onClickHandler(label.toLowerCase())} />}
