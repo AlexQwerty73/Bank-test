@@ -5,7 +5,11 @@ import styles from './homePage.module.css';
 export const HomePage = () => {
    return (
       <div className='homePage'>
-         <HeroSection />
+         <div className={styles.bg}>
+            <div className="container">
+               <HeroSection />
+            </div>
+         </div>
 
          <div className={styles.bg1}>
             <div className="container">

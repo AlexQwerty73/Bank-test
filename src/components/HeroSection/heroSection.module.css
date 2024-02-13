@@ -1,51 +1,38 @@
 .heroSection {
-   position: relative;
    display: flex;
    align-items: center;
-   justify-content: center;
-   text-align: center;
-   color: #fff;
-   overflow: hidden;
-   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
-
-   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url('../../../public/imgs/home/home-mbg.jpg');
-
-   background-size: cover;
-   background-position: center;
-   background-repeat: no-repeat;
-   overflow: hidden;
+   justify-content: space-around;
+   padding: 250px 20px;
+   border-bottom: 1px solid #ddd;
+   color: white;
 }
 
 .heroContent {
-   margin-top: 15%;
-   padding: 100px;
-   z-index: 1;
+   max-width: 550px;
 }
 
 .heroContent h2 {
    font-size: 3.5rem;
    font-weight: bold;
-   margin-bottom: 2%;
    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+   margin: 0 0 30px;
 }
 
 .heroContent p {
    font-size: 1.2rem;
-   margin-bottom: 5%;
+   margin-bottom: 50px;
 }
 
 .btn {
-   margin-top: 10%;
-   margin-bottom: 30%;
    padding: 25px 40px;
    font-size: 20px;
    border-radius: 50px;
    background: rgb(23, 158, 23);
    color: whitesmoke;
-   box-shadow: 0 0 5px rgb(23, 158, 23);
    font-weight: bold;
    border: none;
-   transition: .5s;
+   transition: background-color 0.3s, color 0.3s, transform 0.3s;
 }
 
 .btn:hover {
@@ -53,4 +40,14 @@
    background: rgb(153, 255, 0);
    color: black;
    transform: scale(0.95);
+}
+
+.heroImageContainer {
+   max-width: 400px;
+   overflow: hidden;
+   position: relative;
+}
+
+.heroImage {
+   z-index: -1;
 }

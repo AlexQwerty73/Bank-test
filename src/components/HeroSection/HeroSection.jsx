@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './heroSection.module.css';
-import { Img } from '../commons';
 import { Link } from 'react-router-dom';
+import { Img } from '../commons';
 
 export const HeroSection = () => {
    return (
@@ -15,6 +15,9 @@ export const HeroSection = () => {
                   Create new account!
                </button>
             </Link>
+         </div>
+         <div className={styles.heroImageContainer}>
+            <Img folder='common' img='createAccount.png' />
          </div>
       </section>
    );
