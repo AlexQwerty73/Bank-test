@@ -9,35 +9,36 @@ const App = () => {
       <Routes>
 
         <Route path='/' element={<Layout />}>
-          <Route path="/null/*" element={<Navigate to="/login" />} />
 
           <Route index element={<HomePage />} />
-          <Route path='/login' element={<LoginPage />} />
-          <Route path='create-user/' element={<CreateUserForm />} />
           <Route path='exchange-rate/' element={<ExchangeRatePage />} />
 
           <Route path=':userId/'>
 
             <Route path='create-card/' element={<CreateCardPage />} />
             <Route path='profile/' element={<UserProfilePage />} />
+            
             <Route path='transactions/'>
               <Route index element={<TransactionsPage />} />
-              <Route path=':cardNumber/' element={<CardTransactionsPage />} />{/*  */}
+              <Route path=':cardNumber/' element={<CardTransactionsPage />} />
             </Route>
 
             <Route path='cards/'>
               <Route index element={<CardsPage />} />
               <Route path=':cardNumber/' element={<CardPage />} />
-
-              <Route path='*' element={<NotFoundPage />} />
             </Route>
 
-            <Route path='*' element={<NotFoundPage />} />
           </Route>
 
-
-          <Route path='*' element={<NotFoundPage />} />
         </Route>
+
+        <Route path='/'>
+          <Route path='create-user/' element={<CreateUserForm />} />
+          <Route path='login/' element={<LoginPage />} />
+          <Route path='null/*' element={<Navigate to='/login' />} />
+        </Route>
+
+        <Route path='*' element={<NotFoundPage />} />
 
       </Routes>
 
