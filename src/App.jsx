@@ -1,6 +1,6 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
-import { CreateUserForm, Layout } from './components/';
-import { CardPage, CardTransactionsPage, CardsPage, CreateCardPage, ExchangeRatePage, HomePage, LoginPage, NotFoundPage, TransactionsPage, UserProfilePage } from './pages';
+import { Layout } from './components/';
+import { CardPage, CardTransactionsPage, CardsPage, CreateCardPage, CreateUserPage, ExchangeRatePage, HomePage, LoginPage, NotFoundPage, TransactionsPage, UserProfilePage } from './pages';
 
 const App = () => {
   return (
@@ -17,7 +17,7 @@ const App = () => {
 
             <Route path='create-card/' element={<CreateCardPage />} />
             <Route path='profile/' element={<UserProfilePage />} />
-            
+
             <Route path='transactions/'>
               <Route index element={<TransactionsPage />} />
               <Route path=':cardNumber/' element={<CardTransactionsPage />} />
@@ -33,7 +33,7 @@ const App = () => {
         </Route>
 
         <Route path='/'>
-          <Route path='create-user/' element={<CreateUserForm />} />
+          <Route path='create-user/' element={<CreateUserPage />} />
           <Route path='login/' element={<LoginPage />} />
           <Route path='null/*' element={<Navigate to='/login' />} />
         </Route>

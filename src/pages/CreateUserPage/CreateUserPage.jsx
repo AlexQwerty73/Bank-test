@@ -1,10 +1,10 @@
 import React from 'react';
-import { CreateCardForm } from '../../components';
+import { CreateUserForm } from '../../components';
 
 export const CreateUserPage = () => {
    return (
       <div className='createUserPage'>
-         <CreateCardForm />
+         <CreateUserForm />
       </div>
    );
 };

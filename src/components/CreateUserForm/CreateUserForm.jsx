@@ -19,7 +19,10 @@ export const CreateUserForm = () => {
 
    const handleInputChange = (e) => {
       const { name, value } = e.target;
-      setFormData({ ...formData, [name]: value });
+      setFormData(prevData => ({
+         ...prevData,
+         [name]: value
+      }));
    };
 
    const handleSubmit = async (e) => {
@@ -39,78 +42,19 @@ export const CreateUserForm = () => {
 
    return (
       <form className={styles.createForm} onSubmit={handleSubmit}>
-         <label className={styles.label}>
-            Name:
-            <input
-               className={styles.input}
-               type="text"
-               name="name"
-               value={formData.name}
-               onChange={handleInputChange}
-               required
-            />
-         </label>
-
-         <label className={styles.label}>
-            Surname:
-            <input
-               className={styles.input}
-               type="text"
-               name="surname"
-               value={formData.surname}
-               onChange={handleInputChange}
-               required
-            />
-         </label>
-
-         <label className={styles.label}>
-            Email:
-            <input
-               className={styles.input}
-               type="email"
-               name="email"
-               value={formData.email}
-               onChange={handleInputChange}
-               required
-            />
-         </label>
-
-         <label className={styles.label}>
-            Password:
-            <input
-               className={styles.input}
-               type="password"
-               name="password"
-               value={formData.password}
-               onChange={handleInputChange}
-               required
-            />
-         </label>
-
-         <label className={styles.label}>
-            Address:
-            <input
-               className={styles.input}
-               type="text"
-               name="address"
-               value={formData.address}
-               onChange={handleInputChange}
-               required
-            />
-         </label>
-
-         <label className={styles.label}>
-            Phone:
-            <input
-               className={styles.input}
-               type="tel"
-               name="phone"
-               value={formData.phone}
-               onChange={handleInputChange}
-               required
-            />
-         </label>
-
+         {Object.entries(formData).map(([fieldName, fieldValue]) => (
+            <label key={fieldName} className={styles.label}>
+               {fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}:
+               <input
+                  className={styles.input}
+                  type={fieldName === 'password' ? 'password' : 'text'}
+                  name={fieldName}
+                  value={fieldValue}
+                  onChange={handleInputChange}
+                  required
+               />
+            </label>
+         ))}
          <button className={styles.button} type="submit">Create User</button>
       </form>
    );
