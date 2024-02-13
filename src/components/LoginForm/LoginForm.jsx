@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import s from './loginForm.module.css';
+import styles from './loginForm.module.css';
 import { saveToLocalStorage } from '../../utils';
 import { useUserByEmail } from '../../hooks/';
 import { getFormError } from './getFormError';
@@ -34,21 +34,21 @@ export const LoginForm = () => {
    };
 
    return (
-      <form className={s.loginForm}>
-         <div className={s.cross} onClick={() => navigate(-1)}>&#10540;</div>
-         <label className={s.label}>
+      <form className={styles.loginForm}>
+         <div className={styles.cross} onClick={() => navigate(-1)}>&#10540;</div>
+         <label className={styles.label}>
+            <input className={styles.input} type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
             <h2>Email:</h2>
-            <input className={s.input} type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
          </label>
-         <label className={s.label}>
+         <label className={styles.label}>
+            <input className={styles.input} type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
             <h2>Password:</h2>
-            <input className={s.input} type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
          </label>
-         <button className={s.btn} type="button" onClick={handleLogin}>
-            Увійти
+         <button className={styles.btn} type="button" onClick={handleLogin}>
+            Log in
          </button>
-         {error && <div className={s.errorWindow}>{error}</div>}
-         <Link to="/create-user" className={s.link}>Створити новий акаунт</Link>
+         {error && <div className={styles.errorWindow}>{error}</div>}
+         <Link to="/create-user" className={styles.link}>Create a new account</Link>
       </form>
    );
 };

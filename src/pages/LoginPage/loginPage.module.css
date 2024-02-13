@@ -1,8 +1,11 @@
 .loginPage {
-   position: fixed;
-   top: 0;
-   left: 0;
+   background: rgb(64, 86, 210);
+   background: linear-gradient(135deg, rgba(64, 86, 210, 1) 0%, rgb(185, 76, 161) 100%);
+
    width: 100vw;
    height: 100vh;
-   background: #000000ac;
+
+   display: flex;
+   justify-content: center;
+   align-items: center;
 }
