@@ -29,17 +29,16 @@
    font-size: 20px;
    border-radius: 50px;
    background: rgb(23, 158, 23);
+   border: 1px solid transparent;
    color: whitesmoke;
    font-weight: bold;
-   border: none;
    transition: background-color 0.3s, color 0.3s, transform 0.3s;
 }
 
 .btn:hover {
    cursor: pointer;
-   background: rgb(153, 255, 0);
-   color: black;
-   transform: scale(0.95);
+   background: transparent;
+   border: 1px solid silver;
 }
 
 .heroImageContainer {
