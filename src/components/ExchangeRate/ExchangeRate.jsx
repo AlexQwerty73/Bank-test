@@ -25,7 +25,7 @@ export const ExchangeRate = () => {
 
    return (
       <div className={styles.exchangeRateContainer}>
-         <div>
+         <div className={styles.leftPanel}>
             <h2 className={styles.exchangeRateTitle}>Exchange Rates</h2>
             <ul className={styles.exchangeRateList}>
                <li

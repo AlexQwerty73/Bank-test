@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import styles from './ExchangeRate.module.css';
 import Chart from 'chart.js/auto';
 
 const ExchangeRateChart = ({ history, currency, width = '700%', height = '300%' }) => {
