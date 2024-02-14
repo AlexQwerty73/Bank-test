@@ -19,16 +19,18 @@
    flex-direction: column;
    max-width: 70%;
    margin: 20px auto;
-   opacity: 0;
-   transition: opacity 0.5s ease;
 }
 
-.visible {
-   opacity: 1;
+.question {
+   transform: translate(-50%, 0);
 }
 
+.answer {
+   transform: translate(50%, 0);
+}
 
 .cloud {
+   opacity: 0;
    background-color: #f0f0f0;
    border-radius: 15px;
    padding: 15px;
@@ -36,6 +38,19 @@
    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
    font-size: 16px;
    color: #333;
+   transition: .5s ease;
+}
+
+.visible {
+   opacity: 1;
+}
+
+.answer.visible {
+   transform: translate(0, 0);
+}
+
+.question.visible {
+   transform: translate(0, 0);
 }
 
 .cloud:nth-child(odd) {

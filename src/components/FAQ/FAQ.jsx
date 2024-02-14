@@ -35,15 +35,23 @@ export const FAQ = () => {
 };
 
 const FAQItem = ({ question, answer }) => {
-   const [ref, inView] = useInView({
+   const [refQuestion, inQuestion] = useInView({
       triggerOnce: true,
-      threshold: 0.5
+      threshold: .5
+   });
+   const [refAnswer, inAnswer] = useInView({
+      triggerOnce: true,
+      threshold: .5
    });
 
    return (
-      <div ref={ref} className={`${styles.dialog} ${inView ? styles.visible : ''}`}>
-         <div className={styles.cloud}>{question}</div>
-         <div className={styles.cloud}>{answer}</div>
+      <div className={styles.dialog}>
+         <div ref={refQuestion} className={`${styles.cloud} ${styles.question} ${inQuestion ? styles.visible : ''}`}>
+            {question}
+         </div>
+         <div ref={refAnswer} className={`${styles.cloud} ${styles.answer} ${inAnswer ? styles.visible : ''}`}>
+            {answer}
+         </div>
       </div>
    );
 };
