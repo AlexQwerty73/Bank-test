@@ -18,7 +18,14 @@
    position: relative;
    margin-bottom: 50px;
    color: #333;
+   opacity: 0;
+   transition: .5s ease-in;
 }
+
+.visible {
+   opacity: 1;
+}
+
 
 .featureContent {
    display: flex;
