@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useGetCardByNumberQuery } from '../../redux';
 import styles from './CardTransactionsPage.module.css';
 import { SelectedTransaction } from '../../components';
+import { convertToNumberCartFormat } from '../../utils';
 
 const formatDate = (dateString) => {
    const date = new Date(dateString);
@@ -36,7 +37,7 @@ export const CardTransactionsPage = () => {
       <div className="container">
          <div className={styles.cardTransactionsPage}>
             <h2>Card Transactions</h2>
-            <p>Card Number: {card?.number}</p>
+            <p>Card Number: {convertToNumberCartFormat(cardNumber)}</p>
             <ul>
                {card[0]?.history?.map(transaction => (
                   <li key={transaction.date} onClick={() => handleTransactionClick(transaction)} className={styles.transaction}>
