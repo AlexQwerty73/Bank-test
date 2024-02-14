@@ -1,17 +1,6 @@
-.transactionsPage {
-   padding: 50px 0;
-   background-color: #f5f5f5;
-}
-
-.container {
-   max-width: 1200px;
-   margin: 0 auto;
-   padding: 0 15px;
-}
-
 .transactionsList {
    list-style: none;
-   padding: 0;
+   padding: 0 20px;
 }
 
 .transactionItem {
