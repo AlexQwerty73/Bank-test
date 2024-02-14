@@ -3,7 +3,6 @@
    color: #fff;
    padding: 1rem;
    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
-   /* margin-bottom: 50px; */
 }
 
 .transparentHeader {
@@ -52,6 +51,6 @@
    color: #fff;
 }
 
-.menu__item a.active {
-   color: #000000;
+.menu__item a:hover {
+   color: greenyellow;
 }

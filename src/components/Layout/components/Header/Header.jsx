@@ -8,10 +8,9 @@ export const Header = () => {
    const userId = loadFromLocalStorage('userId');
    const location = useLocation();
    const isHomePage = location.pathname === '/';
- 
+
    return (
-     <header className={`${styles.header} ${isHomePage ? styles.transparentHeader : ''}`}>
-     
+      <header className={`${styles.header} ${isHomePage ? styles.transparentHeader : ''}`}>
          <div className="container">
             <nav className={styles.nav}>
                <div className="leftPart">
@@ -19,10 +18,18 @@ export const Header = () => {
                </div>
                <div className={styles.rightPart}>
                   <ul className={styles.menu}>
-                     <li className={styles.menu__item}><NavLink to={`/${userId}/cards`}>Cards</NavLink></li>
-                     <li className={styles.menu__item}><NavLink to={`/${userId}/transactions`}>Transactions</NavLink></li>
-                     <li className={styles.menu__item}><NavLink to={`/${userId}/profile`}>Profile</NavLink></li>
-                     <li className={styles.menu__item}><NavLink to={`/login`}>Log in</NavLink></li>
+                     <li className={styles.menu__item}>
+                        <NavLink exact to={`/${userId}/cards`} activeClassName={styles.active}>Cards</NavLink>
+                     </li>
+                     <li className={styles.menu__item}>
+                        <NavLink to={`/${userId}/transactions`} activeClassName={styles.active}>Transactions</NavLink>
+                     </li>
+                     <li className={styles.menu__item}>
+                        <NavLink to={`/${userId}/profile`} activeClassName={styles.active}>Profile</NavLink>
+                     </li>
+                     <li className={styles.menu__item}>
+                        <NavLink to={`/login`} activeClassName={styles.active}>Log in</NavLink>
+                     </li>
                   </ul>
                </div>
             </nav>
