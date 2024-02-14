@@ -7,11 +7,6 @@
    margin: 50px auto;
 }
 
-.left {
-   flex: 1;
-   padding-right: 20px;
-}
-
 .title {
    font-size: 40px;
    font-weight: bold;
@@ -39,10 +34,28 @@
    background-color: #388e3c;
 }
 
+.left,
 .right {
+   opacity: 0;
    flex: 1;
+   transition: .5s ease-in-out;
+}
+
+.left {
+   transform: translate(-50%, 0);
+   padding-right: 20px;
+}
+
+.right {
+   transform: translate(50%, 0);
    display: flex;
    justify-content: flex-end;
+}
+
+.leftInView,
+.rightInView {
+   opacity: 1;
+   transform: translate(0, 0);
 }
 
 .img {

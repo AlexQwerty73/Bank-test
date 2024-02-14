@@ -24,10 +24,12 @@ export const HomePage = () => {
             </div>
          </div>
 
-         <div className="container">
-            <CardCreationBlock />
-            <ExchangeRate />
-            <FAQ />
+         <div className={styles.bg3}>
+            <div className="container">
+               <CardCreationBlock />
+               <ExchangeRate />
+               <FAQ />
+            </div>
          </div>
       </div>
    );

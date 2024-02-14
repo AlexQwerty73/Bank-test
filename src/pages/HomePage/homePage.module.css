@@ -9,6 +9,10 @@
    background: linear-gradient(172deg, rgba(0, 26, 102, 1) 0%, rgba(80, 94, 157, 1) 100%);
 }
 
+.bg3 {
+   overflow: hidden;
+}
+
 .bg {
    /* background: rgb(103, 5, 155);
    background: linear-gradient(150deg, rgba(103, 5, 155, 1) 10%, rgba(0, 25, 131, 1) 100%); */
