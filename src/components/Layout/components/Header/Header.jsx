@@ -19,16 +19,16 @@ export const Header = () => {
                <div className={styles.rightPart}>
                   <ul className={styles.menu}>
                      <li className={styles.menu__item}>
-                        <NavLink exact to={`/${userId}/cards`} activeClassName={styles.active}>Cards</NavLink>
+                        <NavLink to={`/${userId}/cards`}>Cards</NavLink>
                      </li>
                      <li className={styles.menu__item}>
-                        <NavLink to={`/${userId}/transactions`} activeClassName={styles.active}>Transactions</NavLink>
+                        <NavLink to={`/${userId}/transactions`} >Transactions</NavLink>
                      </li>
                      <li className={styles.menu__item}>
-                        <NavLink to={`/${userId}/profile`} activeClassName={styles.active}>Profile</NavLink>
+                        <NavLink to={`/${userId}/profile`} >Profile</NavLink>
                      </li>
                      <li className={styles.menu__item}>
-                        <NavLink to={`/login`} activeClassName={styles.active}>Log in</NavLink>
+                        <NavLink to={`/login`} >Log in</NavLink>
                      </li>
                   </ul>
                </div>

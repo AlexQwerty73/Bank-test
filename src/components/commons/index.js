@@ -4,3 +4,4 @@ export * from './Card';
 export * from './EditBtn';
 export * from './VisibleBtn';
 export * from './RemittanceBtn';
+export * from './FormComponent';

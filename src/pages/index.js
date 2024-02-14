@@ -9,3 +9,4 @@ export * from './CreateUserPage';
 export * from './TransactionsCardsPage';
 export * from './CardTransactionsPage';
 export * from './ExchangeRatePage';
+export * from './RemittancePage';

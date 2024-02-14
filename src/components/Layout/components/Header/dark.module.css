@@ -54,3 +54,7 @@
 .menu__item a:hover {
    color: greenyellow;
 }
+
+.menu__item a.active {
+   color: greenyellow;
+}
