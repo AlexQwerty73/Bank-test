@@ -1,0 +1,53 @@
+.profile {
+   margin: 50px auto;
+   max-width: 600px;
+   padding: 20px;
+   border: 1px solid #ccc;
+   border-radius: 10px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.h1 {
+   font-size: 2em;
+   margin-bottom: 20px;
+}
+
+.userData {
+   padding: 20px;
+}
+
+.line {
+   margin-top: 20px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.line:first-child {
+   margin-top: 0;
+}
+
+.itemData {
+   display: flex;
+   align-items: center;
+}
+
+.leftPart {
+   margin-right: 20px;
+   font-weight: bold;
+   min-width: 120px;
+}
+
+.input {
+   width: 100%;
+   padding: 8px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   box-sizing: border-box;
+}
+
+.hr {
+   border: none;
+   border-top: 1px solid #ccc;
+   margin: 20px 0;
+}

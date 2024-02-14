@@ -4,8 +4,6 @@ import { useUpdateUserMutation } from '../../redux';
 import { formatDateTime } from '../../utils';
 import { EditableField } from './components';
 
-
-
 export const UserProfile = ({ user }) => {
    const [updateUserData] = useUpdateUserMutation();
    const { name, surname, email, createdAt, lastLogin, address, phone } = user;
@@ -28,7 +26,7 @@ export const UserProfile = ({ user }) => {
    }
 
    return (
-      <div className={styles.profilePage}>
+      <div className={styles.profile}>
          <div>
             <h1 className={styles.h1}>{name} {surname}'s Profile</h1>
             <div className={styles.userData}>
@@ -71,8 +69,11 @@ export const UserProfile = ({ user }) => {
 
                <div className={styles.line}>
                   <strong>Last Login:</strong>
+
                   <div className={styles.itemData}>
-                     {formatDateTime(lastLogin)}
+                     <div className={styles.leftPart}>
+                        {formatDateTime(lastLogin)}
+                     </div>
                   </div>
                </div>
 
@@ -81,7 +82,9 @@ export const UserProfile = ({ user }) => {
                <div className={styles.line}>
                   <strong>Created At:</strong>
                   <div className={styles.itemData}>
-                     {formatDateTime(createdAt)}
+                     <div className={styles.leftPart}>
+                        {formatDateTime(createdAt)}
+                     </div>
                   </div>
                </div>
 

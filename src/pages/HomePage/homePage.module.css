@@ -10,6 +10,9 @@
 }
 
 .bg {
-   background: rgb(103, 5, 155);
-   background: linear-gradient(150deg, rgba(103, 5, 155, 1) 10%, rgba(0, 25, 131, 1) 100%);
+   /* background: rgb(103, 5, 155);
+   background: linear-gradient(150deg, rgba(103, 5, 155, 1) 10%, rgba(0, 25, 131, 1) 100%); */
+   background-image: url('../../../public/imgs/home/home-mbg.jpg');
+   background-size: cover;
+   background-position: center;
 }
