@@ -3,6 +3,7 @@ import { UserProfile } from '../../components';
 import { useParams } from 'react-router-dom';
 import { loadFromLocalStorage } from '../../utils';
 import { useGetUsersQuery } from '../../redux';
+import styles from './userProfilePage.module.css';
 
 export const UserProfilePage = () => {
    const { userId } = useParams();
@@ -21,7 +22,7 @@ export const UserProfilePage = () => {
    }
 
    return (
-      <div className="userProfile">
+      <div className={styles.userProfile}>
          <div className="container">
             <UserProfile user={userData} />
          </div>
