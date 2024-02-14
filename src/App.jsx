@@ -20,7 +20,7 @@ const App = () => {
 
             <Route path='transactions/'>
               <Route index element={<TransactionsCardsPage />} />
-              <Route path='remittance/' />
+              <Route path='remittance/' element={<RemittancePage />}/>
               <Route path=':cardNumber/' element={<CardTransactionsPage />} />
             </Route>
 

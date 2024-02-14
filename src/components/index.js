@@ -16,3 +16,4 @@ export * from './ExchangeRatesSection';
 export * from './SecurityInfo';
 export * from './FAQ';
 export * from './CardsTransactionList';
+export * from './RemittanceForm';
