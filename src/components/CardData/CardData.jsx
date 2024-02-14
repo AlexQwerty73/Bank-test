@@ -8,7 +8,7 @@ export const CardData = ({ card }) => {
    const { number, expiryDate, cvv, balance, type, currency, pin } = card;
    const [updateCard] = useUpdateCardMutation();
    const [isEdit, setIsEdit] = useState({ cvv: false, pin: false });
-   const [isVisible, setIsVisible] = useState({ pin: false });
+   const [isVisible, setIsVisible] = useState({ pin: false, cvv: false });
    const [editData, setEditData] = useState({ cvv, pin });
 
    const onClickHandler = (label) => {
@@ -22,6 +22,7 @@ export const CardData = ({ card }) => {
          }
          if (cvv !== editData.cvv || pin !== editData.pin) updateCard({ ...card, [label]: editData[label] }).unwrap();
       }
+      if (cvv !== editData.cvv || pin !== editData.pin) updateCard({ ...card, [label]: editData[label] }).unwrap();
    };
 
    const onVisibleChange = (label) => {
@@ -35,22 +36,24 @@ export const CardData = ({ card }) => {
 
 
    const renderDataItem = (label, value, isEditable = false, isShow = false) => {
+      const labLow = label.toLowerCase();
+
       return (
          <div className={styles.data__item}>
             <div className={styles.item__data}>
                <h3 className={styles.h3}>{label}:</h3>
-               {isEditable && isEdit[label.toLowerCase()] ? (
-                  <input className={styles.input} type="number" value={editData[label.toLowerCase()]} onChange={e => setEditData({ ...editData, [label.toLowerCase()]: e.target.value })} maxLength={3} />
+               {isEditable && isEdit[labLow] ? (
+                  <input className={styles.input} type="number" value={editData[labLow]} onChange={e => setEditData({ ...editData, [labLow]: e.target.value })} maxLength={3} />
                ) : (
                   <h3 className={styles.h3}>{value}</h3>
                )}
             </div>
             <div className={styles.btns}>
                <div className={styles.btn}>
-                  {isShow && <VisibleBtn isVisible={isVisible.pin} onClick={() => onVisibleChange(label.toLowerCase())} />}
+                  {isShow && <VisibleBtn isVisible={isVisible[labLow]} onClick={() => onVisibleChange(labLow)} />}
                </div>
                <div className={styles.btn}>
-                  {isEditable && <EditBtn isEdit={isEdit[label.toLowerCase()]} onClick={() => onClickHandler(label.toLowerCase())} />}
+                  {isEditable && <EditBtn isEdit={isEdit[labLow]} onClick={() => onClickHandler(labLow)} />}
                </div>
             </div>
 
@@ -66,7 +69,7 @@ export const CardData = ({ card }) => {
             <div className={styles.data}>
                {renderDataItem('Number', convertToNumberCartFormat(number))}
                {renderDataItem('Expiry date', expiryDate.split('-').reverse().join(' '))}
-               {renderDataItem('CVV', cvv, true)}
+               {renderDataItem('CVV', isVisible.cvv ? cvv : "***", true, true)}
                {renderDataItem('Balance', `${balance} ${currency}`)}
                {renderDataItem('Pin', isVisible.pin ? pin : "****", true, true)}
                {renderDataItem('Type', type)}
