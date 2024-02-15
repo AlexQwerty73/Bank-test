@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './createCardForm.module.css';
-import { generateCVV, generateCardNumber, generateExpiryDate, loadFromLocalStorage } from '../../utils';
-import { useAddCardMutation } from '../../redux';
+import { generateCVV, generateCardNumber, generateExpiryDate, loadFromLocalStorage } from '../../../utils';
+import { useAddCardMutation } from '../../../redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 export const CreateCardForm = () => {

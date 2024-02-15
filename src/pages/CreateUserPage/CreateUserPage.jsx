@@ -1,5 +1,5 @@
 import React from 'react';
-import { CreateUserForm } from '../../components';
+import { CreateUserForm } from '../../components/Forms/CreateUserForm';
 import styles from './createUserPage.module.css';
 
 export const CreateUserPage = () => {

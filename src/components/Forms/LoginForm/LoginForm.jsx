@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styles from './loginForm.module.css';
-import { saveToLocalStorage } from '../../utils';
-import { useUserByEmail } from '../../hooks/';
+import { saveToLocalStorage } from '../../../utils';
+import { useUserByEmail } from '../../../hooks';
 import { getFormError } from './getFormError';
-import { useUpdateUserMutation } from '../../redux';
+import { useUpdateUserMutation } from '../../../redux';
 
 export const LoginForm = () => {
    const [email, setEmail] = useState('');

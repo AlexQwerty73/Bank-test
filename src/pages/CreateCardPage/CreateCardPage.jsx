@@ -1,5 +1,5 @@
 import React from 'react';
-import { CreateCardForm } from '../../components';
+import { CreateCardForm } from '../../components/Forms/CreateCardForm';
 
 export const CreateCardPage = () => {
    return (

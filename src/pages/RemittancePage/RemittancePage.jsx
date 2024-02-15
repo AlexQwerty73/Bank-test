@@ -1,5 +1,5 @@
 import React from 'react';
-import { RemittanceForm } from '../../components';
+import { RemittanceForm } from '../../components/Forms/RemittanceForm';
 
 export const RemittancePage = () => {
    return (

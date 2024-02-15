@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './remittanceForm.module.css';
-import { FormComponent } from '../commons';
+import { FormComponent } from '../.././commons';
 
 export const RemittanceForm = () => {
 
