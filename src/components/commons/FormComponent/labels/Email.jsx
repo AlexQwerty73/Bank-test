@@ -1,11 +1,15 @@
+
+import styles from '.././formComponent.module.css';
+
 export const Email = ({ register, errors }) => {
    const name = 'email';
  
    return (
-     <div>
+     <div className={styles.input_container}>
        <label>
-         <div className="title">Email:</div>
+         <div className={styles.title}>Email:</div>
          <input
+         placeholder='email@gmail.com'
            type="email"
            {...register(name, {
              required: 'Email is required',

@@ -1,10 +1,13 @@
+
+import styles from '.././formComponent.module.css';
+
 export const CardType = ({ register, errors }) => {
    const name = 'cardType';
 
    return (
-      <div>
+      <div className={styles.input_container}>
          <label>
-            <div className="title">Card Type:</div>
+            <div className={styles.title}>Card Type:</div>
             <select {...register(name, { required: 'Please select a card type' })}>
                <option value="">Select type</option>
                <option value="VISA">VISA</option>

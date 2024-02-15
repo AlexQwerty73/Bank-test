@@ -1,11 +1,15 @@
+
+import styles from '.././formComponent.module.css';
+
 export const Name = ({ register, errors }) => {
    const name = 'name';
 
    return (
-      <div>
+      <div className={styles.input_container}>
          <label>
-            <div className="title">Name:</div>
+            <div className={styles.title}>Name:</div>
             <input
+            placeholder='your name'
                type="text"
                {...register(name, {
                   required: 'Name is required'

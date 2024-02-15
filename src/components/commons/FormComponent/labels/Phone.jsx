@@ -1,11 +1,15 @@
+
+import styles from '.././formComponent.module.css';
+
 export const Phone = ({ register, errors }) => {
    const name = 'phone';
 
    return (
-      <div>
+      <div className={styles.input_container}>
          <label>
-            <div className="title">Phone:</div>
+            <div className={styles.title}>Phone:</div>
             <input
+            placeholder='0000000000'
                type="tel"
                {...register(name, {
                   required: 'Phone number is required',

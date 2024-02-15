@@ -1,11 +1,15 @@
+
+import styles from '.././formComponent.module.css';
+
 export const PIN = ({ register, errors }) => {
    const name = 'pin';
  
    return (
-     <div>
+     <div className={styles.input_container}>
        <label>
-         <div className="title">PIN:</div>
+         <div className={styles.title}>PIN:</div>
          <input
+         placeholder='****'
            type="text"
            {...register(name, {
              required: 'PIN is required',

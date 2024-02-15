@@ -1,11 +1,15 @@
+
+import styles from '.././formComponent.module.css';
+
 export const Password = ({ register, errors }) => {
    const name = 'password';
  
    return (
-     <div>
+     <div className={styles.input_container}>
        <label>
-         <div className="title">Password:</div>
+         <div className={styles.title}>Password:</div>
          <input
+         placeholder='************'
            type="password"
            {...register(name, {
              required: 'Password is required',

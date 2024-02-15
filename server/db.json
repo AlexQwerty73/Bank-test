@@ -509,10 +509,10 @@
           "location": ""
         },
         {
-          "date": "2024-04-24T09:20:00Z",
+          "date": "2024-04-21T09:13:00Z",
           "type": "deposit",
-          "amount": "1200",
-          "description": "Deposit from user",
+          "amount": "50",
+          "description": "Deposit from user2e2e2",
           "location": "Str 15/3"
         },
         {

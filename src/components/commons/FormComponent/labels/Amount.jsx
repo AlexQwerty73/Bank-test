@@ -1,13 +1,15 @@
 import React from 'react';
+import styles from '.././formComponent.module.css';
 
 export const Amount = ({ register, errors }) => {
   const name = 'amount';
 
   return (
-    <div>
+    <div className={styles.input_container}>
       <label>
-        <div className="title">Amount:</div>
+        <div className={styles.title}>Amount:</div>
         <input
+        placeholder='1000'
           type="number"
           {...register(name, {
             required: 'Amount is required',
