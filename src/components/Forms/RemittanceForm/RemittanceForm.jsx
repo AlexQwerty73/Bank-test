@@ -25,17 +25,20 @@ export const RemittanceForm = () => {
       const rateFromToBuy = exchangeRate[exchangeRateKeyFromTo]?.buy || 1; 
       const rateToFromSell = exchangeRate[exchangeRateKeyToFrom]?.sell || 1;
    
-      const amountToTransfer = (Number(data.amount) * rateFromToBuy).toFixed(2) * 1.01;
+      const amountToTransfer = Number(data.amount) * rateFromToBuy; 
+      
+      const bankCommission = amountToTransfer * 0.01;
+      const amountToTransferWithCommission = amountToTransfer - bankCommission;
    
       const updatedCardTo = {
          ...cardTo,
-         balance: Number(cardTo.balance) + Number(amountToTransfer), 
+         balance: Number(cardTo.balance) + Number(amountToTransferWithCommission), 
          history: [
             ...cardTo.history,
             {
                date: new Date().toISOString(),
                type: 'remittance',
-               amount: Number(amountToTransfer),
+               amount: Number(amountToTransferWithCommission),
                action: '+',
                description: `from ${cardFrom.number}`,
                location: ''
@@ -64,6 +67,7 @@ export const RemittanceForm = () => {
    
       navigate(-1); 
    }
+   
    
 
    if (!cards) {
