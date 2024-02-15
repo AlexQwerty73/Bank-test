@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Currency, Number, Name, Surname, Email, Password, Phone, PIN, CardCategory, CardType, Address, Amount } from './labels';
+import { Currency, Number, Name, Surname, Email, Password, Phone, PIN, CardCategory, CardType, Address, Amount, UserCards } from './labels';
 
 export const FormComponent = ({ inputs, onSubmit }) => {
    const { register, handleSubmit, formState: { errors } } = useForm();
@@ -33,6 +33,8 @@ export const FormComponent = ({ inputs, onSubmit }) => {
                   return <Address key={input} register={register} errors={errors} required />;
                case 'amount':
                   return <Amount key={input} register={register} errors={errors} required />;
+               case 'usercards':
+                  return <UserCards key={input} register={register} errors={errors} required />;
                default:
                   return null;
             }

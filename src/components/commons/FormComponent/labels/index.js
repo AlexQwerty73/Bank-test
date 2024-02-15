@@ -10,3 +10,4 @@ export * from './PIN';
 export * from './Password';
 export * from './Phone';
 export * from './Amount';
+export * from './UserCards';

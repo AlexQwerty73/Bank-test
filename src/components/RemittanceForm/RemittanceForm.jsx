@@ -11,7 +11,7 @@ export const RemittanceForm = () => {
    return (
       <div className={styles.remittanceForm}>
 
-         <FormComponent inputs={['number', 'amount']} onSubmit={onSubmit} />
+         <FormComponent inputs={['number', 'amount', 'usercards']} onSubmit={onSubmit} />
 
       </div>
    );
