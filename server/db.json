@@ -2,348 +2,73 @@
   "exchangeRate": {
     "usdToUah": {
       "name": "USDTOUAH",
-      "buy": 37.3,
-      "sell": 37.8,
+      "buy": 36.89,
+      "sell": 37.89,
       "history": [
         {
           "date": "2024-01-01",
-          "buy": 37.5,
-          "sell": 37
-        },
-        {
-          "date": "2024-01-02",
-          "buy": 37.7,
-          "sell": 37.2
-        },
-        {
-          "date": "2024-01-03",
-          "buy": 37.9,
-          "sell": 37.4
-        },
-        {
-          "date": "2024-01-04",
-          "buy": 37.6,
-          "sell": 37.1
-        },
-        {
-          "date": "2024-01-05",
-          "buy": 37.2,
-          "sell": 36.7
-        },
-        {
-          "date": "2024-01-06",
-          "buy": 37.3,
-          "sell": 36.8
-        },
-        {
-          "date": "2024-01-07",
-          "buy": 36.4,
-          "sell": 36
-        },
-        {
-          "date": "2024-01-08",
-          "buy": 37,
-          "sell": 36.6
-        },
-        {
-          "date": "2024-01-09",
-          "buy": 37.1,
-          "sell": 36.7
-        },
-        {
-          "date": "2024-01-10",
-          "buy": 36.9,
-          "sell": 36.7
-        },
-        {
-          "date": "2024-01-11",
-          "buy": 36.7,
-          "sell": 36.4
-        },
-        {
-          "date": "2024-01-12",
-          "buy": 37.4,
-          "sell": 36.9
-        },
-        {
-          "date": "2024-01-13",
-          "buy": 37.5,
-          "sell": 37
-        },
-        {
-          "date": "2024-01-14",
-          "buy": 37.7,
-          "sell": 37.2
-        },
-        {
-          "date": "2024-01-15",
-          "buy": 38,
-          "sell": 37.2
-        },
-        {
-          "date": "2024-01-16",
-          "buy": 38.6,
-          "sell": 37.8
-        },
-        {
-          "date": "2024-01-17",
-          "buy": 39.1,
-          "sell": 38.1
-        },
-        {
-          "date": "2024-01-18",
-          "buy": 38.9,
-          "sell": 38.1
-        },
-        {
-          "date": "2024-01-19",
-          "buy": 37.9,
-          "sell": 37
-        },
-        {
-          "date": "2020-01-19",
-          "buy": 28,
-          "sell": 27.8
-        },
-        {
-          "date": "2024-01-20",
-          "buy": 37.1,
-          "sell": 36.2
-        },
-        {
-          "date": "2024-01-21",
-          "buy": 37,
-          "sell": 36.1
-        },
-        {
-          "date": "2024-01-22",
-          "buy": 37.6,
-          "sell": 37.15
-        },
-        {
-          "date": "2024-01-23",
-          "buy": 36.8,
-          "sell": 36.4
-        },
-        {
-          "date": "2024-01-24",
-          "buy": 37.05,
-          "sell": 36.55
-        },
-        {
-          "date": "2023-12-31",
-          "buy": 37,
-          "sell": 36.1
-        },
-        {
-          "date": "2023-12-26",
-          "buy": 37,
-          "sell": 36.1
-        },
-        {
-          "date": "2023-12-29",
-          "buy": 37,
-          "sell": 36.1
-        },
-        {
-          "date": "2023-11-02",
-          "buy": 37,
-          "sell": 36.1
+          "buy": 36.89,
+          "sell": 37.89
         }
       ]
     },
     "uahToUsd": {
       "name": "UAHTOUSD",
-      "buy": 0.0265,
-      "sell": 0.0275,
+      "buy": 0.0274,
+      "sell": 0.0264,
       "history": [
         {
           "date": "2024-01-01",
-          "buy": 0.027,
-          "sell": 0.028
-        },
-        {
-          "date": "2024-01-02",
-          "buy": 0.0268,
-          "sell": 0.0278
-        },
-        {
-          "date": "2024-01-03",
-          "buy": 0.0272,
-          "sell": 0.0282
-        },
-        {
-          "date": "2024-01-04",
-          "buy": 0.0267,
-          "sell": 0.0277
-        },
-        {
-          "date": "2024-01-05",
-          "buy": 0.0271,
-          "sell": 0.0281
-        },
-        {
-          "date": "2024-01-06",
-          "buy": 0.0269,
-          "sell": 0.0279
+          "buy": 0.0274,
+          "sell": 0.0264
         }
       ]
     },
     "eurToUah": {
       "name": "EURTOUAH",
-      "buy": 41.15,
-      "sell": 40.65,
+      "buy": 39.79,
+      "sell": 40.79,
       "history": [
         {
           "date": "2024-01-01",
-          "buy": 41,
-          "sell": 39.5
-        },
-        {
-          "date": "2024-01-02",
-          "buy": 41.5,
-          "sell": 40
-        },
-        {
-          "date": "2024-02-13",
-          "buy": 41,
-          "sell": 39.5
-        },
-        {
-          "date": "2024-02-12",
-          "buy": 40,
-          "sell": 39.7
-        },
-        {
-          "date": "2024-01-03",
-          "buy": 41.2,
-          "sell": 39.7
-        },
-        {
-          "date": "2024-01-04",
-          "buy": 39.9,
-          "sell": 39.4
-        },
-        {
-          "date": "2024-01-05",
-          "buy": 40.1,
-          "sell": 39.6
-        },
-        {
-          "date": "2024-01-06",
-          "buy": 40.15,
-          "sell": 39.65
+          "buy": 39.79,
+          "sell": 40.79
         }
       ]
     },
     "uahToEur": {
       "name": "UAHTOEUR",
-      "buy": 0.0245,
-      "sell": 0.0255,
+      "buy": 0.0255,
+      "sell": 0.0245,
       "history": [
         {
           "date": "2024-01-01",
-          "buy": 0.025,
-          "sell": 0.026
-        },
-        {
-          "date": "2024-01-02",
-          "buy": 0.0248,
-          "sell": 0.0258
-        },
-        {
-          "date": "2024-01-03",
-          "buy": 0.0252,
-          "sell": 0.0262
-        },
-        {
-          "date": "2024-01-04",
-          "buy": 0.0247,
-          "sell": 0.0257
-        },
-        {
-          "date": "2024-01-05",
-          "buy": 0.0251,
-          "sell": 0.0261
-        },
-        {
-          "date": "2024-01-06",
-          "buy": 0.0249,
-          "sell": 0.0259
+          "buy": 0.0255,
+          "sell": 0.0245
         }
       ]
     },
     "eurToUsd": {
       "name": "EURTOUSD",
-      "buy": 0.95,
-      "sell": 0.89,
+      "buy": 1.07,
+      "sell": 1.08,
       "history": [
         {
           "date": "2024-01-01",
-          "buy": 0.94,
-          "sell": 0.88
-        },
-        {
-          "date": "2024-01-02",
-          "buy": 0.96,
-          "sell": 0.9
-        },
-        {
-          "date": "2024-01-03",
-          "buy": 0.93,
-          "sell": 0.87
-        },
-        {
-          "date": "2024-01-04",
-          "buy": 0.97,
-          "sell": 0.91
-        },
-        {
-          "date": "2024-01-05",
-          "buy": 0.92,
-          "sell": 0.86
-        },
-        {
-          "date": "2024-01-06",
-          "buy": 0.98,
-          "sell": 0.92
+          "buy": 1.07,
+          "sell": 1.08
         }
       ]
     },
     "usdToEur": {
       "name": "USDTOEUR",
-      "buy": 1.1,
-      "sell": 1.15,
+      "buy": 0.93,
+      "sell": 0.94,
       "history": [
         {
           "date": "2024-01-01",
-          "buy": 1.12,
-          "sell": 1.17
-        },
-        {
-          "date": "2024-01-02",
-          "buy": 1.08,
-          "sell": 1.13
-        },
-        {
-          "date": "2024-01-03",
-          "buy": 1.11,
-          "sell": 1.16
-        },
-        {
-          "date": "2024-01-04",
-          "buy": 1.07,
-          "sell": 1.12
-        },
-        {
-          "date": "2024-01-05",
-          "buy": 1.13,
-          "sell": 1.18
-        },
-        {
-          "date": "2024-01-06",
-          "buy": 1.06,
-          "sell": 1.11
+          "buy": 0.93,
+          "sell": 0.94
         }
       ]
     }
@@ -475,51 +200,89 @@
       "expiryDate": "2024-12-31",
       "cvv": "356",
       "pin": "1111",
-      "balance": 1000,
+      "balance": 10032.189,
       "type": "VISA",
       "currency": "USD",
       "category": "debit",
       "history": [
         {
-          "date": "2024-04-20T09:10:00Z",
-          "type": "deposit",
-          "amount": "1200",
-          "description": "Deposit from user",
-          "location": "Str 15/3"
-        },
-        {
-          "date": "2024-04-21T09:13:00Z",
-          "type": "deposit",
-          "amount": "50",
-          "description": "Deposit from user2e2e2",
-          "location": "Str 15/3"
-        },
-        {
-          "date": "2024-04-22T09:15:00Z",
-          "type": "deposit",
-          "amount": "1200",
-          "description": "Deposit from user",
-          "location": "Str 15/3"
-        },
-        {
-          "date": "2024-04-23T09:18:00Z",
-          "type": "deposit",
-          "amount": "50",
-          "description": "Deposit from user",
+          "date": "2024-02-15T15:11:10.333Z",
+          "type": "",
+          "amount": 10000,
+          "action": "+",
+          "description": "",
           "location": ""
         },
         {
-          "date": "2024-04-21T09:13:00Z",
-          "type": "deposit",
-          "amount": "50",
-          "description": "Deposit from user2e2e2",
-          "location": "Str 15/3"
+          "date": "2024-02-15T15:21:28.904Z",
+          "type": "remittance",
+          "amount": 5000,
+          "action": "-",
+          "description": "To 1111222233334444",
+          "location": ""
         },
         {
-          "date": "2024-04-25T09:21:00Z",
-          "type": "deposit",
-          "amount": "50",
-          "description": "Deposit from user",
+          "date": "2024-02-15T15:21:46.344Z",
+          "type": "remittance",
+          "amount": 3000,
+          "action": "-",
+          "description": "To 1234123412341234",
+          "location": ""
+        },
+        {
+          "date": "2024-02-15T15:31:33.405Z",
+          "type": "remittance",
+          "amount": 1000,
+          "action": "-",
+          "description": "To 1234123412341234",
+          "location": ""
+        },
+        {
+          "date": "2024-02-15T15:32:51.234Z",
+          "type": "remittance",
+          "amount": 1000,
+          "action": "-",
+          "description": "To 1234123412341234",
+          "location": ""
+        },
+        {
+          "date": "2024-02-15T15:33:22.169Z",
+          "type": "remittance",
+          "amount": 989.62,
+          "action": "+",
+          "description": "from 1234123412341234",
+          "location": ""
+        },
+        {
+          "date": "2024-02-15T15:36:48.631Z",
+          "type": "remittance",
+          "amount": 100,
+          "action": "-",
+          "description": "To 1234123412341234",
+          "location": ""
+        },
+        {
+          "date": "2024-02-15T15:37:35.001Z",
+          "type": "remittance",
+          "amount": 101.08,
+          "action": "+",
+          "description": "from 1234123412341234",
+          "location": ""
+        },
+        {
+          "date": "2024-02-15T15:38:23.591Z",
+          "type": "remittance",
+          "amount": 1000,
+          "action": "-",
+          "description": "To 1234123412341234",
+          "location": ""
+        },
+        {
+          "date": "2024-02-15T15:38:54.211Z",
+          "type": "remittance",
+          "amount": 1031.109,
+          "action": "+",
+          "description": "from 1234123412341234",
           "location": ""
         }
       ]
@@ -531,17 +294,18 @@
       "expiryDate": "2025-12-31",
       "cvv": "111",
       "pin": "2222",
-      "balance": 200,
+      "balance": 1000,
       "type": "VISA",
       "currency": "EUR",
       "category": "debit",
       "history": [
         {
-          "date": "2024-01-28T09:15:00Z",
+          "date": "2024-02-15T15:21:28.904Z",
           "type": "remittance",
-          "amount": 200,
-          "description": "Deposit from user3",
-          "location": "home"
+          "amount": 4305.56,
+          "action": "+",
+          "description": "from 0000111122223333",
+          "location": ""
         }
       ]
     },
@@ -552,32 +316,76 @@
       "expiryDate": "2028-01-31",
       "cvv": "890",
       "pin": "1111",
-      "balance": 1500,
+      "balance": 999.9000000000015,
       "type": "VISA",
       "currency": "UAH",
       "category": "debit",
       "history": [
         {
-          "date": "2024-04-28T09:15:00Z",
+          "date": "2024-02-15T15:21:46.344Z",
           "type": "remittance",
-          "amount": 1500,
-          "description": "",
+          "amount": 4192045.45,
+          "action": "+",
+          "description": "from 0000111122223333",
+          "location": ""
+        },
+        {
+          "date": "2024-02-15T15:31:33.405Z",
+          "type": "remittance",
+          "amount": 0,
+          "action": "+",
+          "description": "from 0000111122223333",
+          "location": ""
+        },
+        {
+          "date": "2024-02-15T15:32:51.234Z",
+          "type": "remittance",
+          "amount": 1382846.72,
+          "action": "+",
+          "description": "from 0000111122223333",
+          "location": ""
+        },
+        {
+          "date": "2024-02-15T15:33:22.169Z",
+          "type": "remittance",
+          "amount": 1382846,
+          "action": "-",
+          "description": "To 0000111122223333",
+          "location": ""
+        },
+        {
+          "date": "2024-02-15T15:36:48.631Z",
+          "type": "remittance",
+          "amount": 3689,
+          "action": "+",
+          "description": "from 0000111122223333",
+          "location": ""
+        },
+        {
+          "date": "2024-02-15T15:37:35.001Z",
+          "type": "remittance",
+          "amount": 3689,
+          "action": "-",
+          "description": "To 0000111122223333",
+          "location": ""
+        },
+        {
+          "date": "2024-02-15T15:38:23.590Z",
+          "type": "remittance",
+          "amount": 37258.9,
+          "action": "+",
+          "description": "from 0000111122223333",
+          "location": ""
+        },
+        {
+          "date": "2024-02-15T15:38:54.211Z",
+          "type": "remittance",
+          "amount": 37259,
+          "action": "-",
+          "description": "To 0000111122223333",
           "location": ""
         }
       ]
-    },
-    {
-      "id": "565b",
-      "userId": "23rf",
-      "number": "9181074813148877",
-      "expiryDate": "2029-02-31",
-      "cvv": "726",
-      "pin": "2333",
-      "balance": 0,
-      "type": "MASTERCARD",
-      "currency": "UAH",
-      "category": "debit",
-      "history": []
     }
   ]
 }

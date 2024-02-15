@@ -17,7 +17,7 @@ export const UserCards = ({ register, errors }) => {
                   ? <select {...register(name, { required: 'Please select a card number' })}>
                      <option value="">Select category</option>
                      {
-                        cards.map(card => <option key={card.id} value={card.number}>{convertToNumberCartFormat(card.number)}</option>)
+                        cards.map(card => <option key={card.id} value={card.number}>{convertToNumberCartFormat(card.number)} ({card.currency})</option>)
                      }
                   </select>
                   : <option value="">Loading ...</option>

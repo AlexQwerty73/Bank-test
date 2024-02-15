@@ -7,9 +7,9 @@ export const Number = ({ register, errors }) => {
   return (
     <div className={styles.input_container}>
       <label>
-         <div className={styles.title}>Card Number:</div> 
+        <div className={styles.title}>Card Number:</div>
         <input
-        placeholder='0000 0000 0000 0000'
+          placeholder='0000 0000 0000 0000'
           type="text"
           {...register(name, {
             required: 'Card number is required',
