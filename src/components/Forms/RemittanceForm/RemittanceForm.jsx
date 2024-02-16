@@ -56,7 +56,7 @@ export const RemittanceForm = () => {
                type: 'remittance',
                amount: Number(amountToTransferWithCommission),
                action: '+',
-               description: `from ${cardFrom.number}`,
+               description: `from ${cardFrom.number}.\n${cardFrom.currency} => ${cardTo.currency}`,
                location: ''
             }
          ]

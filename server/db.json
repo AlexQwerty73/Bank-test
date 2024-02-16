@@ -200,61 +200,13 @@
       "expiryDate": "2024-12-31",
       "cvv": "356",
       "pin": "1111",
-      "balance": 1124.54,
+      "balance": 4990,
       "type": "VISA",
       "currency": "USD",
       "category": "debit",
       "history": [
         {
-          "date": "2024-02-15T15:11:10.333Z",
-          "type": "",
-          "amount": 10000,
-          "action": "+",
-          "description": "",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:21:28.904Z",
-          "type": "remittance",
-          "amount": 5000,
-          "action": "-",
-          "description": "To 1111222233334444",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:21:46.344Z",
-          "type": "remittance",
-          "amount": 3000,
-          "action": "-",
-          "description": "To 1234123412341234",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:31:33.405Z",
-          "type": "remittance",
-          "amount": 1000,
-          "action": "-",
-          "description": "To 1234123412341234",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:32:51.234Z",
-          "type": "remittance",
-          "amount": 1000,
-          "action": "-",
-          "description": "To 1234123412341234",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:33:22.169Z",
-          "type": "remittance",
-          "amount": 989.62,
-          "action": "+",
-          "description": "from 1234123412341234",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:36:48.631Z",
+          "date": "2024-02-16T12:06:08.148Z",
           "type": "remittance",
           "amount": 100,
           "action": "-",
@@ -262,81 +214,17 @@
           "location": ""
         },
         {
-          "date": "2024-02-15T15:37:35.001Z",
+          "date": "2024-02-16T12:06:44.942Z",
           "type": "remittance",
-          "amount": 101.08,
-          "action": "+",
-          "description": "from 1234123412341234",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:38:23.591Z",
-          "type": "remittance",
-          "amount": 1000,
-          "action": "-",
-          "description": "To 1234123412341234",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:38:54.211Z",
-          "type": "remittance",
-          "amount": 1031.109,
-          "action": "+",
-          "description": "from 1234123412341234",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:50:21.553Z",
-          "type": "remittance",
-          "amount": 1000,
-          "action": "-",
-          "description": "To 1234123412341234",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:50:42.220Z",
-          "type": "remittance",
-          "amount": 990.67,
-          "action": "+",
-          "description": "from 1234123412341234",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:51:01.212Z",
-          "type": "remittance",
-          "amount": 1059.3,
-          "action": "+",
-          "description": "from 1111222233334444",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:51:21.349Z",
-          "type": "remittance",
-          "amount": 1100,
+          "amount": 4900,
           "action": "-",
           "description": "To 1111222233334444",
           "location": ""
         },
         {
-          "date": "2024-02-15T15:51:32.917Z",
+          "date": "2024-02-16T12:08:35.562Z",
           "type": "remittance",
-          "amount": 12.7116,
-          "action": "+",
-          "description": "from 1111222233334444",
-          "location": ""
-        },
-        {
-          "date": "2024-02-16T11:51:38.297Z",
-          "type": "remittance",
-          "amount": 211.86,
-          "action": "+",
-          "description": "from 1111222233334444",
-          "location": ""
-        },
-        {
-          "date": "2024-02-16T12:01:06.806Z",
-          "type": "remittance",
-          "amount": 50,
+          "amount": 10,
           "action": "-",
           "description": "To 1234123412341234",
           "location": ""
@@ -350,49 +238,17 @@
       "expiryDate": "2025-12-31",
       "cvv": "111",
       "pin": "2222",
-      "balance": 800.77,
+      "balance": 4511.43,
       "type": "VISA",
       "currency": "EUR",
       "category": "debit",
       "history": [
         {
-          "date": "2024-02-15T15:21:28.904Z",
+          "date": "2024-02-16T12:06:44.942Z",
           "type": "remittance",
-          "amount": 4305.56,
+          "amount": 4511.43,
           "action": "+",
           "description": "from 0000111122223333",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:51:01.212Z",
-          "type": "remittance",
-          "amount": 1000,
-          "action": "-",
-          "description": "To 0000111122223333",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:51:21.349Z",
-          "type": "remittance",
-          "amount": 1012.77,
-          "action": "+",
-          "description": "from 0000111122223333",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:51:32.917Z",
-          "type": "remittance",
-          "amount": 12,
-          "action": "-",
-          "description": "To 0000111122223333",
-          "location": ""
-        },
-        {
-          "date": "2024-02-16T11:51:38.297Z",
-          "type": "remittance",
-          "amount": 200,
-          "action": "-",
-          "description": "To 0000111122223333",
           "location": ""
         }
       ]
@@ -404,97 +260,25 @@
       "expiryDate": "2028-01-31",
       "cvv": "890",
       "pin": "1111",
-      "balance": 2826.16,
+      "balance": 4017.32,
       "type": "VISA",
       "currency": "UAH",
       "category": "debit",
       "history": [
         {
-          "date": "2024-02-15T15:21:46.344Z",
+          "date": "2024-02-16T12:06:08.148Z",
           "type": "remittance",
-          "amount": 4192045.45,
+          "amount": 3652.11,
           "action": "+",
           "description": "from 0000111122223333",
           "location": ""
         },
         {
-          "date": "2024-02-15T15:31:33.405Z",
+          "date": "2024-02-16T12:08:35.562Z",
           "type": "remittance",
-          "amount": 0,
+          "amount": 365.21,
           "action": "+",
-          "description": "from 0000111122223333",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:32:51.234Z",
-          "type": "remittance",
-          "amount": 1382846.72,
-          "action": "+",
-          "description": "from 0000111122223333",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:33:22.169Z",
-          "type": "remittance",
-          "amount": 1382846,
-          "action": "-",
-          "description": "To 0000111122223333",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:36:48.631Z",
-          "type": "remittance",
-          "amount": 3689,
-          "action": "+",
-          "description": "from 0000111122223333",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:37:35.001Z",
-          "type": "remittance",
-          "amount": 3689,
-          "action": "-",
-          "description": "To 0000111122223333",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:38:23.590Z",
-          "type": "remittance",
-          "amount": 37258.9,
-          "action": "+",
-          "description": "from 0000111122223333",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:38:54.211Z",
-          "type": "remittance",
-          "amount": 37259,
-          "action": "-",
-          "description": "To 0000111122223333",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:50:21.553Z",
-          "type": "remittance",
-          "amount": 36521.1,
-          "action": "+",
-          "description": "from 0000111122223333",
-          "location": ""
-        },
-        {
-          "date": "2024-02-15T15:50:42.220Z",
-          "type": "remittance",
-          "amount": 36521,
-          "action": "-",
-          "description": "To 0000111122223333",
-          "location": ""
-        },
-        {
-          "date": "2024-02-16T12:01:06.806Z",
-          "type": "remittance",
-          "amount": 1826.06,
-          "action": "+",
-          "description": "from 0000111122223333",
+          "description": "from 0000111122223333.\nUSD => UAH",
           "location": ""
         }
       ]

@@ -44,7 +44,7 @@ export const CardTransactionsPage = () => {
                      <div>Date: {formatDate(transaction.date)}</div>
                      <div>Amount: {transaction.action}{transaction.amount}</div>
                   </li>
-               ))}
+               )).reverse()}
             </ul>
 
             {selectedTransaction && <SelectedTransaction card={card} selectedTransaction={selectedTransaction} handleCloseTransaction={handleCloseTransaction} />}
