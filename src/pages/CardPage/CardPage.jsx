@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useGetCardByNumberQuery } from '../../redux';
 import { CardData } from '../../components';
 import { loadFromLocalStorage } from '../../utils';
+import styles from './cardPage.module.css';
 
 export const CardPage = () => {
    const { cardNumber } = useParams();
@@ -14,7 +15,7 @@ export const CardPage = () => {
    const isUserCard = card?.userId === userId;
 
    return (
-      <div className='cardPage'>
+      <div className={styles.cardPage}>
          <div className="container">
             {
                isUserCard

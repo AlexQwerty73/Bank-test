@@ -14,7 +14,7 @@ export const CardsPage = () => {
    const cards = isUser ? cardsData : [];
 
    return (
-      <div className='cardsPage'>
+      <div className={styles.cardsPage}>
          <div className="container">
          <div className={styles.content}>
             {isLoading && <p>Loading ...</p>}
