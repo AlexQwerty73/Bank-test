@@ -42,7 +42,8 @@ export const CardTransactionsPage = () => {
                {card[0]?.history?.map(transaction => (
                   <li key={transaction.date} onClick={() => handleTransactionClick(transaction)} className={styles.transaction}>
                      <div>Date: {formatDate(transaction.date)}</div>
-                     <div>Amount: {transaction.action}{transaction.amount}</div>
+                     <div> {transaction.action}{transaction.amount} ({card[0].currency})</div>
+                     {/* Amount: */}
                   </li>
                )).reverse()}
             </ul>
