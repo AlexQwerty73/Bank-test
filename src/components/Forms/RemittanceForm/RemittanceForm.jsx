@@ -25,7 +25,8 @@ export const RemittanceForm = () => {
       const currencyFrom = cardFrom.currency.toUpperCase();
       const currencyTo = cardTo.currency.toUpperCase();
       const amountFrom = data.amount;
-      const amountTo = (Number(data.amount) * exchangeRate[`${currencyFrom.toLowerCase()}To${currencyTo.charAt(0).toUpperCase() + currencyTo.slice(1).toLowerCase()}`]?.buy).toFixed(2);
+      const rate = exchangeRate[`${currencyFrom.toLowerCase()}To${currencyTo.charAt(0).toUpperCase() + currencyTo.slice(1).toLowerCase()}`]?.buy || 1;
+      const amountTo = (Number(data.amount) * rate).toFixed(2); // Округлення до двох знаків після коми
 
       setTransferData({
          cardTo,
@@ -40,21 +41,20 @@ export const RemittanceForm = () => {
    const confirmTransfer = () => {
       const { cardTo, cardFrom, amountFrom, amountTo } = transferData;
 
-      const exchangeRateKeyFromTo = `${cardFrom.currency.toLowerCase()}To${cardTo.currency.charAt(0).toUpperCase() + cardTo.currency.slice(1).toLowerCase()}`;
-      const rateFromToBuy = exchangeRate[exchangeRateKeyFromTo]?.buy || 1;
-      const amountToTransfer = Number(amountFrom) * rateFromToBuy;
+      const rate = exchangeRate[`${cardFrom.currency.toLowerCase()}To${cardTo.currency.charAt(0).toUpperCase() + cardTo.currency.slice(1).toLowerCase()}`]?.buy || 1;
+      const amountToTransfer = Number(amountFrom) * rate;
       const bankCommission = amountToTransfer * 0.01;
-      const amountToTransferWithCommission = (amountToTransfer - bankCommission).toFixed(2);
+      const amountToTransferWithCommission = (amountToTransfer - bankCommission).toFixed(2); // Округлення до двох знаків після коми
 
       const updatedCardTo = {
          ...cardTo,
-         balance: Number(cardTo.balance) + Number(amountToTransferWithCommission),
+         balance: (Number(cardTo.balance) + Number(amountToTransferWithCommission)).toFixed(2),
          history: [
             ...cardTo.history,
             {
                date: new Date().toISOString(),
                type: 'remittance',
-               amount: Number(amountToTransferWithCommission),
+               amount: Number(amountToTransferWithCommission).toFixed(2),
                action: '+',
                description: `from ${cardFrom.number}.\n${cardFrom.currency} => ${cardTo.currency}`,
                location: ''
@@ -64,13 +64,13 @@ export const RemittanceForm = () => {
 
       const updatedCardFrom = {
          ...cardFrom,
-         balance: Number(cardFrom.balance) - Number(amountFrom),
+         balance: (Number(cardFrom.balance) - Number(amountFrom)).toFixed(2),
          history: [
             ...cardFrom.history,
             {
                date: new Date().toISOString(),
                type: 'remittance',
-               amount: Number(amountFrom),
+               amount: Number(amountFrom).toFixed(2),
                action: '-',
                description: `To ${cardTo.number}`,
                location: ''

@@ -13,9 +13,14 @@ export const TransactionsCardsPage = () => {
       <div className={styles.transactionsPage}>
          <div className='container'>
 
-            <RemittanceBtn/>
+            <RemittanceBtn />
 
-            <CardsTransactionList cards={cards} />
+            {
+               isLoading
+                  ? <h4>Loading ...</h4>
+                  : <CardsTransactionList cards={cards} />
+            }
+
 
          </div>
       </div >

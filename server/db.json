@@ -200,7 +200,7 @@
       "expiryDate": "2024-12-31",
       "cvv": "356",
       "pin": "1111",
-      "balance": 4990,
+      "balance": "9872.52",
       "type": "VISA",
       "currency": "USD",
       "category": "debit",
@@ -228,6 +228,86 @@
           "action": "-",
           "description": "To 1234123412341234",
           "location": ""
+        },
+        {
+          "date": "2024-02-16T12:12:32.388Z",
+          "type": "remittance",
+          "amount": 211.86,
+          "action": "+",
+          "description": "from 1111222233334444.\nEUR => USD",
+          "location": ""
+        },
+        {
+          "date": "2024-02-16T12:15:06.252Z",
+          "type": "remittance",
+          "amount": 200,
+          "action": "-",
+          "description": "To 1234123412341234",
+          "location": ""
+        },
+        {
+          "date": "2024-02-16T12:16:29.612Z",
+          "type": "remittance",
+          "amount": 1,
+          "action": "-",
+          "description": "To 1234123412341234",
+          "location": ""
+        },
+        {
+          "date": "2024-02-16T12:17:57.428Z",
+          "type": "remittance",
+          "amount": 317.79,
+          "action": "+",
+          "description": "from 1111222233334444.\nEUR => USD",
+          "location": ""
+        },
+        {
+          "date": "2024-02-16T12:18:30.725Z",
+          "type": "remittance",
+          "amount": 300,
+          "action": "-",
+          "description": "To 1234123412341234",
+          "location": ""
+        },
+        {
+          "date": "2024-02-16T12:21:31.075Z",
+          "type": "remittance",
+          "amount": 11.65,
+          "action": "+",
+          "description": "from 1111222233334444.\nEUR => USD",
+          "location": ""
+        },
+        {
+          "date": "2024-02-16T12:23:17.035Z",
+          "type": "remittance",
+          "amount": 30,
+          "action": "-",
+          "description": "To 1234123412341234",
+          "location": ""
+        },
+        {
+          "date": "2024-02-16T12:23:47.971Z",
+          "type": "remittance",
+          "amount": 623.9,
+          "action": "+",
+          "description": "from 1234123412341234.\nUAH => USD",
+          "location": ""
+        },
+        {
+          "date": "2024-02-16T12:25:25.563Z",
+          "type": "remittance",
+          "amount": "11.12",
+          "action": "+",
+          "description": "from 1234123412341234.\nUAH => USD",
+          "location": ""
+        },
+        {
+          "date": "2024-02-16T12:25:46.178Z",
+          "type": "remittance",
+          "amount": "4237.20",
+          "action": "+",
+          "description": "from 1111222233334444.\nEUR => USD",
+          "location": ""
         }
       ]
     },
@@ -238,7 +318,7 @@
       "expiryDate": "2025-12-31",
       "cvv": "111",
       "pin": "2222",
-      "balance": 4511.43,
+      "balance": "0.40",
       "type": "VISA",
       "currency": "EUR",
       "category": "debit",
@@ -250,6 +330,38 @@
           "action": "+",
           "description": "from 0000111122223333",
           "location": ""
+        },
+        {
+          "date": "2024-02-16T12:12:32.388Z",
+          "type": "remittance",
+          "amount": 200,
+          "action": "-",
+          "description": "To 0000111122223333",
+          "location": ""
+        },
+        {
+          "date": "2024-02-16T12:17:57.428Z",
+          "type": "remittance",
+          "amount": 300,
+          "action": "-",
+          "description": "To 0000111122223333",
+          "location": ""
+        },
+        {
+          "date": "2024-02-16T12:21:31.075Z",
+          "type": "remittance",
+          "amount": 11,
+          "action": "-",
+          "description": "To 0000111122223333",
+          "location": ""
+        },
+        {
+          "date": "2024-02-16T12:25:46.178Z",
+          "type": "remittance",
+          "amount": "4000.00",
+          "action": "-",
+          "description": "To 0000111122223333",
+          "location": ""
         }
       ]
     },
@@ -260,7 +372,7 @@
       "expiryDate": "2028-01-31",
       "cvv": "890",
       "pin": "1111",
-      "balance": 4017.32,
+      "balance": "0.00",
       "type": "VISA",
       "currency": "UAH",
       "category": "debit",
@@ -279,6 +391,54 @@
           "amount": 365.21,
           "action": "+",
           "description": "from 0000111122223333.\nUSD => UAH",
+          "location": ""
+        },
+        {
+          "date": "2024-02-16T12:15:06.252Z",
+          "type": "remittance",
+          "amount": 7304.22,
+          "action": "+",
+          "description": "from 0000111122223333.\nUSD => UAH",
+          "location": ""
+        },
+        {
+          "date": "2024-02-16T12:16:29.612Z",
+          "type": "remittance",
+          "amount": 36.52,
+          "action": "+",
+          "description": "from 0000111122223333.\nUSD => UAH",
+          "location": ""
+        },
+        {
+          "date": "2024-02-16T12:18:30.725Z",
+          "type": "remittance",
+          "amount": 10956.33,
+          "action": "+",
+          "description": "from 0000111122223333.\nUSD => UAH",
+          "location": ""
+        },
+        {
+          "date": "2024-02-16T12:23:17.035Z",
+          "type": "remittance",
+          "amount": 1095.63,
+          "action": "+",
+          "description": "from 0000111122223333.\nUSD => UAH",
+          "location": ""
+        },
+        {
+          "date": "2024-02-16T12:23:47.971Z",
+          "type": "remittance",
+          "amount": 23000,
+          "action": "-",
+          "description": "To 0000111122223333",
+          "location": ""
+        },
+        {
+          "date": "2024-02-16T12:25:25.563Z",
+          "type": "remittance",
+          "amount": "410.00",
+          "action": "-",
+          "description": "To 0000111122223333",
           "location": ""
         }
       ]
