@@ -26,7 +26,7 @@ export const RemittanceForm = () => {
       const currencyTo = cardTo.currency.toUpperCase();
       const amountFrom = data.amount;
       const rate = exchangeRate[`${currencyFrom.toLowerCase()}To${currencyTo.charAt(0).toUpperCase() + currencyTo.slice(1).toLowerCase()}`]?.buy || 1;
-      const amountTo = (Number(data.amount) * rate).toFixed(2); // Округлення до двох знаків після коми
+      const amountTo = (Number(data.amount) * rate).toFixed(2); 
 
       setTransferData({
          cardTo,
@@ -40,12 +40,17 @@ export const RemittanceForm = () => {
 
    const confirmTransfer = () => {
       const { cardTo, cardFrom, amountFrom, amountTo } = transferData;
-
+   
       const rate = exchangeRate[`${cardFrom.currency.toLowerCase()}To${cardTo.currency.charAt(0).toUpperCase() + cardTo.currency.slice(1).toLowerCase()}`]?.buy || 1;
       const amountToTransfer = Number(amountFrom) * rate;
       const bankCommission = amountToTransfer * 0.01;
-      const amountToTransferWithCommission = (amountToTransfer - bankCommission).toFixed(2); // Округлення до двох знаків після коми
-
+      const amountToTransferWithCommission = (amountToTransfer - bankCommission).toFixed(2);
+   
+      if (Number(cardFrom.balance) < Number(amountFrom)) {
+         alert('На вашій картці недостатньо коштів для здійснення переказу.');
+         return;
+      }
+   
       const updatedCardTo = {
          ...cardTo,
          balance: (Number(cardTo.balance) + Number(amountToTransferWithCommission)).toFixed(2),
@@ -61,7 +66,7 @@ export const RemittanceForm = () => {
             }
          ]
       };
-
+   
       const updatedCardFrom = {
          ...cardFrom,
          balance: (Number(cardFrom.balance) - Number(amountFrom)).toFixed(2),
@@ -77,12 +82,13 @@ export const RemittanceForm = () => {
             }
          ]
       };
-
+   
       updateCard(updatedCardTo).unwrap();
       updateCard(updatedCardFrom).unwrap();
-
+   
       navigate(`/${userId}/transactions`);
    };
+   
 
 
    if (!cards) {

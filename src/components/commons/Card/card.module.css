@@ -76,7 +76,7 @@
 .cardBottom {
    position: absolute;
    right: 15px;
-   bottom: 15px;
+   bottom: 5px;
    font-weight: bold;
    font-size: 19px;
 }
@@ -87,4 +87,9 @@
    right: 20px;
    font-size: 20px;
    letter-spacing: 3px;
+}
+
+.img {
+   width: 40px;
+
 }

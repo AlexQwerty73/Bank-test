@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './card.module.css';
 import { convertYYYYMMDDToMMYY, convertToNumberCartFormat } from '../../../utils';
+import { Img } from '../Img';
 
 export const Card = ({ card }) => {
    const [isActive, setIsActive] = useState(false);
@@ -20,7 +21,13 @@ export const Card = ({ card }) => {
                <div className={styles.date}>{convertYYYYMMDDToMMYY(expiryDate)}</div>
             </div>
             <div className={styles.cardBottom}>
-               <div className={styles.type}>{type}</div>
+               <div className={styles.type}>
+                  <div className={styles.img}>
+                     {
+                        <Img folder='icon/card' img={`${type.toLowerCase()}${type.toLowerCase()==='visa'?'2':''}.png`} />
+                     }
+                  </div>
+               </div>
             </div>
          </div>
          <div className={styles.backSide}>
