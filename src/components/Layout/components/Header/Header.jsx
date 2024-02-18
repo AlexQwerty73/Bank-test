@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Logo } from '../../../commons/';
 import { NavLink, useLocation } from 'react-router-dom';
 import { loadFromLocalStorage } from '../../../../utils'
@@ -8,6 +8,11 @@ export const Header = () => {
    const userId = loadFromLocalStorage('userId');
    const location = useLocation();
    const isHomePage = location.pathname === '/';
+   const [menuOpen, setMenuOpen] = useState(false);
+
+   const toggleMenu = () => {
+      setMenuOpen(!menuOpen);
+   };
 
    return (
       <header className={`${styles.header} ${isHomePage ? styles.transparentHeader : ''}`}>
@@ -17,7 +22,12 @@ export const Header = () => {
                   <Logo />
                </div>
                <div className={styles.rightPart}>
-                  <ul className={styles.menu}>
+                  <div className={`${styles.burger} ${menuOpen ? styles.open : ''}`} onClick={toggleMenu}>
+                     <div className={styles.burgerLine}></div>
+                     <div className={styles.burgerLine}></div>
+                     <div className={styles.burgerLine}></div>
+                  </div>
+                  <ul className={`${styles.menu} ${menuOpen ? styles.open : ''}`}>
                      <li className={styles.menu__item}>
                         <NavLink to={`/${userId}/cards`}>Cards</NavLink>
                      </li>

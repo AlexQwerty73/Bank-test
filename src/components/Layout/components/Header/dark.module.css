@@ -3,6 +3,7 @@
    color: #fff;
    padding: 1rem;
    box-shadow: 0 -0 5px 5px rgba(0, 0, 0, 0.5);
+   position: relative;
 }
 
 .transparentHeader {
@@ -57,4 +58,57 @@
 
 .menu__item a.active {
    color: greenyellow;
+}
+
+
+.burger {
+   display: none;
+   cursor: pointer;
+}
+
+.burgerLine {
+   width: 25px;
+   height: 3px;
+   background-color: #fff;
+   margin: 5px;
+   transition: all 0.3s ease;
+}
+
+.open .burgerLine:nth-child(1) {
+   transform: rotate(45deg) translate(5px, 5px);
+}
+
+.open .burgerLine:nth-child(2) {
+   opacity: 0;
+}
+
+.open .burgerLine:nth-child(3) {
+   transform: rotate(-45deg) translate(7px, -7px);
+}
+
+@media (max-width: 768px) {
+   .burger {
+      display: block;
+   }
+
+   .menu {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #33333380;
+      width: 100%;
+      padding: 1rem;
+      transition: all 0.3s ease;
+   }
+
+   .menu__item {
+      margin: 0.5rem 0;
+   }
+
+   .open.menu {
+      display: flex;
+   }
 }
