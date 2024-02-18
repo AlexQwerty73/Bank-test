@@ -56,3 +56,15 @@
 .feature:hover .featureIcon img {
    filter: brightness(0) invert(1);
 }
+
+@media (max-width: 768px) {
+   .featuresSection {
+     flex-direction: column;
+     padding: 20px 0;
+   }
+ 
+   .feature {
+     width: calc(100% - 20px);
+   }
+ }
+ 
