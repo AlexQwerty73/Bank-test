@@ -4,7 +4,7 @@ import { validateForm } from './validateForm';
 import { useAddUserMutation } from '../../../redux';
 import { useNavigate } from 'react-router-dom';
 import { saveToLocalStorage } from '../../../utils';
-import { FormComponent } from '../.././commons'
+import { FormComponent } from '../.././commons/FormComponent'; 
 
 export const CreateUserForm = () => {
    const navigate = useNavigate();
@@ -42,26 +42,13 @@ export const CreateUserForm = () => {
    };
 
    return (
-      <div className="createUserForm">
-         {/* <FormComponent inputs={['name', 'surname', 'email', 'password', 'address', 'phone']} /> */}
-
-         {
-            <form className={styles.createForm} onSubmit={handleSubmit}>
-               {Object.entries(formData).map(([fieldName, fieldValue]) => (
-                  <label key={fieldName} className={styles.label}>
-                     <input
-                        className={styles.input}
-                        type={fieldName === 'password' ? 'password' : 'text'}
-                        name={fieldName}
-                        value={fieldValue}
-                        onChange={handleInputChange}
-                        required
-                     />
-                     <h3> {fieldName.charAt(0).toUpperCase() + fieldName.slice(1)} </h3>
-                  </label>
-               ))}
-               <button className={styles.button} type="submit">Create User</button>
-            </form>}
+      <div className={styles.createUserForm}>
+         <FormComponent
+            inputs={['name', 'surname', 'email', 'password', 'address', 'phone']}
+            formData={formData}
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
+         />
       </div>
    );
 };
