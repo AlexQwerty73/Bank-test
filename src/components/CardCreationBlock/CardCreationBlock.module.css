@@ -61,3 +61,47 @@
 .img {
    width: 600px;
 }
+
+
+@media (max-width: 768px) {
+   .cardCreationBlock {
+      flex-direction: column;
+      padding: 20px;
+   }
+
+   .left,
+   .right {
+      opacity: 1;
+      transform: translate(0, 0);
+      padding: 0;
+      text-align: center;
+   }
+
+   .left {
+      order: 2;
+      margin-bottom: 20px;
+   }
+
+   .right {
+      order: 1;
+   }
+
+   .img {
+      width: 100%;
+   }
+
+   .title {
+      font-size: 30px;
+   }
+
+   .description {
+      font-size: 18px;
+      margin-bottom: 30px;
+   }
+
+   .createCardButton {
+      font-size: 20px;
+      padding: 15px 30px;
+      border-radius: 8px;
+   }
+}
