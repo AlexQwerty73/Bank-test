@@ -61,3 +61,24 @@
    flex: 1;
    margin-left: 20px;
 }
+
+
+@media (max-width: 768px) {
+   .exchangeRateContainer {
+      flex-direction: column;
+      padding: 20px;
+   }
+
+   .leftPanel {
+      margin-bottom: 20px;
+   }
+
+   .rightPanel {
+      display: none;
+      margin-left: 0;
+   }
+
+   .exchangeRateItem {
+      max-width: 100%;
+   }
+}
