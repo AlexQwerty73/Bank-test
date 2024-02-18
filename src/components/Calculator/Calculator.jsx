@@ -113,7 +113,7 @@ export const Calculator = () => {
                      </div>
                   </div>
                </div>
-               <hr />
+               <hr className={styles.hr}/>
                <div className={styles.result_container}>
                   {result && (
                      <>
