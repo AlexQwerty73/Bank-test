@@ -1,5 +1,3 @@
-/* securityInfo.module.css */
-
 .securityInfo {
    max-width: 800px;
    margin: 0 auto;
@@ -66,4 +64,48 @@
    font-size: 1rem;
    color: #666;
    margin: 0;
+}
+
+@media (max-width: 768px) {
+   .securityInfo {
+      padding: 10px;
+   }
+
+   .title {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+   }
+
+   .subtitle {
+      font-size: 1.2rem;
+      margin-top: 20px;
+      margin-bottom: 5px;
+   }
+
+   .paragraph {
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+   }
+
+   .list li {
+      margin-bottom: 15px;
+   }
+
+   .img {
+      margin-right: 15px;
+   }
+
+   .img img {
+      width: 40px;
+      height: 40px;
+   }
+
+   .list li div {
+      width: 40px;
+      height: 40px;
+   }
+
+   .list li p {
+      font-size: 0.9rem;
+   }
 }
