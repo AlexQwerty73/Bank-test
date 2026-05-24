@@ -5,8 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { generateCVV, generateCardNumber, generateExpiryDate, loadFromLocalStorage } from '../../../utils';
 import styles from './createCardForm.module.css';
 
-// Max cards per account currency
-const LIMITS = { UAH: 2, EUR: 1, USD: 1 };
+// Max 1 debit + 1 credit per account (all currencies equal)
+const MAX_PER_CATEGORY = 1; // per account per category
 const CURRENCY_FLAGS = { USD: '🇺🇸', EUR: '🇪🇺', UAH: '🇺🇦' };
 
 export const CreateCardForm = () => {
@@ -28,24 +28,37 @@ export const CreateCardForm = () => {
       cvv:        generateCVV(),
    }), []);
 
-   // Count cards already linked to each account
-   const cardCountByAccount = useMemo(() =>
-      existingCards.reduce((acc, c) => {
-         acc[c.accountId] = (acc[c.accountId] || 0) + 1;
-         return acc;
+   // Count cards per account per category
+   const cardSlots = useMemo(() =>
+      existingCards.reduce((map, c) => {
+         const key = `${c.accountId}::${c.category}`;
+         map[key] = (map[key] || 0) + 1;
+         return map;
       }, {}),
    [existingCards]);
 
-   // Accounts that still have capacity
-   const availableAccounts = useMemo(() =>
-      userAccounts.filter(acc => {
-         const limit = LIMITS[acc.currency] ?? 1;
-         const used  = cardCountByAccount[acc.id] || 0;
-         return used < limit;
-      }),
-   [userAccounts, cardCountByAccount]);
+   // Per account: which categories still have a free slot
+   const availableCategories = useMemo(() => {
+      const result = {};
+      userAccounts.forEach(acc => {
+         const hasDebit  = (cardSlots[`${acc.id}::debit`]  || 0) >= MAX_PER_CATEGORY;
+         const hasCredit = (cardSlots[`${acc.id}::credit`] || 0) >= MAX_PER_CATEGORY;
+         result[acc.id] = {
+            debit:  !hasDebit,
+            credit: !hasCredit,
+            any:    !hasDebit || !hasCredit,
+         };
+      });
+      return result;
+   }, [userAccounts, cardSlots]);
 
-   const { register, handleSubmit, formState: { errors } } = useForm();
+   // Accounts that have at least one free slot
+   const availableAccounts = useMemo(() =>
+      userAccounts.filter(acc => availableCategories[acc.id]?.any),
+   [userAccounts, availableCategories]);
+
+   const { register, handleSubmit, watch, formState: { errors } } = useForm();
+   const watchedAccountId = watch('accountId', '');
 
    const onSubmit = async (data) => {
       const targetAccount = availableAccounts.find(a => a.id === data.accountId);
@@ -86,7 +99,7 @@ export const CreateCardForm = () => {
             <span className={styles.limitIcon}>🚫</span>
             <p className={styles.limitTitle}>Card limit reached</p>
             <p className={styles.limitText}>
-               Maximum: <strong>2 UAH cards</strong>, <strong>1 EUR card</strong>, <strong>1 USD card</strong>.
+               Maximum <strong>1 debit + 1 credit</strong> card per account (up to <strong>6 cards</strong> total across all currencies).
                Delete an existing card to issue a new one.
             </p>
          </div>
@@ -99,13 +112,18 @@ export const CreateCardForm = () => {
          {/* Account slot usage summary */}
          <div className={styles.slotsRow}>
             {userAccounts.map(acc => {
-               const limit = LIMITS[acc.currency] ?? 1;
-               const used  = cardCountByAccount[acc.id] || 0;
-               const full  = used >= limit;
+               const debitUsed  = cardSlots[`${acc.id}::debit`]  || 0;
+               const creditUsed = cardSlots[`${acc.id}::credit`] || 0;
+               const totalUsed  = debitUsed + creditUsed;
+               const full = totalUsed >= 2;
                return (
                   <div key={acc.id} className={`${styles.slot} ${full ? styles.slotFull : styles.slotFree}`}>
                      <span className={styles.slotCur}>{CURRENCY_FLAGS[acc.currency]} {acc.currency}</span>
-                     <span className={styles.slotCount}>{used}/{limit}</span>
+                     <span className={styles.slotCount}>{totalUsed}/2</span>
+                     <span className={styles.slotDetail}>
+                        {debitUsed > 0 ? '💳' : '○'} debit &nbsp;
+                        {creditUsed > 0 ? '💳' : '○'} credit
+                     </span>
                   </div>
                );
             })}
@@ -159,7 +177,7 @@ export const CreateCardForm = () => {
             {errors.type && <span className={styles.err}>{errors.type.message}</span>}
          </div>
 
-         {/* Category */}
+         {/* Category — filtered by what's still free on the selected account */}
          <div className={styles.field}>
             <label className={styles.label}>Category</label>
             <select
@@ -167,10 +185,23 @@ export const CreateCardForm = () => {
                {...register('category', { required: 'Select a category' })}
             >
                <option value="">Select category</option>
-               <option value="debit">Debit</option>
-               <option value="credit">Credit</option>
+               {(!watchedAccountId || availableCategories[watchedAccountId]?.debit) && (
+                  <option value="debit">Debit</option>
+               )}
+               {(!watchedAccountId || availableCategories[watchedAccountId]?.credit) && (
+                  <option value="credit">Credit</option>
+               )}
             </select>
             {errors.category && <span className={styles.err}>{errors.category.message}</span>}
+            {watchedAccountId && availableCategories[watchedAccountId] && (
+               <span className={styles.hint}>
+                  {availableCategories[watchedAccountId]?.debit && !availableCategories[watchedAccountId]?.credit
+                     ? 'Only debit available (credit already issued)'
+                     : !availableCategories[watchedAccountId]?.debit && availableCategories[watchedAccountId]?.credit
+                     ? 'Only credit available (debit already issued)'
+                     : 'Both debit and credit available'}
+               </span>
+            )}
          </div>
 
          <button className={styles.btn} type="submit" disabled={isSubmitting}>

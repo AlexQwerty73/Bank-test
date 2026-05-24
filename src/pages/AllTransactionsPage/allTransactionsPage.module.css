@@ -59,8 +59,11 @@
    display: flex;
    flex-direction: column;
    align-items: center;
-   gap: 4px;
+   gap: 2px;
 }
+
+/* when multiple currency lines stack, scale down a touch */
+.summaryItem > span + span { font-size: 0.9rem; }
 
 .summaryLabel {
    font-size: 0.72rem;

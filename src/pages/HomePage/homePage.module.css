@@ -1,22 +1,28 @@
-/* Hero — тёмный синий градиент, чтобы белый прозрачный хедер читался */
-.bg {
+/* Hero — тёмный синий градиент */
+.bgHero {
    background: linear-gradient(140deg, #0F2459 0%, #1D4ED8 100%);
 }
 
-/* Features + Security — чистый белый */
-.bg1 {
-   background-color: #FFFFFF;
-   padding: 100px 0;
+/* Основной светлый блок */
+.bgLight {
+   background: #F8FAFC;
+   padding: 60px 0 40px;
 }
 
-/* Calculator — очень лёгкий синий */
-.bg2 {
-   background-color: #F0F6FF;
-   padding: 100px 0;
+/* Мягкий синий — калькулятор */
+.bgBlue {
+   background: #EEF2FF;
+   padding: 80px 0;
 }
 
-/* Cards CTA + ExchangeRate + FAQ — белый */
-.bg3 {
-   background-color: #FFFFFF;
+/* Чистый белый */
+.bgLight2 {
+   background: #FFFFFF;
    overflow: hidden;
+}
+
+/* Очень лёгкий серый — testimonials */
+.bgGrey {
+   background: #F8FAFC;
+   padding: 0 0 20px;
 }

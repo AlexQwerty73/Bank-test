@@ -1,21 +1,98 @@
+.groups {
+   display: flex;
+   flex-direction: column;
+   gap: 40px;
+}
+
+/* ── Account group ── */
+.group {}
+
+.groupHeader {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 14px 20px;
+   background: #fff;
+   border: 1.5px solid #F3F4F6;
+   border-radius: 14px 14px 0 0;
+   border-bottom: none;
+   gap: 12px;
+}
+
+.groupHeaderLeft {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+}
+
+.groupFlag { font-size: 1.5rem; line-height: 1; }
+
+.groupCurrency {
+   font-size: 0.9rem;
+   font-weight: 700;
+   color: #111827;
+   display: block;
+}
+
+.groupNumber {
+   font-size: 0.72rem;
+   color: #9CA3AF;
+   font-family: monospace;
+   letter-spacing: 0.05em;
+}
+
+.groupBalance { text-align: right; }
+
+.groupBalanceLabel {
+   font-size: 0.65rem;
+   font-weight: 600;
+   text-transform: uppercase;
+   letter-spacing: 0.08em;
+   color: #9CA3AF;
+   display: block;
+}
+
+.groupBalanceValue {
+   font-size: 1rem;
+   font-weight: 700;
+   color: #111827;
+}
+
+.groupBalanceCur {
+   font-size: 0.72rem;
+   font-weight: 500;
+   color: #6B7280;
+}
+
+/* ── Card grid ── */
 .grid {
    display: grid;
    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-   gap: 32px;
+   gap: 28px;
    justify-items: center;
+   padding: 24px 20px;
+   background: #FAFAFA;
+   border: 1.5px solid #F3F4F6;
+   border-radius: 0 0 14px 14px;
+}
+
+/* Group without a header (unknown account) */
+.group:not(:has(.groupHeader)) .grid {
+   border-radius: 14px;
 }
 
 .cardLink {
    display: block;
    line-height: 0;
    border-radius: 20px;
-   transition: transform 0.2s, filter 0.2s;
+   transition: transform 0.2s;
 }
 
 .cardLink:hover {
-   transform: translateY(-4px);
+   transform: translateY(-5px);
 }
 
 @media (max-width: 600px) {
-   .grid { gap: 20px; }
+   .grid { gap: 20px; padding: 16px; }
+   .groupHeader { padding: 12px 16px; }
 }

@@ -184,7 +184,7 @@ const SendTab = ({ myAccounts, exchangeRate, userId, navigate }) => {
             }).unwrap();
          }
          setSuccess(true);
-         setTimeout(() => navigate(`/${userId}/transactions`), 1800);
+         setTimeout(() => navigate(`/${userId}/history`), 1800);
       } catch { setError('Transfer failed. Try again.'); }
       finally   { setLoading(false); }
    };
@@ -370,7 +370,7 @@ const ExchangeTab = ({ myAccounts, exchangeRate, userId, navigate }) => {
          }).unwrap();
 
          setAnimData({ fromAmount: parsedAmt, fromCur: fromAcc.currency, toAmount: liveResult, toCur: toAcc.currency });
-         setTimeout(() => navigate(`/${userId}/transactions`), 3200);
+         setTimeout(() => navigate(`/${userId}/history`), 3200);
       } catch { setError('Exchange failed. Try again.'); }
       finally   { setLoading(false); }
    };

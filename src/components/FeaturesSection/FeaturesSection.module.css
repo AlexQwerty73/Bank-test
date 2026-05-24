@@ -1,59 +1,102 @@
+/* ── Section header ── */
+.sectionHead {
+   text-align: center;
+   margin-bottom: 48px;
+   opacity: 0;
+   transform: translateY(16px);
+   transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.headVisible {
+   opacity: 1;
+   transform: translateY(0);
+}
+
+.eyebrow {
+   font-size: 0.78rem;
+   font-weight: 700;
+   text-transform: uppercase;
+   letter-spacing: 0.12em;
+   color: #4F46E5;
+   margin-bottom: 10px;
+}
+
+.sectionTitle {
+   font-size: 2rem;
+   font-weight: 800;
+   color: #111827;
+   letter-spacing: -0.03em;
+   margin: 0;
+}
+
+/* ── Grid ── */
 .featuresSection {
-   padding: 40px 0;
+   padding: 0 0 40px;
    display: flex;
-   justify-content: space-around;
+   justify-content: space-between;
    align-items: stretch;
    flex-wrap: wrap;
+   gap: 20px;
 }
 
 .feature {
    text-align: center;
-   padding: 32px 24px;
-   border-radius: 12px;
-   border: 1px solid #E2E8F0;
+   padding: 32px 24px 28px;
+   border-radius: 16px;
+   border: 1.5px solid #F3F4F6;
    background-color: #FFFFFF;
-   width: calc(30% - 20px);
-   margin-bottom: 28px;
+   width: calc(33% - 16px);
+   min-width: 200px;
    color: #0F172A;
    opacity: 0;
-   transition: opacity 0.5s ease-in, border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+   transform: translateY(20px);
+   transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.25s, box-shadow 0.25s;
+   box-shadow: 0 1px 8px rgba(15,23,42,0.04);
 }
 
 .visible {
    opacity: 1;
+   transform: translateY(0);
 }
 
 .featureContent {
    display: flex;
    flex-direction: column;
    align-items: center;
+   height: 100%;
 }
 
 .featureIcon {
-   max-width: 72px;
-   margin-bottom: 16px;
+   max-width: 64px;
+   margin-bottom: 14px;
 }
 
 .h3 {
    font-size: 0.95rem;
-   font-weight: 600;
+   font-weight: 700;
    color: #1E293B;
+   margin: 0 0 10px;
+}
+
+.desc {
+   font-size: 0.82rem;
+   color: #6B7280;
+   line-height: 1.65;
    margin: 0;
 }
 
 .feature:hover {
-   border-color: #BFDBFE;
-   box-shadow: 0 4px 24px rgba(37, 99, 235, 0.08);
+   border-color: #C7D2FE;
+   box-shadow: 0 8px 28px rgba(79,70,229,0.10);
    transform: translateY(-4px);
 }
 
-@media (max-width: 768px) {
-   .featuresSection {
-      flex-direction: column;
-      padding: 20px 0;
-   }
+@media (max-width: 900px) {
+   .feature { width: calc(50% - 12px); }
+   .sectionTitle { font-size: 1.6rem; }
+}
 
-   .feature {
-      width: calc(100% - 20px);
-   }
+@media (max-width: 560px) {
+   .featuresSection { gap: 14px; }
+   .feature { width: 100%; }
 }

@@ -48,7 +48,15 @@
 
 .slotCount {
    font-size: 0.68rem;
+   font-weight: 700;
    color: #6B7280;
+}
+
+.slotDetail {
+   font-size: 0.62rem;
+   color: #9CA3AF;
+   text-align: center;
+   line-height: 1.4;
 }
 
 /* ── Fields ── */
@@ -95,6 +103,12 @@
 .err {
    font-size: 0.78rem;
    color: #EF4444;
+}
+
+.hint {
+   font-size: 0.72rem;
+   color: #6B7280;
+   font-style: italic;
 }
 
 /* ── Submit button ── */

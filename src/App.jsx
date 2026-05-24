@@ -8,10 +8,12 @@ import {
    CardsPage,
    CreateAccountPage,
    CreateCardPage,
+   DepositPage,
    ExchangeRatePage,
    HomePage,
    NotFoundPage,
    RemittancePage,
+   SettingsPage,
    TransactionsCardsPage,
    UserProfilePage,
 } from './pages';
@@ -46,7 +48,9 @@ const App = () => {
                         <Route path=":accountId/" element={<CardTransactionsPage />} />
                      </Route>
 
-                     <Route path="history/" element={<AllTransactionsPage />} />
+                     <Route path="history/"   element={<AllTransactionsPage />} />
+                     <Route path="deposits/" element={<DepositPage />} />
+                     <Route path="settings/" element={<SettingsPage />} />
 
                      <Route path="cards/">
                         <Route index element={<CardsPage />} />

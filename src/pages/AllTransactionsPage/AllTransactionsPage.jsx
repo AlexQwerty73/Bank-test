@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useGetTransactionsByUserIdQuery, useGetAccountsByUserIdQuery } from '../../store';
+import { usePagination } from '../../hooks';
+import { Pagination } from '../../components/commons';
 import styles from './allTransactionsPage.module.css';
 
 /* ── Helpers ─────────────────────────────────────────── */
@@ -17,29 +19,24 @@ function withinPeriod(dateStr, days) {
 }
 
 const TYPE_LABEL = {
-   transfer:          'Transfer',
+   transfer:            'Transfer',
    'external-transfer': 'External',
-   exchange:          'Exchange',
-   deposit:           'Deposit',
-   withdrawal:        'Withdrawal',
+   exchange:            'Exchange',
+   deposit:             'Deposit',
+   withdrawal:          'Withdrawal',
 };
 
 const TYPE_ICON = {
-   transfer:          '↔️',
+   transfer:            '↔️',
    'external-transfer': '🏦',
-   exchange:          '🔄',
-   deposit:           '💰',
-   withdrawal:        '🏧',
+   exchange:            '🔄',
+   deposit:             '💰',
+   withdrawal:          '🏧',
 };
 
 const CURRENCY_FLAGS = { USD: '🇺🇸', EUR: '🇪🇺', UAH: '🇺🇦' };
 
-/* ── Direction pill ─────────────────────────────────── */
-const DirBadge = ({ dir }) => (
-   <span className={dir === 'in' ? styles.badgeIn : styles.badgeOut}>
-      {dir === 'in' ? '+' : '−'}
-   </span>
-);
+const PAGE_SIZE_OPTIONS = [10, 20, 50];
 
 /* ── Single row ─────────────────────────────────────── */
 const TxRow = ({ tx }) => {
@@ -49,9 +46,7 @@ const TxRow = ({ tx }) => {
    const time  = date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
    return (
       <div className={styles.txRow}>
-         <div className={styles.txIcon}>
-            {TYPE_ICON[tx.type] ?? '💳'}
-         </div>
+         <div className={styles.txIcon}>{TYPE_ICON[tx.type] ?? '💳'}</div>
          <div className={styles.txMeta}>
             <span className={styles.txDesc}>
                {tx.description || TYPE_LABEL[tx.type] || 'Transaction'}
@@ -77,22 +72,16 @@ const TxRow = ({ tx }) => {
 export const AllTransactionsPage = () => {
    const { userId } = useParams();
 
-   const { data: allTxs    = [], isLoading: txLoad   } = useGetTransactionsByUserIdQuery(userId);
-   const { data: accounts  = [], isLoading: accLoad  } = useGetAccountsByUserIdQuery(userId);
+   const { data: allTxs   = [], isLoading: txLoad  } = useGetTransactionsByUserIdQuery(userId, { refetchOnMountOrArgChange: true });
+   const { data: accounts = [], isLoading: accLoad } = useGetAccountsByUserIdQuery(userId, { refetchOnMountOrArgChange: true });
 
-   /* ── Filters state ── */
+   /* ── Filter state ── */
    const [accountFilter, setAccountFilter] = useState('all');
    const [dirFilter,     setDirFilter]     = useState('all');
-   const [periodFilter,  setPeriodFilter]  = useState('30');
+   const [periodFilter,  setPeriodFilter]  = useState('all');
    const [search,        setSearch]        = useState('');
    const [typeFilter,    setTypeFilter]    = useState('all');
-
-   /* ── Derived account map ── */
-   const accountsById = useMemo(() => {
-      const map = {};
-      accounts.forEach(a => { map[a.id] = a; });
-      return map;
-   }, [accounts]);
+   const [pageSize,      setPageSize]      = useState(10);
 
    /* ── Unique types in data ── */
    const allTypes = useMemo(() => {
@@ -103,43 +92,88 @@ export const AllTransactionsPage = () => {
    /* ── Filtered list ── */
    const filtered = useMemo(() => {
       const days = PERIOD_DAYS[periodFilter] ?? Infinity;
-      const q = search.trim().toLowerCase();
+      const q    = search.trim().toLowerCase();
       return allTxs.filter(tx => {
          if (accountFilter !== 'all' && tx.accountId !== accountFilter) return false;
-         if (dirFilter !== 'all'     && tx.direction !== dirFilter)      return false;
-         if (typeFilter !== 'all'    && tx.type     !== typeFilter)       return false;
-         if (!withinPeriod(tx.date, days))                               return false;
+         if (dirFilter     !== 'all' && tx.direction !== dirFilter)     return false;
+         if (typeFilter    !== 'all' && tx.type      !== typeFilter)    return false;
+         if (!withinPeriod(tx.date, days))                              return false;
          if (q && !(
-            (tx.description ?? '').toLowerCase().includes(q) ||
-            (tx.counterName  ?? '').toLowerCase().includes(q) ||
+            (tx.description          ?? '').toLowerCase().includes(q) ||
+            (tx.counterName          ?? '').toLowerCase().includes(q) ||
             (tx.counterAccountNumber ?? '').toLowerCase().includes(q)
          )) return false;
          return true;
       });
    }, [allTxs, accountFilter, dirFilter, typeFilter, periodFilter, search]);
 
-   /* ── Summary ── */
+   /* ── Summary (grouped by currency) ── */
    const summary = useMemo(() => {
-      let totalIn = 0, totalOut = 0;
+      const byCurrency = {};
       filtered.forEach(tx => {
-         if (tx.direction === 'in')  totalIn  += Number(tx.amount);
-         if (tx.direction === 'out') totalOut += Number(tx.amount);
+         const cur = tx.currency ?? '?';
+         if (!byCurrency[cur]) byCurrency[cur] = { in: 0, out: 0 };
+         if (tx.direction === 'in')  byCurrency[cur].in  += Number(tx.amount);
+         if (tx.direction === 'out') byCurrency[cur].out += Number(tx.amount);
       });
-      return { totalIn, totalOut, net: totalIn - totalOut };
+      return { byCurrency, currencies: Object.keys(byCurrency) };
    }, [filtered]);
 
-   /* ── Group by date ── */
+   /* ── Pagination ── */
+   const {
+      page, totalPages, totalItems, pageItems,
+      setPage, prevPage, nextPage, startIndex, endIndex,
+   } = usePagination(filtered, pageSize);
+
+   /* ── Group current page by date ── */
    const grouped = useMemo(() => {
       const groups = {};
-      filtered.forEach(tx => {
-         const key = new Date(tx.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+      pageItems.forEach(tx => {
+         const key = new Date(tx.date).toLocaleDateString('en-GB', {
+            day: '2-digit', month: 'long', year: 'numeric',
+         });
          if (!groups[key]) groups[key] = [];
          groups[key].push(tx);
       });
       return Object.entries(groups);
-   }, [filtered]);
+   }, [pageItems]);
+
+   /* ── Summary renderers ── */
+   const renderAmounts = (dir) => {
+      const sign   = dir === 'in' ? '+' : '−';
+      const valCls = dir === 'in'
+         ? `${styles.summaryVal} ${styles.valIn}`
+         : `${styles.summaryVal} ${styles.valOut}`;
+      const items = summary.currencies
+         .map(cur => ({ cur, val: summary.byCurrency[cur][dir] }))
+         .filter(({ val }) => val > 0);
+      if (items.length === 0) return <span className={styles.summaryVal}>—</span>;
+      return items.map(({ cur, val }) => (
+         <span key={cur} className={valCls}>{sign}{fmt(val)} {cur}</span>
+      ));
+   };
+
+   const renderNet = () => {
+      if (summary.currencies.length === 0) return <span className={styles.summaryVal}>—</span>;
+      return summary.currencies.map(cur => {
+         const net = summary.byCurrency[cur].in - summary.byCurrency[cur].out;
+         const cls = net >= 0
+            ? `${styles.summaryVal} ${styles.valIn}`
+            : `${styles.summaryVal} ${styles.valOut}`;
+         return (
+            <span key={cur} className={cls}>
+               {net >= 0 ? '+' : ''}{fmt(net)} {cur}
+            </span>
+         );
+      });
+   };
 
    const isLoading = txLoad || accLoad;
+
+   const resetFilters = () => {
+      setAccountFilter('all'); setDirFilter('all');
+      setTypeFilter('all');    setPeriodFilter('all'); setSearch('');
+   };
 
    return (
       <div className={styles.page}>
@@ -163,27 +197,21 @@ export const AllTransactionsPage = () => {
             <div className={styles.summaryStrip}>
                <div className={styles.summaryItem}>
                   <span className={styles.summaryLabel}>Incoming</span>
-                  <span className={`${styles.summaryVal} ${styles.valIn}`}>
-                     +{fmt(summary.totalIn)}
-                  </span>
+                  {renderAmounts('in')}
                </div>
                <div className={styles.summarySep} />
                <div className={styles.summaryItem}>
                   <span className={styles.summaryLabel}>Outgoing</span>
-                  <span className={`${styles.summaryVal} ${styles.valOut}`}>
-                     −{fmt(summary.totalOut)}
-                  </span>
+                  {renderAmounts('out')}
                </div>
                <div className={styles.summarySep} />
                <div className={styles.summaryItem}>
                   <span className={styles.summaryLabel}>Net</span>
-                  <span className={`${styles.summaryVal} ${summary.net >= 0 ? styles.valIn : styles.valOut}`}>
-                     {summary.net >= 0 ? '+' : ''}{fmt(summary.net)}
-                  </span>
+                  {renderNet()}
                </div>
                <div className={styles.summarySep} />
                <div className={styles.summaryItem}>
-                  <span className={styles.summaryLabel}>Transactions</span>
+                  <span className={styles.summaryLabel}>Total</span>
                   <span className={styles.summaryVal}>{filtered.length}</span>
                </div>
             </div>
@@ -191,7 +219,6 @@ export const AllTransactionsPage = () => {
             {/* ── Filters ── */}
             <div className={styles.filters}>
 
-               {/* Search */}
                <div className={styles.searchWrap}>
                   <svg className={styles.searchIcon} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
                      <circle cx="9" cy="9" r="5"/><path d="M20 20l-4.3-4.3"/>
@@ -205,10 +232,8 @@ export const AllTransactionsPage = () => {
                   />
                </div>
 
-               {/* Filter row */}
                <div className={styles.filterRow}>
 
-                  {/* Account */}
                   <div className={styles.filterGroup}>
                      <label className={styles.filterLabel}>Account</label>
                      <div className={styles.selectWrap}>
@@ -223,7 +248,6 @@ export const AllTransactionsPage = () => {
                      </div>
                   </div>
 
-                  {/* Direction */}
                   <div className={styles.filterGroup}>
                      <label className={styles.filterLabel}>Direction</label>
                      <div className={styles.pills}>
@@ -239,7 +263,6 @@ export const AllTransactionsPage = () => {
                      </div>
                   </div>
 
-                  {/* Type */}
                   <div className={styles.filterGroup}>
                      <label className={styles.filterLabel}>Type</label>
                      <div className={styles.selectWrap}>
@@ -253,7 +276,6 @@ export const AllTransactionsPage = () => {
                      </div>
                   </div>
 
-                  {/* Period */}
                   <div className={styles.filterGroup}>
                      <label className={styles.filterLabel}>Period</label>
                      <div className={styles.pills}>
@@ -269,6 +291,22 @@ export const AllTransactionsPage = () => {
                      </div>
                   </div>
 
+                  {/* Per-page selector */}
+                  <div className={styles.filterGroup}>
+                     <label className={styles.filterLabel}>Per page</label>
+                     <div className={styles.pills}>
+                        {PAGE_SIZE_OPTIONS.map(n => (
+                           <button
+                              key={n}
+                              className={`${styles.pill} ${pageSize === n ? styles.pillActive : ''}`}
+                              onClick={() => setPageSize(n)}
+                           >
+                              {n}
+                           </button>
+                        ))}
+                     </div>
+                  </div>
+
                </div>
             </div>
 
@@ -279,24 +317,33 @@ export const AllTransactionsPage = () => {
                <div className={styles.empty}>
                   <span>🔍</span>
                   <p>No transactions match your filters.</p>
-                  <button className={styles.resetBtn} onClick={() => {
-                     setAccountFilter('all'); setDirFilter('all');
-                     setTypeFilter('all'); setPeriodFilter('all'); setSearch('');
-                  }}>
-                     Reset filters
-                  </button>
+                  <button className={styles.resetBtn} onClick={resetFilters}>Reset filters</button>
                </div>
             ) : (
-               <div className={styles.list}>
-                  {grouped.map(([date, txs]) => (
-                     <div key={date} className={styles.group}>
-                        <div className={styles.groupDate}>{date}</div>
-                        <div className={styles.groupRows}>
-                           {txs.map(tx => <TxRow key={tx.id} tx={tx} />)}
+               <>
+                  <div className={styles.list}>
+                     {grouped.map(([date, txs]) => (
+                        <div key={date} className={styles.group}>
+                           <div className={styles.groupDate}>{date}</div>
+                           <div className={styles.groupRows}>
+                              {txs.map(tx => <TxRow key={tx.id} tx={tx} />)}
+                           </div>
                         </div>
-                     </div>
-                  ))}
-               </div>
+                     ))}
+                  </div>
+
+                  <Pagination
+                     page={page}
+                     totalPages={totalPages}
+                     totalItems={totalItems}
+                     startIndex={startIndex}
+                     endIndex={endIndex}
+                     onPage={setPage}
+                     onPrev={prevPage}
+                     onNext={nextPage}
+                     label="transactions"
+                  />
+               </>
             )}
 
          </div>

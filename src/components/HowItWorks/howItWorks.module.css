@@ -1,0 +1,116 @@
+.section {
+   padding: 80px 0 60px;
+   text-align: center;
+}
+
+.eyebrow {
+   font-size: 0.78rem;
+   font-weight: 700;
+   text-transform: uppercase;
+   letter-spacing: 0.12em;
+   color: #4F46E5;
+   margin-bottom: 12px;
+}
+
+.title {
+   font-size: 2rem;
+   font-weight: 800;
+   color: #111827;
+   letter-spacing: -0.03em;
+   margin-bottom: 56px;
+}
+
+.steps {
+   display: flex;
+   justify-content: center;
+   gap: 32px;
+   flex-wrap: wrap;
+   margin-bottom: 48px;
+}
+
+.step {
+   background: #fff;
+   border-radius: 20px;
+   border: 1.5px solid #F3F4F6;
+   box-shadow: 0 2px 16px rgba(15,23,42,0.05);
+   padding: 36px 28px;
+   width: calc(33% - 24px);
+   min-width: 220px;
+   max-width: 300px;
+   text-align: center;
+   position: relative;
+   opacity: 0;
+   transform: translateY(28px);
+   transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.25s, border-color 0.25s;
+}
+
+.step:hover {
+   box-shadow: 0 8px 32px rgba(79,70,229,0.12);
+   border-color: #C7D2FE;
+   transform: translateY(-4px) !important;
+}
+
+.visible {
+   opacity: 1;
+   transform: translateY(0);
+}
+
+.stepNum {
+   position: absolute;
+   top: -14px;
+   left: 50%;
+   transform: translateX(-50%);
+   background: #4F46E5;
+   color: #fff;
+   font-size: 0.7rem;
+   font-weight: 800;
+   letter-spacing: 0.06em;
+   padding: 3px 12px;
+   border-radius: 999px;
+}
+
+.stepIcon {
+   font-size: 2.6rem;
+   margin-bottom: 16px;
+}
+
+.stepTitle {
+   font-size: 1rem;
+   font-weight: 700;
+   color: #111827;
+   margin-bottom: 10px;
+}
+
+.stepDesc {
+   font-size: 0.875rem;
+   color: #6B7280;
+   line-height: 1.65;
+   margin: 0;
+}
+
+.cta {
+   display: flex;
+   justify-content: center;
+}
+
+.ctaBtn {
+   display: inline-block;
+   padding: 14px 30px;
+   background: #4F46E5;
+   color: #fff;
+   font-size: 0.95rem;
+   font-weight: 700;
+   border-radius: 10px;
+   text-decoration: none;
+   transition: background 0.15s, transform 0.15s;
+   box-shadow: 0 4px 16px rgba(79,70,229,0.3);
+}
+.ctaBtn:hover {
+   background: #4338CA;
+   transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+   .title { font-size: 1.6rem; }
+   .step { width: 100%; max-width: 100%; }
+}

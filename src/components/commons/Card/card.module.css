@@ -1,7 +1,7 @@
 /* ── 3-D wrapper ── */
 .cardWrap {
    width: 340px;
-   height: 210px;
+   height: 215px;
    perspective: 1200px;
    flex-shrink: 0;
 }
@@ -31,13 +31,7 @@
    color: #fff;
 }
 
-/* ── FRONT ── */
-.front {
-   display: flex;
-   flex-direction: column;
-   padding: 22px 24px 20px;
-}
-
+/* ── Gradients ── */
 .visa {
    background: linear-gradient(135deg, #1E1B4B 0%, #312E81 55%, #4338CA 100%);
 }
@@ -64,6 +58,30 @@
    pointer-events: none;
 }
 
+/* ── FRONT ── */
+.front {
+   display: flex;
+   flex-direction: column;
+   padding: 18px 22px 18px;
+}
+
+/* Expired dim overlay */
+.expiredOverlay {
+   position: absolute;
+   inset: 0;
+   background: rgba(0,0,0,0.45);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 1.4rem;
+   font-weight: 900;
+   letter-spacing: 0.25em;
+   color: rgba(255,255,255,0.7);
+   z-index: 10;
+   border-radius: 20px;
+}
+
+/* Top row */
 .topRow {
    display: flex;
    justify-content: space-between;
@@ -73,89 +91,112 @@
 }
 
 .brandName {
-   font-size: 0.9rem;
+   font-size: 0.85rem;
    font-weight: 800;
    letter-spacing: 0.12em;
    text-transform: uppercase;
 }
 
+.topRight {
+   display: flex;
+   align-items: center;
+   gap: 5px;
+}
+
 .currencyBadge {
-   font-size: 0.7rem;
+   font-size: 0.65rem;
    font-weight: 600;
    letter-spacing: 0.06em;
-   padding: 3px 9px;
+   padding: 2px 8px;
    background: rgba(255,255,255,0.18);
    border-radius: 999px;
    color: rgba(255,255,255,0.85);
 }
 
+.categoryBadgeFront {
+   font-size: 0.58rem;
+   font-weight: 700;
+   letter-spacing: 0.07em;
+   text-transform: uppercase;
+   padding: 2px 7px;
+   border-radius: 999px;
+}
+
+.debitBadge  { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.8); }
+.creditBadge { background: rgba(251,191,36,0.28);  color: #FDE68A; }
+
+/* Chip row */
 .chipRow {
    display: flex;
    align-items: center;
    gap: 10px;
-   margin-top: 14px;
+   margin-top: 10px;
    position: relative;
    z-index: 1;
 }
 
+/* Number */
 .numberRow {
-   font-size: 1.05rem;
+   font-size: 1rem;
    font-weight: 400;
-   letter-spacing: 0.22em;
-   margin-top: 12px;
+   letter-spacing: 0.2em;
+   margin-top: 10px;
    color: rgba(255,255,255,0.92);
    position: relative;
    z-index: 1;
 }
 
-/* ── Balance row (optional, between number and bottom) ── */
+/* Balance (optional) */
 .balanceRow {
-   margin-top: 8px;
+   margin-top: 6px;
    position: relative;
    z-index: 1;
 }
 
 .balanceLabel {
-   font-size: 0.46rem;
+   font-size: 0.44rem;
    text-transform: uppercase;
    letter-spacing: 0.12em;
    color: rgba(255,255,255,0.45);
-   margin-bottom: 2px;
+   margin-bottom: 1px;
 }
 
 .balanceValue {
-   font-size: 0.95rem;
+   font-size: 0.88rem;
    font-weight: 700;
    letter-spacing: 0.01em;
-   color: rgba(255,255,255,0.95);
+   color: rgba(255,255,255,0.93);
 }
 
+/* Bottom row */
 .bottomRow {
    display: flex;
    justify-content: space-between;
    align-items: flex-end;
    margin-top: auto;
-   padding-top: 6px;
+   padding-top: 4px;
    position: relative;
    z-index: 1;
 }
 
 .expiryLabel {
-   font-size: 0.5rem;
+   font-size: 0.46rem;
    text-transform: uppercase;
    letter-spacing: 0.1em;
    color: rgba(255,255,255,0.5);
-   margin-bottom: 3px;
+   margin-bottom: 2px;
 }
 
 .expiryValue {
-   font-size: 0.82rem;
+   font-size: 0.8rem;
    font-weight: 500;
    letter-spacing: 0.08em;
 }
 
+.expiryExpired { color: #FCA5A5; }
+
 .cardLogo {
-   width: 52px;
+   width: 48px;
    object-fit: contain;
    filter: brightness(0) invert(1);
    opacity: 0.88;
@@ -166,10 +207,8 @@
    transform: rotateY(180deg);
    display: flex;
    flex-direction: column;
-   /* same gradient via .visa/.mastercard class */
 }
 
-/* Magnetic stripe */
 .backStripe {
    height: 42px;
    background: rgba(0,0,0,0.7);
@@ -177,16 +216,14 @@
    flex-shrink: 0;
 }
 
-/* Signature area label */
 .sigLabel {
-   font-size: 0.48rem;
+   font-size: 0.46rem;
    text-transform: uppercase;
    letter-spacing: 0.12em;
    color: rgba(255,255,255,0.35);
    padding: 6px 20px 0;
 }
 
-/* Signature strip row: hatched area + white CVV box */
 .sigRow {
    display: flex;
    align-items: stretch;
@@ -206,7 +243,6 @@
    );
 }
 
-/* White CVV box — clearly readable */
 .cvvBox {
    display: flex;
    flex-direction: column;
@@ -219,7 +255,7 @@
 }
 
 .cvvBoxLabel {
-   font-size: 0.44rem;
+   font-size: 0.42rem;
    font-weight: 700;
    text-transform: uppercase;
    letter-spacing: 0.1em;
@@ -233,26 +269,24 @@
    color: #111827;
 }
 
-/* Bottom info */
 .backBottom {
    display: flex;
    justify-content: space-between;
    align-items: center;
-   padding: 0 20px;
+   padding: 0 20px 16px;
    margin-top: auto;
-   padding-bottom: 16px;
    position: relative;
    z-index: 1;
 }
 
 .fullNumber {
-   font-size: 0.6rem;
-   letter-spacing: 0.12em;
+   font-size: 0.58rem;
+   letter-spacing: 0.1em;
    color: rgba(255,255,255,0.35);
 }
 
-.categoryBadge {
-   font-size: 0.6rem;
+.categoryBadgeBack {
+   font-size: 0.58rem;
    text-transform: uppercase;
    letter-spacing: 0.1em;
    color: rgba(255,255,255,0.5);
@@ -266,6 +300,6 @@
    .cardWrap {
       width: 100%;
       max-width: 340px;
-      height: 200px;
+      height: 210px;
    }
 }

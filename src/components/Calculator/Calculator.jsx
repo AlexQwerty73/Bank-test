@@ -16,7 +16,7 @@ export const Calculator = () => {
 
    useEffect(() => {
       calculateDeposit();
-   }, [amount, months, currency, taxDeducted, depositData]);
+   }, [amount, months, currency, taxDeducted, depositData]); // eslint-disable-line react-hooks/exhaustive-deps
 
    const calculateDeposit = () => {
       if (depositError) {
@@ -64,7 +64,7 @@ export const Calculator = () => {
    return (
       <div className={styles.calculator}>
          <div className={styles.calc_conainer}>
-            <h1 className={styles.header}>I want multiply 💸</h1>
+            <h1 className={styles.header}>Deposit Calculator</h1>
             <div className={styles.content}>
                <div className={styles.input_group}>
                   <label className={styles.input_label}>

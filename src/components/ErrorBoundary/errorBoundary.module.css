@@ -1,0 +1,140 @@
+.page {
+   min-height: 100vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   padding: 48px 16px;
+   background: #F9FAFB;
+}
+
+.card {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   text-align: center;
+   background: #fff;
+   border: 1.5px solid #FEE2E2;
+   border-radius: 24px;
+   padding: 52px 48px;
+   max-width: 480px;
+   width: 100%;
+   box-shadow: 0 4px 32px rgba(239, 68, 68, 0.08);
+}
+
+/* ── Illustration ── */
+.illustration {
+   margin-bottom: 20px;
+   animation: wiggle 3s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+   0%, 100% { transform: rotate(0deg); }
+   20%       { transform: rotate(-8deg); }
+   40%       { transform: rotate(8deg); }
+   60%       { transform: rotate(-4deg); }
+   80%       { transform: rotate(4deg); }
+}
+
+/* ── Heading ── */
+.title {
+   font-size: 1.5rem;
+   font-weight: 700;
+   color: #111827;
+   margin: 0 0 12px;
+   letter-spacing: -0.02em;
+}
+
+/* ── Description ── */
+.desc {
+   font-size: 0.9rem;
+   color: #6B7280;
+   line-height: 1.6;
+   margin: 0 0 32px;
+}
+
+/* ── Action buttons ── */
+.actions {
+   display: flex;
+   gap: 12px;
+   flex-wrap: wrap;
+   justify-content: center;
+   margin-bottom: 24px;
+}
+
+.reloadBtn,
+.homeBtn {
+   display: inline-flex;
+   align-items: center;
+   gap: 7px;
+   padding: 11px 22px;
+   font-size: 0.875rem;
+   font-weight: 600;
+   border-radius: 10px;
+   cursor: pointer;
+   transition: background 0.18s, transform 0.13s;
+   border: none;
+}
+
+.reloadBtn svg,
+.homeBtn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+.reloadBtn {
+   background: #EF4444;
+   color: #fff;
+   box-shadow: 0 2px 12px rgba(239, 68, 68, 0.3);
+}
+.reloadBtn:hover {
+   background: #DC2626;
+   transform: translateY(-1px);
+}
+
+.homeBtn {
+   background: #F3F4F6;
+   color: #374151;
+   border: 1.5px solid #E5E7EB;
+}
+.homeBtn:hover {
+   background: #E5E7EB;
+   transform: translateY(-1px);
+}
+
+/* ── Error details (dev) ── */
+.detailsWrap {
+   width: 100%;
+   text-align: left;
+}
+
+.detailsToggle {
+   font-size: 0.78rem;
+   font-weight: 600;
+   color: #9CA3AF;
+   background: none;
+   border: none;
+   cursor: pointer;
+   padding: 4px 0;
+   transition: color 0.15s;
+}
+.detailsToggle:hover { color: #6B7280; }
+
+.detailsCode {
+   margin-top: 8px;
+   padding: 14px;
+   background: #1F2937;
+   color: #F87171;
+   font-size: 0.72rem;
+   line-height: 1.6;
+   border-radius: 10px;
+   overflow-x: auto;
+   white-space: pre-wrap;
+   word-break: break-word;
+   max-height: 200px;
+   overflow-y: auto;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+   .card { padding: 36px 20px; }
+   .title { font-size: 1.25rem; }
+   .actions { flex-direction: column; width: 100%; }
+   .reloadBtn, .homeBtn { justify-content: center; }
+}

@@ -51,6 +51,34 @@
    margin: 0;
 }
 
+/* ── Show / hide password ── */
+.passWrap {
+   position: relative;
+}
+
+.passWrap input {
+   padding-right: 44px !important;
+}
+
+.eyeBtn {
+   position: absolute;
+   right: 10px;
+   top: 50%;
+   transform: translateY(-50%);
+   background: none;
+   border: none;
+   cursor: pointer;
+   color: #9CA3AF;
+   padding: 4px;
+   display: flex;
+   align-items: center;
+   border-radius: 6px;
+   transition: color 0.15s, background 0.15s;
+   line-height: 0;
+}
+.eyeBtn svg { width: 18px; height: 18px; }
+.eyeBtn:hover { color: #4F46E5; background: #EEF2FF; }
+
 .button {
    width: 100%;
    padding: 13px;

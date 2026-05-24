@@ -4,36 +4,52 @@
 .header {
    display: flex;
    justify-content: space-between;
-   align-items: flex-end;
-   margin-bottom: 36px;
+   align-items: flex-start;
+   margin-bottom: 24px;
    gap: 16px;
    flex-wrap: wrap;
 }
 
 .title {
    font-size: 1.75rem;
-   font-weight: 700;
+   font-weight: 800;
    letter-spacing: -0.03em;
    color: #111827;
+   margin: 0 0 8px;
 }
 
-.subtitle {
+/* Meta line */
+.meta {
    display: flex;
    align-items: center;
    gap: 6px;
    flex-wrap: wrap;
-   margin-top: 6px;
-   font-size: 0.82rem;
-   color: #6B7280;
 }
 
-/* slot pills in the subtitle */
+.metaCount {
+   font-size: 0.82rem;
+   font-weight: 600;
+   color: #374151;
+}
+
+.metaDot { color: #D1D5DB; }
+
+.metaChip {
+   font-size: 0.72rem;
+   font-weight: 600;
+   color: #6B7280;
+   background: #F3F4F6;
+   padding: 2px 8px;
+   border-radius: 999px;
+}
+
+/* Slot pills */
 .slotPill {
    display: inline-flex;
    align-items: center;
    padding: 2px 8px;
    border-radius: 999px;
-   font-size: 0.72rem;
+   font-size: 0.7rem;
    font-weight: 600;
    letter-spacing: 0.04em;
    border: 1px solid;
@@ -45,7 +61,7 @@
 .addBtn {
    display: inline-flex;
    align-items: center;
-   gap: 8px;
+   gap: 7px;
    padding: 10px 20px;
    font-size: 0.875rem;
    font-weight: 600;
@@ -58,16 +74,17 @@
    transition: background 0.18s, transform 0.15s, box-shadow 0.18s;
    box-shadow: 0 2px 12px rgba(79,70,229,0.35);
    white-space: nowrap;
+   flex-shrink: 0;
 }
+.addBtn svg { width: 16px; height: 16px; }
 .addBtn:hover { background: #4338CA; transform: translateY(-1px); box-shadow: 0 4px 20px rgba(79,70,229,0.45); }
 .addBtn:active { transform: translateY(0); }
-
-.plusIcon { font-size: 1.1rem; line-height: 1; }
 
 .limitReached {
    display: inline-flex;
    align-items: center;
-   padding: 10px 20px;
+   gap: 6px;
+   padding: 10px 18px;
    font-size: 0.875rem;
    font-weight: 600;
    color: #9CA3AF;
@@ -75,7 +92,70 @@
    border: 1.5px solid #E5E7EB;
    border-radius: 10px;
    white-space: nowrap;
+   flex-shrink: 0;
 }
+.limitReached svg { width: 15px; height: 15px; }
+
+/* ── Filters ── */
+.filters {
+   display: flex;
+   gap: 6px;
+   margin-bottom: 28px;
+   flex-wrap: wrap;
+}
+
+.filterPill {
+   font-size: 0.82rem;
+   font-weight: 600;
+   padding: 7px 16px;
+   border-radius: 8px;
+   border: 1.5px solid #E5E7EB;
+   background: #fff;
+   color: #6B7280;
+   cursor: pointer;
+   transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.filterPill:hover { background: #EEF2FF; border-color: #C7D2FE; color: #4F46E5; }
+.filterActive {
+   background: #4F46E5 !important;
+   border-color: #4F46E5 !important;
+   color: #fff !important;
+}
+
+/* ── Loading skeleton ── */
+.skeletonWrap {
+   display: flex;
+   flex-direction: column;
+   gap: 32px;
+}
+
+.skeleton {
+   height: 160px;
+   border-radius: 14px;
+   background: linear-gradient(90deg, #F3F4F6 25%, #E9EAEC 50%, #F3F4F6 75%);
+   background-size: 400% 100%;
+   animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+   0%   { background-position: 100% 0; }
+   100% { background-position: -100% 0; }
+}
+
+/* ── Error box ── */
+.errorBox {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   padding: 20px 24px;
+   background: #FEF2F2;
+   border: 1.5px solid #FCA5A5;
+   border-radius: 14px;
+   font-size: 0.9rem;
+   font-weight: 500;
+   color: #DC2626;
+}
+.errorBox svg { width: 18px; height: 18px; flex-shrink: 0; }
 
 /* ── Empty state ── */
 .empty {
@@ -83,7 +163,7 @@
    flex-direction: column;
    align-items: center;
    justify-content: center;
-   gap: 16px;
+   gap: 14px;
    padding: 72px 24px;
    background: #fff;
    border-radius: 20px;
@@ -91,8 +171,23 @@
    text-align: center;
 }
 .emptyIcon  { font-size: 3rem; line-height: 1; opacity: 0.35; }
-.emptyTitle { font-size: 1.1rem; font-weight: 600; color: #374151; }
-.emptyText  { font-size: 0.875rem; color: #9CA3AF; max-width: 260px; line-height: 1.6; }
+.emptyTitle { font-size: 1.1rem; font-weight: 600; color: #374151; margin: 0; }
+.emptyText  { font-size: 0.875rem; color: #9CA3AF; max-width: 280px; line-height: 1.6; margin: 0; }
 
-/* ── Loading / error ── */
-.statusText { font-size: 0.9rem; color: #6B7280; padding: 40px 0; text-align: center; }
+.resetBtn {
+   padding: 9px 20px;
+   font-size: 0.875rem;
+   font-weight: 600;
+   color: #4F46E5;
+   background: #EEF2FF;
+   border: none;
+   border-radius: 8px;
+   cursor: pointer;
+   transition: background 0.15s;
+}
+.resetBtn:hover { background: #E0E7FF; }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+   .header { flex-direction: column; align-items: flex-start; }
+}

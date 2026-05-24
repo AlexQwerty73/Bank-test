@@ -1,58 +1,77 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './faq.module.css';
 import { useInView } from 'react-intersection-observer';
 
-// Поза компонентом — масив не ре-створюється при кожному рендері
 const FAQ_ITEMS = [
-      {
-         question: "How to open an account in your bank?",
-         answer: "To open an account in our bank, you need to visit any branch with a passport and identification code (for legal entities) or identification number (for individuals). Our specialists will provide you with all the necessary information and fill out the required documents."
-      },
-      {
-         question: "What advantages do clients of your bank have?",
-         answer: "Our bank offers a wide range of services, including various credit and deposit products, investment opportunities, electronic payment systems, and much more. We also provide a high level of service and individual approach to each client."
-      },
-      {
-         question: "Lorem ipsum dolor sit amet?",
-         answer: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nesciunt ipsam aspernatur illum corporis dicta cum exercitationem perferendis. Deleniti, alias enim eligendi, voluptas in asperiores iusto quae iste fugiat cumque quaerat!"
-      },
-      {
-         question: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet?",
-         answer: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe sapiente commodi vel cum eaque harum non, eum et expedita sed cumque rerum error nam eligendi eius. Assumenda molestiae dolores illum! Adipisci ducimus perspiciatis ratione ipsam deleniti asperiores nostrum facilis saepe doloribus laboriosam rem iusto consequuntur enim cumque dignissimos, laudantium dolor quidem sapiente ea aliquid porro. Rem eveniet beatae itaque enim!"
-      },
+   {
+      question: 'How do I open an account?',
+      answer:   'Click "Open free account", fill in your name, email and password — that\'s it. Your account is ready in under 2 minutes with no branch visits or paperwork.',
+   },
+   {
+      question: 'What currencies are supported?',
+      answer:   'We support UAH (Ukrainian hryvnia), USD (US dollar) and EUR (euro). You can open a separate account for each currency and hold all three simultaneously.',
+   },
+   {
+      question: 'How do I issue a card?',
+      answer:   'Go to the Cards section and click "Add card". Choose the account to link it to and the card type — debit or credit. Each account supports one debit and one credit card.',
+   },
+   {
+      question: 'Is my money safe?',
+      answer:   'Yes. All data is protected with 256-bit TLS encryption. We use two-factor authentication and real-time fraud monitoring to keep your account secure around the clock.',
+   },
+   {
+      question: 'How do deposits work?',
+      answer:   'Open a deposit from the Deposits section. Use the calculator to estimate your earnings based on amount, currency and term. Interest is calculated monthly and credited at the end of the term.',
+   },
+   {
+      question: 'Can I transfer money between accounts?',
+      answer:   'Yes. Go to Transactions → New Transfer and select the source and destination accounts. Transfers between your own accounts are instant and free of charge.',
+   },
 ];
 
-export const FAQ = () => {
+const FAQItem = ({ item, isOpen, onToggle }) => {
+   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.3 });
+
    return (
-      <div className={styles.faq}>
-         <h2 className={styles.title}>Frequently Asked Questions (FAQ)</h2>
-         <div className={styles.faqList}>
-            {FAQ_ITEMS.map((item) => (
-               <FAQItem key={item.question} question={item.question} answer={item.answer} />
-            ))}
-         </div>
+      <div
+         ref={ref}
+         className={`${styles.item} ${inView ? styles.visible : ''} ${isOpen ? styles.open : ''}`}
+      >
+         <button className={styles.question} onClick={onToggle} aria-expanded={isOpen}>
+            <span>{item.question}</span>
+            <span className={styles.arrow}>{isOpen ? '▲' : '▼'}</span>
+         </button>
+         {isOpen && (
+            <div className={styles.answer}>
+               {item.answer}
+            </div>
+         )}
       </div>
    );
 };
 
-const FAQItem = ({ question, answer }) => {
-   const [refQuestion, inQuestion] = useInView({
-      triggerOnce: true,
-      threshold: .5
-   });
-   const [refAnswer, inAnswer] = useInView({
-      triggerOnce: true,
-      threshold: .5
-   });
+export const FAQ = () => {
+   const [openIndex, setOpenIndex] = useState(null);
+   const [headRef, headInView] = useInView({ triggerOnce: true, threshold: 0.3 });
+
+   const toggle = (i) => setOpenIndex(prev => prev === i ? null : i);
 
    return (
-      <div className={styles.dialog}>
-         <div ref={refQuestion} className={`${styles.cloud} ${styles.question} ${inQuestion ? styles.visible : ''}`}>
-            {question}
+      <section className={styles.faq}>
+         <div className={`${styles.head} ${headInView ? styles.headVisible : ''}`} ref={headRef}>
+            <p className={styles.eyebrow}>FAQ</p>
+            <h2 className={styles.title}>Frequently Asked Questions</h2>
          </div>
-         <div ref={refAnswer} className={`${styles.cloud} ${styles.answer} ${inAnswer ? styles.visible : ''}`}>
-            {answer}
+         <div className={styles.list}>
+            {FAQ_ITEMS.map((item, i) => (
+               <FAQItem
+                  key={item.question}
+                  item={item}
+                  isOpen={openIndex === i}
+                  onToggle={() => toggle(i)}
+               />
+            ))}
          </div>
-      </div>
+      </section>
    );
 };

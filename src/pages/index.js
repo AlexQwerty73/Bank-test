@@ -13,3 +13,5 @@ export * from './ExchangeRatePage';
 export * from './RemittancePage';
 export * from './CreateAccountPage';
 export * from './AllTransactionsPage';
+export * from './DepositPage';
+export * from './SettingsPage';

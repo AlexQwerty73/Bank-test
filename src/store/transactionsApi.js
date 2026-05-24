@@ -14,7 +14,7 @@ export const transactionsApi = createApi({
       /* All transactions for one account (sorted newest first) */
       getTransactionsByAccountId: build.query({
          query: (accountId) =>
-            `${resource}?accountId=${accountId}&_sort=date&_order=desc`,
+            `${resource}?accountId=${accountId}&_sort=-date`,
          providesTags: (result, error, accountId) => [
             { type: tag, id: `account-${accountId}` },
          ],
@@ -23,7 +23,7 @@ export const transactionsApi = createApi({
       /* All transactions for one user (sorted newest first) */
       getTransactionsByUserId: build.query({
          query: (userId) =>
-            `${resource}?userId=${userId}&_sort=date&_order=desc`,
+            `${resource}?userId=${userId}&_sort=-date`,
          providesTags: (result, error, userId) => [
             { type: tag, id: `user-${userId}` },
          ],

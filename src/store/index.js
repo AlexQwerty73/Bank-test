@@ -5,3 +5,4 @@ export * from './exchangeRateApi';
 export * from './depositApi';
 export * from './accountsApi';
 export * from './transactionsApi';
+export * from './userDepositsApi';

@@ -21,6 +21,11 @@ const IconHistory = () => (
       <path d="M5 10h10M5 6h6M5 14h8"/><path d="M13 8l2 2-2 2"/>
    </svg>
 );
+const IconDeposit = () => (
+   <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M10 3v11M7 11l3 3 3-3"/><path d="M4 17h12"/>
+   </svg>
+);
 const IconExchange = () => (
    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <path d="M3 7h14M3 7l3-3M3 7l3 3M17 13H3M17 13l-3-3M17 13l-3 3"/>
@@ -34,6 +39,12 @@ const IconProfile = () => (
 const IconLogout = () => (
    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <path d="M13 3h4v14h-4M8 14l4-4-4-4M12 10H4"/>
+   </svg>
+);
+const IconSettings = () => (
+   <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="10" cy="10" r="3"/>
+      <path d="M10 1v2M10 17v2M1 10h2M17 10h2M3.2 3.2l1.4 1.4M15.4 15.4l1.4 1.4M3.2 16.8l1.4-1.4M15.4 4.6l1.4-1.4"/>
    </svg>
 );
 
@@ -56,6 +67,18 @@ export const Header = () => {
       };
       document.addEventListener('mousedown', handler);
       return () => document.removeEventListener('mousedown', handler);
+   }, []);
+
+   /* close dropdown / drawer on Escape */
+   useEffect(() => {
+      const handleKey = (e) => {
+         if (e.key === 'Escape') {
+            setProfileOpen(false);
+            setMenuOpen(false);
+         }
+      };
+      document.addEventListener('keydown', handleKey);
+      return () => document.removeEventListener('keydown', handleKey);
    }, []);
 
    /* close mobile menu on route change */
@@ -94,6 +117,9 @@ export const Header = () => {
                      <NavLink to={`/${userId}/history`}      className={navCls}>
                         <IconHistory /><span>History</span>
                      </NavLink>
+                     <NavLink to={`/${userId}/deposits`}     className={navCls}>
+                        <IconDeposit /><span>Deposits</span>
+                     </NavLink>
                      <NavLink to="/exchange-rate"            className={navCls}>
                         <IconExchange /><span>Exchange</span>
                      </NavLink>
@@ -131,6 +157,13 @@ export const Header = () => {
                               >
                                  <IconProfile /> Profile
                               </NavLink>
+                              <NavLink
+                                 to={`/${userId}/settings`}
+                                 className={styles.dropdownItem}
+                                 onClick={() => setProfileOpen(false)}
+                              >
+                                 <IconSettings /> Settings
+                              </NavLink>
                               <div className={styles.dropdownDivider} />
                               <button className={`${styles.dropdownItem} ${styles.dropdownLogout}`} onClick={handleLogout}>
                                  <IconLogout /> Log out
@@ -163,8 +196,10 @@ export const Header = () => {
                      <NavLink to={`/${userId}/cards`}        className={styles.drawerLink}><IconCards />Cards</NavLink>
                      <NavLink to={`/${userId}/transactions`} className={styles.drawerLink}><IconAccounts />Accounts</NavLink>
                      <NavLink to={`/${userId}/history`}      className={styles.drawerLink}><IconHistory />History</NavLink>
+                     <NavLink to={`/${userId}/deposits`}     className={styles.drawerLink}><IconDeposit />Deposits</NavLink>
                      <NavLink to="/exchange-rate"            className={styles.drawerLink}><IconExchange />Exchange</NavLink>
                      <NavLink to={`/${userId}/profile`}      className={styles.drawerLink}><IconProfile />Profile</NavLink>
+                     <NavLink to={`/${userId}/settings`}     className={styles.drawerLink}><IconSettings />Settings</NavLink>
                      <button className={styles.drawerLogout} onClick={handleLogout}><IconLogout />Log out</button>
                   </>
                ) : (
