@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useGetCardsByUserIdQuery } from '../../../../redux'
+import { useGetCardsByUserIdQuery } from '../../../../store'
 import { convertToNumberCartFormat } from "../../../../utils";
 import styles from '.././formComponent.module.css';
 

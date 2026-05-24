@@ -1,0 +1,221 @@
+/* ── Wrapper ── */
+.pageWrapper {
+   min-height: 100vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background: #EEF2FF;
+   padding: 32px 16px;
+}
+
+/* ── Card ── */
+.authCard {
+   position: relative;
+   width: 100%;
+   max-width: 1100px;
+   min-height: 760px;
+   border-radius: 24px;
+   overflow: hidden;
+   box-shadow: 0 24px 64px rgba(30, 27, 75, 0.18);
+   background: #FFFFFF;
+   animation: cardIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes cardIn {
+   from { opacity: 0; transform: translateY(20px) scale(0.97); }
+   to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+/* ── Form areas ──────────────────────────────────────────────────────────────
+   Both forms live inside the card at all times.
+   They overlap by ~16% in the centre — the panel always covers that zone.
+   z-index controls which form is "on top" in the narrow overlap strip;
+   the panel (z-index: 3) always hides the real edge.
+────────────────────────────────────────────────────────────────────────────── */
+.formArea {
+   position: absolute;
+   top: 0;
+   height: 100%;
+   width: 58%;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   padding: 60px 72px;
+   overflow-y: auto;
+   box-sizing: border-box;
+   background: #FFFFFF;
+   /* NO opacity or visibility transitions — forms are always "present" */
+}
+
+.formAreaLeft  { left: 0; }
+.formAreaRight { right: 0; }
+
+/* Destination form rises to z-index:1 the instant the slide begins,
+   so it's already "there" being unveiled by the moving panel.         */
+.formTop    { z-index: 1; }
+.formBottom { z-index: 0; }
+
+/* ── Sliding indigo panel ── */
+.panel {
+   position: absolute;
+   top: 0;
+   width: 42%;
+   height: 100%;
+   background: #1E1B4B;
+   background-image:
+      radial-gradient(ellipse at 75% 50%, rgba(99, 91, 255, 0.38) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 15%, rgba(139, 92, 246, 0.28) 0%, transparent 50%);
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   padding: 60px 52px;
+   overflow: hidden;
+   z-index: 3;                                         /* always above both forms */
+   transition: left 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.panelLeft  { left: 0; }
+.panelRight { left: 58%; }
+
+/* Panel text cross-fades at the slide midpoint */
+.panelInner {
+   position: relative;
+   z-index: 1;
+   transition: opacity 0.3s ease;
+}
+
+.panelVisible { opacity: 1; }
+.panelHidden  { opacity: 0; }
+
+/* ── Panel typography ── */
+.brandMark {
+   font-size: 2.2rem;
+   color: #A5B4FC;
+   margin-bottom: 48px;
+   line-height: 1;
+}
+
+.panelTitle {
+   font-size: 2.8rem;
+   font-weight: 800;
+   letter-spacing: -0.04em;
+   line-height: 1.1;
+   color: #FFFFFF;
+   margin: 0 0 20px;
+}
+
+.panelSub {
+   font-size: 1rem;
+   color: rgba(165, 180, 252, 0.8);
+   line-height: 1.7;
+   margin-bottom: 40px;
+}
+
+.panelList {
+   list-style: none;
+   padding: 0;
+   margin: 0;
+   display: flex;
+   flex-direction: column;
+   gap: 14px;
+}
+
+.panelList li {
+   font-size: 0.9rem;
+   color: rgba(199, 210, 254, 0.9);
+}
+
+.panelDeco {
+   position: absolute;
+   bottom: -40px;
+   right: -40px;
+   display: flex;
+   flex-direction: column;
+   gap: 20px;
+   opacity: 0.06;
+   z-index: 0;
+   pointer-events: none;
+}
+
+.panelDeco span {
+   font-size: 15rem;
+   line-height: 1;
+   color: #fff;
+}
+
+/* ── Form typography ── */
+.formHeader   { margin-bottom: 32px; }
+
+.formTitle {
+   font-size: 1.75rem;
+   font-weight: 700;
+   letter-spacing: -0.03em;
+   color: #111827;
+   margin: 0 0 6px;
+}
+
+.formSubtitle {
+   font-size: 0.9rem;
+   color: #6B7280;
+   margin: 0;
+}
+
+.switchText {
+   margin-top: 24px;
+   font-size: 0.875rem;
+   color: #6B7280;
+}
+
+.switchLink {
+   color: #4F46E5;
+   font-weight: 600;
+   transition: color 0.15s;
+}
+
+.switchLink:hover { color: #4338CA; }
+
+/* ── Mobile ── */
+@media (max-width: 900px) {
+   .pageWrapper {
+      padding: 0;
+      align-items: flex-start;
+   }
+
+   .authCard {
+      min-height: 100vh;
+      border-radius: 0;
+      box-shadow: none;
+      display: flex;
+      flex-direction: column;
+   }
+
+   /* On mobile: panel becomes a static header strip */
+   .panel {
+      position: relative !important;
+      left: auto !important;
+      width: 100% !important;
+      height: auto;
+      padding: 40px 32px 32px;
+      transition: none !important;
+      order: 0;
+      flex-shrink: 0;
+      z-index: 1;
+   }
+
+   /* Both forms stack; only the active one is shown */
+   .formArea {
+      position: relative !important;
+      left: auto !important;
+      right: auto !important;
+      width: 100% !important;
+      height: auto;
+      padding: 40px 24px 60px;
+      order: 1;
+      flex: 1;
+   }
+
+   .formBottom { display: none; }
+
+   .panelTitle { font-size: 2rem; }
+   .panelDeco  { display: none; }
+}

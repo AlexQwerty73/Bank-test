@@ -1,4 +1,5 @@
 export * from './Layout';
+export * from './ProtectedRoute';
 export * from './commons';
 export * from './ExchangeRate'
 export * from './CardCreationBlock';

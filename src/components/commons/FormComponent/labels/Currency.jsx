@@ -12,7 +12,7 @@ export const Currency = ({ register, errors }) => {
           <option value="">Select currency</option>
           <option value="USD">USD</option>
           <option value="EUR">EUR</option>
-          <option value="GBP">UAH</option>
+          <option value="UAH">UAH</option>
         </select>
       </label>
       {errors[name] && <p>{errors[name].message}</p>}

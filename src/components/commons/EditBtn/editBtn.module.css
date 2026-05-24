@@ -1,6 +1,16 @@
 
 .btnEdit {
    cursor: pointer;
-   width: 30px;
-   height: 30px;
+   width: 32px;
+   height: 32px;
+   border-radius: 8px;
+   padding: 4px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   transition: background-color 0.2s;
+}
+
+.btnEdit:hover {
+   background-color: #EFF6FF;
 }

@@ -1,54 +1,75 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import styles from './loginForm.module.css';
 import { saveToLocalStorage } from '../../../utils';
-import { useUserByEmail } from '../../../hooks';
-import { getFormError } from './getFormError';
-import { useUpdateUserMutation } from '../../../redux';
+import { useLazyGetUserByEmailQuery, useUpdateUserMutation } from '../../../store';
 
 export const LoginForm = () => {
-   const [email, setEmail] = useState('');
-   const [password, setPassword] = useState('');
-   const [error, setError] = useState('');
+   const navigate = useNavigate();
+   const [getUserByEmail] = useLazyGetUserByEmailQuery();
    const [updateUser] = useUpdateUserMutation();
 
-   const navigate = useNavigate();
-   const userData = useUserByEmail(email);
+   const {
+      register,
+      handleSubmit,
+      setError,
+      formState: { errors, isSubmitting },
+   } = useForm();
 
-   const handleLogin = () => {
-      const isPasswordOk = userData?.password === password || false;
+   const onSubmit = async ({ email, password }) => {
+      const { data: users = [] } = await getUserByEmail(email);
+      const user = users[0];
 
-      if (userData && isPasswordOk) {
-         saveToLocalStorage('userId', userData.id);
-         navigate('/');
-
-         const newUserData = {
-            ...userData,
-            lastLogin: new Date().toISOString(),
-         }
-         updateUser(newUserData);
-
-      } else {
-         setError(getFormError(email, password, userData, isPasswordOk));
+      if (!user) {
+         setError('email', { message: 'No account found with this email' });
+         return;
       }
+      if (user.password !== password) {
+         setError('password', { message: 'Incorrect password' });
+         return;
+      }
+
+      saveToLocalStorage('userId', user.id);
+      updateUser({ ...user, lastLogin: new Date().toISOString() });
+      navigate('/');
    };
 
    return (
-      <form className={styles.loginForm}>
-         <div className={styles.cross} onClick={() => navigate(-1)}>&#10540;</div>
-         <label className={styles.label}>
-            <input className={styles.input} type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <h2>Email:</h2>
-         </label>
-         <label className={styles.label}>
-            <input className={styles.input} type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <h2>Password:</h2>
-         </label>
-         <button className={styles.btn} type="button" onClick={handleLogin}>
-            Log in
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+
+         <div className={styles.field}>
+            <label className={styles.label}>Email</label>
+            <input
+               className={`${styles.input} ${errors.email ? styles.inputError : ''}`}
+               type="email"
+               placeholder="you@example.com"
+               {...register('email', {
+                  required: 'Email is required',
+                  pattern: {
+                     value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                     message: 'Enter a valid email address',
+                  },
+               })}
+            />
+            {errors.email && <span className={styles.error}>{errors.email.message}</span>}
+         </div>
+
+         <div className={styles.field}>
+            <label className={styles.label}>Password</label>
+            <input
+               className={`${styles.input} ${errors.password ? styles.inputError : ''}`}
+               type="password"
+               placeholder="••••••••"
+               {...register('password', { required: 'Password is required' })}
+            />
+            {errors.password && <span className={styles.error}>{errors.password.message}</span>}
+         </div>
+
+         <button className={styles.btn} type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Signing in…' : 'Sign in'}
          </button>
-         {error && <div className={styles.errorWindow}>{error}</div>}
-         <Link to="/create-user" className={styles.link}>Create a new account</Link>
+
       </form>
    );
 };

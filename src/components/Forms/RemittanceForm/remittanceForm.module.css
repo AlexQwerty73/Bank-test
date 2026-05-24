@@ -1,40 +1,568 @@
-.remittanceForm {
-   max-width: 400px;
-   margin: 50px auto;
-   padding: 50px;
-   border-radius: 20px;
-   background: white;
-   border: 1px solid silver;
+.wrap {
+   max-width: 520px;
+   margin: 0 auto;
+   padding: 48px 0 100px;
 }
 
-.confirmationMessage {
-   font-size: 1.4em;
-   max-width: 400px;
-   background: white;
-   border: 1px solid #ccc;
-   padding: 20px;
-   border-radius: 20px;
-
-   position: fixed;
-   left: 50%;
-   top: 50%;
-   transform: translate(-50%, -50%);
+.heading {
+   font-size: 1.75rem;
+   font-weight: 700;
+   letter-spacing: -0.03em;
+   color: #111827;
+   margin-bottom: 24px;
 }
 
-.confirmationMessage p {
-   margin-bottom: 10px;
+/* ── Tabs ────────────────────────────────────────────── */
+.tabs {
+   display: flex;
+   gap: 6px;
+   background: #F3F4F6;
+   border-radius: 12px;
+   padding: 4px;
+   margin-bottom: 28px;
 }
 
-.confirmationMessage button {
-   margin-right: 10px;
-   padding: 5px 10px;
-   background-color: #007bff;
-   color: #fff;
+.tab {
+   flex: 1;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   gap: 7px;
+   padding: 10px;
+   font-size: 0.875rem;
+   font-weight: 600;
+   color: #6B7280;
+   background: transparent;
    border: none;
-   border-radius: 4px;
+   border-radius: 9px;
    cursor: pointer;
+   transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+}
+.tab svg { width: 16px; height: 16px; }
+.tab:hover { color: #374151; }
+.tabActive {
+   background: #fff;
+   color: #4F46E5;
+   box-shadow: 0 1px 6px rgba(15,23,42,0.10);
 }
 
-.confirmationMessage button:hover {
-   background-color: #0056b3;
+/* ── Fields ──────────────────────────────────────────── */
+.field { margin-bottom: 18px; }
+
+.label {
+   display: block;
+   font-size: 0.78rem;
+   font-weight: 600;
+   color: #374151;
+   margin-bottom: 6px;
+   letter-spacing: 0.01em;
+}
+
+.input {
+   width: 100%;
+   padding: 12px 16px;
+   border: 1.5px solid #E5E7EB;
+   border-radius: 10px;
+   font-size: 0.95rem;
+   color: #111827;
+   background: #fff;
+   outline: none;
+   transition: border-color 0.15s, box-shadow 0.15s;
+   box-sizing: border-box;
+}
+.input:focus { border-color: #4F46E5; box-shadow: 0 0 0 3px rgba(79,70,229,0.12); }
+
+.inputErr {
+   border-color: #FCA5A5 !important;
+   background: #FFF5F5;
+}
+.inputErr:focus {
+   border-color: #DC2626 !important;
+   box-shadow: 0 0 0 3px rgba(220,38,38,0.10) !important;
+}
+
+.fieldErr {
+   font-size: 0.78rem;
+   color: #DC2626;
+   margin-top: 5px;
+}
+
+.selectWrap { position: relative; }
+.select {
+   width: 100%;
+   padding: 12px 40px 12px 16px;
+   border: 1.5px solid #E5E7EB;
+   border-radius: 10px;
+   font-size: 0.95rem;
+   color: #111827;
+   background: #fff;
+   appearance: none;
+   outline: none;
+   cursor: pointer;
+   transition: border-color 0.15s;
+   box-sizing: border-box;
+}
+.select:focus { border-color: #4F46E5; }
+.selectWrap::after {
+   content: '▾';
+   position: absolute;
+   right: 14px;
+   top: 50%;
+   transform: translateY(-50%);
+   color: #9CA3AF;
+   pointer-events: none;
+   font-size: 0.85rem;
+}
+
+.hint {
+   font-size: 0.72rem;
+   color: #9CA3AF;
+   font-family: monospace;
+   letter-spacing: 0.06em;
+   margin-top: 5px;
+}
+
+/* ── Balance hint + credit badge ─────────────────────── */
+.balanceHint {
+   display: flex;
+   align-items: center;
+   gap: 8px;
+   font-size: 0.78rem;
+   color: #6B7280;
+   margin-top: 6px;
+}
+.balanceHint b { color: #111827; }
+
+.creditBadge {
+   display: inline-flex;
+   align-items: center;
+   background: #EEF2FF;
+   color: #4F46E5;
+   font-size: 0.72rem;
+   font-weight: 600;
+   padding: 2px 8px;
+   border-radius: 999px;
+   border: 1px solid #C7D2FE;
+}
+
+.rateHint {
+   display: flex;
+   align-items: center;
+   gap: 8px;
+   font-size: 0.82rem;
+   color: #6B7280;
+   background: #F9FAFB;
+   border: 1px solid #E5E7EB;
+   border-radius: 8px;
+   padding: 8px 12px;
+   margin-bottom: 16px;
+}
+.rateHint strong { color: #111827; }
+
+.exchangeNote {
+   font-size: 0.875rem;
+   color: #6B7280;
+   margin-bottom: 20px;
+   line-height: 1.5;
+}
+
+/* ── External toggle ─────────────────────────────────── */
+.toggle {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   cursor: pointer;
+   margin-bottom: 16px;
+   user-select: none;
+}
+.toggle input { display: none; }
+
+.toggleTrack {
+   width: 40px;
+   height: 22px;
+   background: #E5E7EB;
+   border-radius: 999px;
+   position: relative;
+   transition: background 0.2s;
+   flex-shrink: 0;
+}
+.toggle input:checked + .toggleTrack { background: #4F46E5; }
+
+.toggleThumb {
+   position: absolute;
+   width: 16px;
+   height: 16px;
+   background: #fff;
+   border-radius: 50%;
+   top: 3px;
+   left: 3px;
+   transition: transform 0.2s;
+   box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+}
+.toggle input:checked + .toggleTrack .toggleThumb { transform: translateX(18px); }
+
+.toggleLabel {
+   font-size: 0.875rem;
+   font-weight: 600;
+   color: #374151;
+}
+.toggleNote { font-weight: 400; color: #9CA3AF; font-size: 0.8rem; }
+
+/* ── Error ───────────────────────────────────────────── */
+.error {
+   font-size: 0.82rem;
+   color: #DC2626;
+   background: #FEF2F2;
+   border: 1px solid #FECACA;
+   border-radius: 8px;
+   padding: 10px 14px;
+   margin-bottom: 16px;
+}
+
+/* ── Buttons ─────────────────────────────────────────── */
+.primaryBtn {
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   padding: 12px 28px;
+   font-size: 0.9rem;
+   font-weight: 600;
+   color: #fff;
+   background: #4F46E5;
+   border: none;
+   border-radius: 10px;
+   cursor: pointer;
+   transition: background 0.15s, transform 0.12s;
+   box-shadow: 0 2px 12px rgba(79,70,229,0.28);
+   width: 100%;
+}
+.primaryBtn:hover:not(:disabled) { background: #4338CA; transform: translateY(-1px); }
+.primaryBtn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.ghostBtn {
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   padding: 12px 28px;
+   font-size: 0.9rem;
+   font-weight: 600;
+   color: #6B7280;
+   background: #F9FAFB;
+   border: 1.5px solid #E5E7EB;
+   border-radius: 10px;
+   cursor: pointer;
+   transition: background 0.15s;
+   width: 100%;
+}
+.ghostBtn:hover { background: #F3F4F6; }
+
+/* ── Confirm card ────────────────────────────────────── */
+.confirmCard {
+   margin-top: 24px;
+   background: #fff;
+   border-radius: 16px;
+   padding: 22px 24px;
+   border: 1.5px solid #C7D2FE;
+   box-shadow: 0 4px 24px rgba(79,70,229,0.09);
+}
+
+.confirmTitle {
+   font-size: 0.95rem;
+   font-weight: 700;
+   color: #111827;
+   margin-bottom: 16px;
+}
+
+.confirmRow {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 9px 0;
+   border-bottom: 1px solid #F3F4F6;
+   font-size: 0.875rem;
+   color: #6B7280;
+}
+.confirmRow:last-of-type { border-bottom: none; }
+.confirmRow strong { color: #111827; font-weight: 600; text-align: right; max-width: 60%; word-break: break-all; }
+
+.confirmTotal span { font-weight: 700; color: #111827; font-size: 0.9rem; }
+.confirmTotal strong { font-size: 1.05rem; }
+
+.mono { font-family: monospace; font-size: 0.75rem; letter-spacing: 0.06em; }
+
+.confirmActions { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+
+/* ── Success ─────────────────────────────────────────── */
+.successCard {
+   display: flex; flex-direction: column; align-items: center;
+   gap: 12px; text-align: center; padding: 48px 32px;
+   background: #fff; border-radius: 20px; border: 1.5px solid #D1FAE5;
+   box-shadow: 0 4px 24px rgba(5,150,105,0.10);
+}
+.successIcon {
+   width: 64px; height: 64px; border-radius: 50%;
+   background: #D1FAE5; color: #059669;
+   font-size: 1.75rem; font-weight: 700;
+   display: flex; align-items: center; justify-content: center;
+}
+.successCard h3 { font-size: 1.25rem; font-weight: 700; color: #111827; }
+.successCard p  { font-size: 0.875rem; color: #6B7280; }
+
+/* ── Empty tab ───────────────────────────────────────── */
+.emptyTab {
+   display: flex; flex-direction: column; align-items: center;
+   gap: 12px; padding: 48px 24px; text-align: center;
+   background: #fff; border-radius: 16px; border: 2px dashed #C7D2FE;
+   font-size: 0.9rem; color: #6B7280;
+}
+.emptyTab span { font-size: 2rem; }
+
+/* ════════════════════════════════════════════════════════
+   LIVE PREVIEW PANEL
+   ════════════════════════════════════════════════════════ */
+.livePreview {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 12px;
+   background: #F5F7FF;
+   border: 1.5px solid #C7D2FE;
+   border-radius: 14px;
+   padding: 16px 20px;
+   margin-bottom: 20px;
+   animation: fadeSlideIn 0.25s ease both;
+}
+
+.liveFrom,
+.liveTo {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 4px;
+   min-width: 90px;
+}
+
+.liveFlag {
+   font-size: 1.5rem;
+   line-height: 1;
+}
+
+.liveSell {
+   font-size: 0.95rem;
+   font-weight: 700;
+   color: #DC2626;
+   letter-spacing: -0.01em;
+}
+
+.liveBuy {
+   font-size: 0.95rem;
+   font-weight: 700;
+   color: #059669;
+   letter-spacing: -0.01em;
+}
+
+.liveArrow {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 4px;
+   flex: 1;
+}
+.liveArrow svg {
+   width: 44px;
+   height: 18px;
+}
+
+.liveRate {
+   font-size: 0.68rem;
+   font-weight: 600;
+   color: #6B7280;
+   white-space: nowrap;
+   letter-spacing: 0.01em;
+}
+
+/* ════════════════════════════════════════════════════════
+   EXCHANGE SUCCESS ANIMATION
+   ════════════════════════════════════════════════════════ */
+
+/* ── Keyframes ── */
+@keyframes drawPath {
+   from { stroke-dashoffset: 160; }
+   to   { stroke-dashoffset: 0; }
+}
+
+@keyframes dotPulse {
+   0%   { opacity: 0; transform: scale(0.4); }
+   40%  { opacity: 1; transform: scale(1.15); }
+   70%  { opacity: 1; transform: scale(1); }
+   100% { opacity: 0; transform: scale(0.6); }
+}
+
+@keyframes circleIn {
+   from { stroke-dashoffset: 150; opacity: 0; }
+   to   { stroke-dashoffset: 0;   opacity: 1; }
+}
+
+@keyframes tickIn {
+   from { stroke-dashoffset: 40; opacity: 0; }
+   to   { stroke-dashoffset: 0;  opacity: 1; }
+}
+
+@keyframes fadeSlideIn {
+   from { opacity: 0; transform: translateY(8px); }
+   to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeSlideOut {
+   from { opacity: 1; transform: translateY(0); }
+   to   { opacity: 0; transform: translateY(-8px); }
+}
+
+@keyframes amtOut {
+   0%   { opacity: 0; transform: translateX(-12px); }
+   20%  { opacity: 1; transform: translateX(0); }
+   80%  { opacity: 1; }
+   100% { opacity: 0.4; }
+}
+
+@keyframes amtIn {
+   0%   { opacity: 0; transform: translateX(12px); }
+   40%  { opacity: 0; transform: translateX(12px); }
+   60%  { opacity: 1; transform: translateX(0); }
+   100% { opacity: 1; }
+}
+
+@keyframes labelFade {
+   from { opacity: 0; transform: translateY(6px); }
+   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Animation wrapper ── */
+.animWrap {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 32px;
+   padding: 48px 24px;
+   background: #fff;
+   border-radius: 20px;
+   border: 1.5px solid #D1FAE5;
+   box-shadow: 0 4px 24px rgba(5,150,105,0.10);
+   animation: fadeSlideIn 0.3s ease both;
+}
+
+/* ── Top row: from → arrow → to ── */
+.animRow {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 16px;
+   width: 100%;
+}
+
+.animSide {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 6px;
+   min-width: 100px;
+}
+
+.animSideRight { align-items: center; }
+
+.animFlag {
+   font-size: 2rem;
+   line-height: 1;
+}
+
+.animAmount {
+   font-size: 1.1rem;
+   font-weight: 700;
+   letter-spacing: -0.02em;
+}
+
+.animAmtOut {
+   color: #DC2626;
+   animation: amtOut 3s ease forwards;
+}
+
+.animAmtIn {
+   color: #059669;
+   animation: amtIn 3s ease forwards;
+}
+
+.animCur {
+   font-size: 0.75rem;
+   font-weight: 600;
+   opacity: 0.7;
+}
+
+/* ── SVG arrow ── */
+.animArrowWrap {
+   flex: 1;
+   display: flex;
+   justify-content: center;
+}
+
+.animArrow {
+   width: 100px;
+   height: 24px;
+   overflow: visible;
+}
+
+.animArrowPath {
+   stroke-dasharray: 160;
+   stroke-dashoffset: 160;
+   animation: drawPath 0.7s ease 0.2s forwards;
+}
+
+/* ── Flowing dots ── */
+.animDot {
+   opacity: 0;
+   animation: dotPulse 0.8s ease forwards;
+   /* delay set inline per dot */
+}
+
+/* ── Checkmark circle ── */
+.animCheck {
+   width: 64px;
+   height: 64px;
+   animation: fadeSlideIn 0.4s ease 1s both;
+}
+.animCheck svg { width: 100%; height: 100%; }
+
+.animCircle {
+   stroke-dasharray: 150;
+   stroke-dashoffset: 150;
+   animation: circleIn 0.6s ease 1.1s forwards;
+   opacity: 0;
+}
+
+.animTick {
+   stroke-dasharray: 40;
+   stroke-dashoffset: 40;
+   animation: tickIn 0.4s ease 1.7s forwards;
+   opacity: 0;
+}
+
+/* ── "Exchange complete!" label ── */
+.animLabel {
+   font-size: 1.1rem;
+   font-weight: 700;
+   color: #059669;
+   letter-spacing: -0.01em;
+   animation: labelFade 0.5s ease 2s both;
+   opacity: 0;
+}
+
+/* ── Responsive ──────────────────────────────────────── */
+@media (max-width: 600px) {
+   .wrap { padding: 32px 0 80px; }
+   .confirmCard { padding: 18px; }
+   .livePreview { padding: 12px 14px; gap: 8px; }
+   .liveFrom, .liveTo { min-width: 70px; }
+   .animRow { gap: 8px; }
+   .animSide { min-width: 80px; }
+   .animArrow { width: 70px; }
+   .animAmount { font-size: 0.9rem; }
 }

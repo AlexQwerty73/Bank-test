@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useGetExchangeRateApiQuery } from '../../redux';
+import { useGetExchangeRateApiQuery } from '../../store';
 import styles from './ExchangeRate.module.css';
 import ExchangeRateChart from './ExchangeRateChart';
 import { findRecentData } from '../../utils';

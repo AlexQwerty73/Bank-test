@@ -2,69 +2,67 @@
    display: flex;
    align-items: center;
    justify-content: space-around;
-   padding: 250px 20px;
-   /* border-bottom: 1px solid #ddd; */
-   color: white;
+   padding: 220px 20px 180px;
+   color: #FFFFFF;
 }
 
 .heroContent {
-   max-width: 550px;
+   max-width: 520px;
 }
 
 .heroContent h2 {
    font-size: 3.5rem;
-   font-weight: bold;
-   font-family: Verdana, Geneva, Tahoma, sans-serif;
-
-   margin: 0 0 30px;
+   font-weight: 700;
+   letter-spacing: -0.03em;
+   line-height: 1.1;
+   margin: 0 0 20px;
+   color: #FFFFFF;
 }
 
 .heroContent p {
-   font-size: 1.2rem;
-   margin-bottom: 50px;
+   font-size: 1.15rem;
+   color: rgba(255, 255, 255, 0.72);
+   margin-bottom: 44px;
+   line-height: 1.65;
 }
 
 .btn {
-   padding: 25px 40px;
-   font-size: 20px;
-   border-radius: 50px;
-   background: rgb(23, 158, 23);
-   border: 1px solid transparent;
-   color: whitesmoke;
-   font-weight: bold;
-   transition: background-color 0.3s, color 0.3s, transform 0.3s;
+   padding: 16px 36px;
+   font-size: 1rem;
+   font-weight: 600;
+   border-radius: 8px;
+   background: #FFFFFF;
+   color: #1D4ED8;
+   border: none;
+   cursor: pointer;
+   transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
 }
 
 .btn:hover {
-   cursor: pointer;
-   background: transparent;
-   border: 1px solid silver;
+   background: #F0F6FF;
+   transform: translateY(-2px);
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .heroImageContainer {
    max-width: 400px;
    overflow: hidden;
-   position: relative;
-}
-
-.heroImage {
-   z-index: -1;
 }
 
 @media (max-width: 768px) {
    .heroSection {
       flex-direction: column;
-      padding: 250px 20px;
+      padding: 180px 24px 100px;
+      text-align: center;
    }
 
    .heroContent {
-      text-align: center;
-      margin-bottom: 50px;
+      margin-bottom: 40px;
    }
 
    .heroContent h2 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
+      font-size: 2.2rem;
    }
 
    .heroContent p {

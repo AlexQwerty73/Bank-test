@@ -1,0 +1,151 @@
+.footer {
+   background: #0F172A;
+   color: #94A3B8;
+   padding: 64px 0 0;
+   margin-top: auto;
+}
+
+/* ── Three-column grid ── */
+.grid {
+   display: grid;
+   grid-template-columns: 1.6fr 1fr 1fr;
+   gap: 48px;
+   padding-bottom: 48px;
+}
+
+/* ── Brand column ── */
+.brand {}
+
+.logo {
+   font-size: 1.4rem;
+   font-weight: 800;
+   letter-spacing: -0.02em;
+   color: #A5B4FC;
+   margin-bottom: 14px;
+}
+
+.tagline {
+   font-size: 0.875rem;
+   color: #64748B;
+   line-height: 1.7;
+   max-width: 280px;
+   margin-bottom: 24px;
+}
+
+.socials {
+   display: flex;
+   gap: 12px;
+}
+
+.social {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 36px;
+   height: 36px;
+   border-radius: 8px;
+   background: rgba(255,255,255,0.06);
+   color: #64748B;
+   transition: background 0.18s, color 0.18s;
+}
+
+.social:hover {
+   background: rgba(165,180,252,0.15);
+   color: #A5B4FC;
+}
+
+.social svg {
+   width: 16px;
+   height: 16px;
+}
+
+/* ── Nav / contact columns ── */
+.col {}
+
+.colTitle {
+   font-size: 0.72rem;
+   font-weight: 700;
+   text-transform: uppercase;
+   letter-spacing: 0.1em;
+   color: #E2E8F0;
+   margin-bottom: 18px;
+}
+
+.links {
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+}
+
+.links a {
+   font-size: 0.875rem;
+   color: #64748B;
+   text-decoration: none;
+   transition: color 0.18s;
+}
+
+.links a:hover { color: #E2E8F0; }
+
+/* ── Contact ── */
+.contacts {
+   display: flex;
+   flex-direction: column;
+   gap: 14px;
+}
+
+.contactItem {
+   display: flex;
+   flex-direction: column;
+   gap: 2px;
+}
+
+.contactLabel {
+   font-size: 0.65rem;
+   font-weight: 700;
+   text-transform: uppercase;
+   letter-spacing: 0.1em;
+   color: #475569;
+}
+
+.contactItem a,
+.contactItem span {
+   font-size: 0.875rem;
+   color: #64748B;
+   text-decoration: none;
+   transition: color 0.18s;
+}
+
+.contactItem a:hover { color: #E2E8F0; }
+
+/* ── Bottom bar ── */
+.bottom { padding-bottom: 24px; }
+
+.divider {
+   border: none;
+   border-top: 1px solid rgba(255,255,255,0.07);
+   margin-bottom: 20px;
+}
+
+.copy {
+   text-align: center;
+   font-size: 0.8rem;
+   color: #334155;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+   .grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+   }
+   .brand { grid-column: 1 / -1; }
+}
+
+@media (max-width: 560px) {
+   .grid {
+      grid-template-columns: 1fr;
+      gap: 28px;
+      padding-bottom: 32px;
+   }
+   .footer { padding-top: 40px; }
+}

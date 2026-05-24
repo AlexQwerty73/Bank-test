@@ -1,94 +1,320 @@
-.cardTransactionsPage {
-   padding: 50px 0;
+.page { padding: 48px 0 100px; }
+
+.loading { color: #6B7280; padding: 40px 0; text-align: center; font-size: 0.9rem; }
+
+.backLink {
+   display: inline-flex;
+   align-items: center;
+   font-size: 0.875rem;
+   font-weight: 600;
+   color: #4F46E5;
+   text-decoration: none;
+   margin-bottom: 24px;
+   gap: 4px;
 }
+.backLink:hover { text-decoration: underline; }
 
-.cardTransactionsPage h2 {
-   font-size: 24px;
-   margin-bottom: 20px;
-}
-
-.cardTransactionsPage p {
-   font-size: 18px;
-   margin-bottom: 20px;
-}
-
-.cardTransactionsPage ul {
-   list-style: none;
-   padding: 0;
-}
-
-.cardTransactionsPage .transaction {
-   background-color: rgb(255, 255, 255);
-   border-radius: 8px;
-   box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
-   padding: 5px 15px;
-   margin-bottom: 5px;
-   border-bottom: 2px solid silver;
-   cursor: pointer;
-   transition: transform 0.3s ease;
-
+/* ── Account summary card ──────────────────────────────── */
+.accountHeader {
    display: flex;
+   align-items: flex-start;
    justify-content: space-between;
+   background: #fff;
+   border-radius: 20px;
+   padding: 28px 32px;
+   border: 1.5px solid #F3F4F6;
+   box-shadow: 0 2px 16px rgba(15,23,42,0.06);
+   margin-bottom: 20px;
+   gap: 24px;
+   flex-wrap: wrap;
 }
 
-.cardTransactionsPage .transaction:hover {
-   transform: translateY(-2px);
-   background: #00000005;
-}
-
-.cardTransactionsPage .transaction div {
-   margin-bottom: 10px;
-   font-size: 16px;
-}
-
-.cardTransactionsPage .transaction .date {
-   color: #666;
-}
-
-.cardTransactionsPage .transaction .amount {
-   font-weight: bold;
-}
-
-.selectedTransaction {
-   background-color: rgba(0, 0, 0, 0.5);
-   position: fixed;
-   top: 0;
-   left: 0;
-   right: 0;
-   bottom: 0;
+.accountHeaderLeft {
    display: flex;
-   justify-content: center;
+   align-items: flex-start;
+   gap: 18px;
+}
+
+.flag { font-size: 2.75rem; line-height: 1; margin-top: 2px; }
+
+.accountCurrency {
+   font-size: 1.15rem;
+   font-weight: 700;
+   color: #111827;
+   margin-bottom: 6px;
+}
+
+/* Account number as a copyable button */
+.accountNumberBtn {
+   display: inline-flex;
+   align-items: center;
+   gap: 6px;
+   background: none;
+   border: none;
+   cursor: pointer;
+   padding: 0;
+   color: #9CA3AF;
+}
+
+.accountNumber {
+   font-size: 0.72rem;
+   color: #9CA3AF;
+   letter-spacing: 0.1em;
+   font-family: monospace;
+}
+
+.copyIcon {
+   width: 14px;
+   height: 14px;
+   color: #9CA3AF;
+   transition: color 0.15s;
+   display: flex;
    align-items: center;
 }
+.copyIcon svg { width: 14px; height: 14px; }
+.accountNumberBtn:hover .copyIcon { color: #4F46E5; }
 
-.selectedTransactionContent {
-   background-color: #fff;
-   border-radius: 8px;
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-   padding: 20px;
-   max-width: 600px;
-   width: 100%;
-   position: relative;
+.copiedLabel {
+   font-size: 0.7rem;
+   color: #059669;
+   font-weight: 600;
 }
 
-.selectedTransactionContent h3 {
-   font-size: 24px;
-   margin-bottom: 20px;
+.openedDate {
+   font-size: 0.72rem;
+   color: #D1D5DB;
+   margin-top: 6px;
 }
 
-.selectedTransactionContent .transactionInfo {
-   margin-bottom: 20px;
+/* Balance block */
+.balanceBlock { text-align: right; }
+
+.balanceLabel {
+   font-size: 0.72rem;
+   color: #9CA3AF;
+   text-transform: uppercase;
+   letter-spacing: 0.08em;
+   margin-bottom: 4px;
 }
 
-.selectedTransactionContent .closeButton {
-   position: absolute;
-   top: 10px;
-   right: 10px;
-   cursor: pointer;
-   font-size: 20px;
-   color: #999;
+.accountBalance {
+   font-size: 2.5rem;
+   font-weight: 700;
+   letter-spacing: -0.03em;
+   color: #111827;
+   display: flex;
+   align-items: baseline;
+   justify-content: flex-end;
+   gap: 8px;
 }
 
-.selectedTransactionContent .closeButton:hover {
-   color: #666;
+.balanceCurrency {
+   font-size: 1rem;
+   font-weight: 600;
+   color: #6B7280;
+}
+
+/* ── Quick actions ─────────────────────────────────────── */
+.actions {
+   display: flex;
+   gap: 10px;
+   margin-bottom: 32px;
+   flex-wrap: wrap;
+}
+
+.actionBtn {
+   display: inline-flex;
+   align-items: center;
+   gap: 7px;
+   padding: 10px 20px;
+   font-size: 0.875rem;
+   font-weight: 600;
+   color: #fff;
+   background: #4F46E5;
+   border-radius: 10px;
+   text-decoration: none;
+   transition: background 0.15s, transform 0.12s;
+   box-shadow: 0 2px 12px rgba(79,70,229,0.30);
+}
+.actionBtn svg { width: 16px; height: 16px; }
+.actionBtn:hover { background: #4338CA; transform: translateY(-1px); }
+
+.actionBtnGhost {
+   color: #4F46E5;
+   background: #EEF2FF;
+   box-shadow: none;
+}
+.actionBtnGhost:hover { background: #E0E7FF; transform: none; }
+
+/* ── Section ───────────────────────────────────────────── */
+.section { margin-bottom: 40px; }
+
+.sectionTitle {
+   font-size: 1.15rem;
+   font-weight: 700;
+   color: #111827;
+   letter-spacing: -0.02em;
+   margin-bottom: 16px;
+   display: flex;
+   align-items: center;
+   gap: 10px;
+}
+
+.sectionCount {
+   font-size: 0.78rem;
+   font-weight: 600;
+   color: #6B7280;
+   background: #F3F4F6;
+   border-radius: 999px;
+   padding: 2px 10px;
+}
+
+/* ── Linked cards row ──────────────────────────────────── */
+.cardsRow {
+   display: flex;
+   gap: 24px;
+   flex-wrap: wrap;
+}
+
+.cardLink {
+   text-decoration: none;
+   display: block;
+   transition: transform 0.2s;
+}
+.cardLink:hover { transform: translateY(-4px); }
+
+/* ── No cards placeholder ──────────────────────────────── */
+.noCards {
+   display: flex;
+   align-items: center;
+   gap: 12px;
+   padding: 20px 24px;
+   background: #FAFAFA;
+   border-radius: 14px;
+   border: 1.5px dashed #E5E7EB;
+   font-size: 0.875rem;
+   color: #9CA3AF;
+   margin-bottom: 32px;
+}
+.noCards span { font-size: 1.5rem; }
+.noCardsLink {
+   color: #4F46E5;
+   font-weight: 600;
+   text-decoration: none;
+   margin-left: auto;
+}
+.noCardsLink:hover { text-decoration: underline; }
+
+/* ── Empty state ───────────────────────────────────────── */
+.empty {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 12px;
+   padding: 48px 24px;
+   background: #fff;
+   border-radius: 20px;
+   border: 2px dashed #C7D2FE;
+   text-align: center;
+   font-size: 0.9rem;
+   color: #6B7280;
+}
+.empty span { font-size: 2.5rem; }
+
+/* ── Transactions list ─────────────────────────────────── */
+.list {
+   list-style: none;
+   padding: 0;
+   margin: 0;
+   display: flex;
+   flex-direction: column;
+   gap: 8px;
+}
+
+.item {
+   display: flex;
+   align-items: center;
+   gap: 16px;
+   background: #fff;
+   border-radius: 14px;
+   padding: 16px 20px;
+   border: 1.5px solid #F3F4F6;
+   box-shadow: 0 1px 8px rgba(15,23,42,0.04);
+   transition: box-shadow 0.2s, transform 0.2s;
+}
+.item:hover {
+   box-shadow: 0 4px 20px rgba(79,70,229,0.10);
+   transform: translateY(-1px);
+}
+
+.dirBadge {
+   width: 42px;
+   height: 42px;
+   border-radius: 12px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 1.1rem;
+   font-weight: 700;
+   flex-shrink: 0;
+}
+.dirIn  { background: #D1FAE5; color: #059669; }
+.dirOut { background: #FEE2E2; color: #DC2626; }
+
+.itemBody { flex: 1; min-width: 0; }
+
+.itemName {
+   font-size: 0.9rem;
+   font-weight: 600;
+   color: #111827;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+
+.itemDesc {
+   font-size: 0.78rem;
+   color: #9CA3AF;
+   margin-top: 2px;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+
+.itemDate {
+   font-size: 0.72rem;
+   color: #D1D5DB;
+   margin-top: 4px;
+}
+
+.itemAmount {
+   font-size: 1rem;
+   font-weight: 700;
+   letter-spacing: -0.01em;
+   display: flex;
+   align-items: baseline;
+   gap: 4px;
+   white-space: nowrap;
+}
+.amtIn  { color: #059669; }
+.amtOut { color: #DC2626; }
+
+.amtCurrency {
+   font-size: 0.72rem;
+   font-weight: 600;
+   opacity: 0.65;
+}
+
+/* ── Responsive ────────────────────────────────────────── */
+@media (max-width: 768px) {
+   .accountHeader { padding: 20px; }
+   .accountBalance { font-size: 1.8rem; }
+   .balanceBlock { text-align: left; }
+   .cardsRow { gap: 16px; }
+}
+
+@media (max-width: 480px) {
+   .item { padding: 12px 14px; gap: 12px; }
+   .dirBadge { width: 36px; height: 36px; font-size: 0.95rem; }
+   .accountBalance { font-size: 1.5rem; }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { exchangeRateApi, useGetExchangeRateApiQuery } from '../../redux';
+import { useGetExchangeRateApiQuery } from '../../store';
 import { ExchangeRatesSection } from '../../components';
 
 export const ExchangeRatePage = () => {

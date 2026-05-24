@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+/* ── Kill horizontal scroll globally ── */
+html {
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -11,10 +16,67 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #F8FAFC;
+  color: #0F172A;
+  overflow-x: hidden;
 
-  /* background: #2c3e50; */
-  /* font-family: cursive; */
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: #4F46E5 #E0E7FF;
 }
+
+/* ── Custom vertical scrollbar (Chromium / Safari / Edge) ── */
+
+/* Track */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 0;        /* hides horizontal scrollbar entirely */
+}
+
+::-webkit-scrollbar-track {
+  background: #E0E7FF;
+  border-radius: 99px;
+}
+
+/* Thumb */
+::-webkit-scrollbar-thumb {
+  background: #4F46E5;
+  border-radius: 99px;
+  border: 2px solid #E0E7FF;  /* thin "gap" around thumb */
+  min-height: 40px;
+}
+
+::-webkit-scrollbar-thumb:hover  { background: #4338CA; }
+::-webkit-scrollbar-thumb:active { background: #3730A3; }
+
+/* Arrow buttons — ▲ up / ▼ down */
+::-webkit-scrollbar-button {
+  width: 8px;
+  height: 8px;
+  background-color: #E0E7FF;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 6px 6px;
+}
+
+/* ▲ top button */
+::-webkit-scrollbar-button:vertical:decrement {
+  border-radius: 99px 99px 0 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 4'%3E%3Cpath d='M3 0 L6 4 L0 4 Z' fill='%234F46E5'/%3E%3C/svg%3E");
+}
+
+/* ▼ bottom button */
+::-webkit-scrollbar-button:vertical:increment {
+  border-radius: 0 0 99px 99px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 4'%3E%3Cpath d='M3 4 L6 0 L0 0 Z' fill='%234F46E5'/%3E%3C/svg%3E");
+}
+
+::-webkit-scrollbar-button:hover {
+  background-color: #C7D2FE;
+}
+
+/* Hide horizontal scrollbar buttons too (belt-and-suspenders) */
+::-webkit-scrollbar-button:horizontal { display: none; }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

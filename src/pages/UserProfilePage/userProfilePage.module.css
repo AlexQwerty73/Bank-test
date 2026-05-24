@@ -1,0 +1,5 @@
+.userProfile {
+   min-height: calc(100vh - 120px);
+   background: #F8FAFC;
+   padding: 40px 0 80px;
+}

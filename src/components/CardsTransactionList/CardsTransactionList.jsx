@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Img } from '../commons';
-import styles from './CardsTransactionList.jsx.module.css';
+import styles from './cardsTransactionList.module.css';
 import { convertToNumberCartFormat } from '../../utils';
 
 export const CardsTransactionList = ({ cards }) => {

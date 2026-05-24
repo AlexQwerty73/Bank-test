@@ -1,42 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './createUserForm.module.css';
-import { validateForm } from './validateForm';
-import { useAddUserMutation } from '../../../redux';
+import { useAddUserMutation } from '../../../store';
 import { useNavigate } from 'react-router-dom';
 import { saveToLocalStorage } from '../../../utils';
-import { FormComponent } from '../.././commons/FormComponent'; 
+import { FormComponent } from '../../commons/FormComponent';
 
 export const CreateUserForm = () => {
    const navigate = useNavigate();
    const [addUser] = useAddUserMutation();
-   const [formData, setFormData] = useState({
-      name: "",
-      surname: "",
-      email: "",
-      password: "",
-      address: "",
-      phone: "",
-   });
 
-   const handleInputChange = (e) => {
-      const { name, value } = e.target;
-      setFormData(prevData => ({
-         ...prevData,
-         [name]: value
-      }));
-   };
+   // FormComponent використовує react-hook-form — своя логіка стану тут зайва.
+   // Отримуємо дані форми через onSubmit від react-hook-form.
+   const onSubmit = async (formData) => {
+      const response = await addUser({
+         ...formData,
+         createdAt: new Date().toISOString(),
+         lastLogin: new Date().toISOString(),
+         verified: false,
+      });
 
-   const handleSubmit = async (e) => {
-      e.preventDefault();
-      if (validateForm(formData)) {
-         const response = await addUser({
-            ...formData,
-            createdAt: new Date().toISOString(),
-            lastLogin: new Date().toISOString(),
-         });
-
-         const userId = response.data.id;
-         saveToLocalStorage('userId', userId);
+      if (response.data?.id) {
+         saveToLocalStorage('userId', response.data.id);
          navigate('/');
       }
    };
@@ -45,9 +29,7 @@ export const CreateUserForm = () => {
       <div className={styles.createUserForm}>
          <FormComponent
             inputs={['name', 'surname', 'email', 'password', 'address', 'phone']}
-            formData={formData}
-            handleInputChange={handleInputChange}
-            handleSubmit={handleSubmit}
+            onSubmit={onSubmit}
          />
       </div>
    );

@@ -1,57 +1,85 @@
 .form {
    width: 100%;
+   display: flex;
+   flex-direction: column;
+   gap: 4px;
 }
 
 .input_container {
-   margin-bottom: 1.5rem;
+   display: flex;
+   flex-direction: column;
+   gap: 5px;
+   margin-bottom: 12px;
 }
 
 .input_container label {
-   display: block;
-   margin-bottom: 0.25rem;
-   font-size: 1em;
-   color: rgb(101, 101, 101);
+   font-size: 0.72rem;
+   font-weight: 700;
+   text-transform: uppercase;
+   letter-spacing: 0.09em;
+   color: #9CA3AF;
 }
 
 .input_container select,
 .input_container input {
    width: 100%;
-   padding: 0.5rem;
-   font-size: 1rem;
-   border: 1px solid #ced4da;
-   border-radius: 0.25rem;
+   padding: 11px 14px;
+   font-size: 0.95rem;
+   color: #111827;
+   background: #FFFFFF;
+   border: 1.5px solid #E5E7EB;
+   border-radius: 10px;
+   transition: border-color 0.18s, box-shadow 0.18s;
+   box-sizing: border-box;
+   appearance: none;
+}
+
+.input_container select:focus,
+.input_container input:focus {
+   outline: none;
+   border-color: #4F46E5;
+   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+.input_container input::placeholder {
+   color: #D1D5DB;
 }
 
 .input_container p {
-   color: red;
+   font-size: 0.78rem;
+   color: #EF4444;
+   margin: 0;
 }
 
 .button {
-   background-color: #4caf50;
    width: 100%;
-   color: #fff;
-   padding: 10px 15px;
+   padding: 13px;
+   margin-top: 8px;
+   font-size: 0.95rem;
+   font-weight: 600;
+   letter-spacing: 0.01em;
+   color: #FFFFFF;
+   background: #4F46E5;
    border: none;
-   border-radius: 4px;
+   border-radius: 10px;
    cursor: pointer;
-   font-size: 16px;
+   transition: background 0.18s, transform 0.15s, box-shadow 0.18s;
+   box-shadow: 0 2px 12px rgba(79, 70, 229, 0.35);
 }
 
 .button:hover {
-   background-color: #45a049;
+   background: #4338CA;
+   transform: translateY(-1px);
+   box-shadow: 0 4px 20px rgba(79, 70, 229, 0.45);
 }
 
-@media (max-width: 768px) {
+.button:active {
+   transform: translateY(0);
+}
 
-   .input_container select,
-   .input_container input {
-      width: 100%;
-      padding: 1.1rem 1em;
-      font-size: 1.1rem;
-   }
-
-   .button {
-      padding: 10px 20px;
-      font-size: 14px;
-   }
+.button:disabled {
+   opacity: 0.55;
+   cursor: not-allowed;
+   transform: none;
+   box-shadow: none;
 }

@@ -1,112 +1,181 @@
-import React, { useState } from 'react';
-import styles from './createCardForm.module.css';
-import { generateCVV, generateCardNumber, generateExpiryDate, loadFromLocalStorage } from '../../../utils';
-import { useAddCardMutation } from '../../../redux';
+import React, { useMemo } from 'react';
+import { useForm } from 'react-hook-form';
+import { useAddCardMutation, useGetCardsByUserIdQuery, useGetAccountsByUserIdQuery } from '../../../store';
 import { useNavigate, useParams } from 'react-router-dom';
+import { generateCVV, generateCardNumber, generateExpiryDate, loadFromLocalStorage } from '../../../utils';
+import styles from './createCardForm.module.css';
+
+// Max cards per account currency
+const LIMITS = { UAH: 2, EUR: 1, USD: 1 };
+const CURRENCY_FLAGS = { USD: '🇺🇸', EUR: '🇪🇺', UAH: '🇺🇦' };
 
 export const CreateCardForm = () => {
-   const navigate = useNavigate();
-   const [addCard] = useAddCardMutation();
-   const { userId } = useParams();
-   const localData = loadFromLocalStorage('userId');
-   const checkedUserId = userId === localData ? localData : '';
+   const navigate    = useNavigate();
+   const { userId }  = useParams();
+   const localUserId = loadFromLocalStorage('userId');
+   const checkedUserId = userId === localUserId ? localUserId : '';
 
-   const [formData, setFormData] = useState({
-      userId: checkedUserId,
-      number: generateCardNumber(),
+   const [addCard, { isLoading: isSubmitting }] = useAddCardMutation();
+
+   const { data: existingCards = [],    isLoading: cardsLoading    } =
+      useGetCardsByUserIdQuery(checkedUserId, { skip: !checkedUserId });
+   const { data: userAccounts = [],     isLoading: accountsLoading } =
+      useGetAccountsByUserIdQuery(checkedUserId, { skip: !checkedUserId });
+
+   const generatedData = useMemo(() => ({
+      number:     generateCardNumber(),
       expiryDate: generateExpiryDate(),
-      cvv: generateCVV(),
-      pin: "",
-      balance: 0,
-      type: "",
-      currency: "",
-      category: "",
-      history: [],
-   });
+      cvv:        generateCVV(),
+   }), []);
 
-   const handleInputChange = (e) => {
-      const { name, value } = e.target;
-      setFormData({ ...formData, [name]: value });
+   // Count cards already linked to each account
+   const cardCountByAccount = useMemo(() =>
+      existingCards.reduce((acc, c) => {
+         acc[c.accountId] = (acc[c.accountId] || 0) + 1;
+         return acc;
+      }, {}),
+   [existingCards]);
+
+   // Accounts that still have capacity
+   const availableAccounts = useMemo(() =>
+      userAccounts.filter(acc => {
+         const limit = LIMITS[acc.currency] ?? 1;
+         const used  = cardCountByAccount[acc.id] || 0;
+         return used < limit;
+      }),
+   [userAccounts, cardCountByAccount]);
+
+   const { register, handleSubmit, formState: { errors } } = useForm();
+
+   const onSubmit = async (data) => {
+      const targetAccount = availableAccounts.find(a => a.id === data.accountId);
+      if (!targetAccount) return;
+
+      await addCard({
+         userId:     checkedUserId,
+         accountId:  targetAccount.id,
+         number:     generatedData.number,
+         expiryDate: generatedData.expiryDate,
+         cvv:        generatedData.cvv,
+         pin:        data.pin,
+         type:       data.type,
+         category:   data.category,
+      });
+      navigate(`/${userId}/cards`);
    };
 
-   const validateForm = () => {
-      if (formData.pin.length !== 4 || !/^\d+$/.test(formData.pin)) {
-         alert('PIN must contain 4 digits!');
-         return false;
-      }
-      return true;
-   };
+   if (cardsLoading || accountsLoading) return <p className={styles.info}>Loading…</p>;
 
-   const handleSubmit = (e) => {
-      e.preventDefault();
-      if (validateForm()) {
-         addCard(formData);
-         navigate(`/`);
-      }
-   };
+   // No accounts at all
+   if (userAccounts.length === 0) {
+      return (
+         <div className={styles.limitBox}>
+            <span className={styles.limitIcon}>🏦</span>
+            <p className={styles.limitTitle}>No accounts found</p>
+            <p className={styles.limitText}>
+               You need at least one account before you can issue a card.
+            </p>
+         </div>
+      );
+   }
+
+   // All account slots full
+   if (availableAccounts.length === 0) {
+      return (
+         <div className={styles.limitBox}>
+            <span className={styles.limitIcon}>🚫</span>
+            <p className={styles.limitTitle}>Card limit reached</p>
+            <p className={styles.limitText}>
+               Maximum: <strong>2 UAH cards</strong>, <strong>1 EUR card</strong>, <strong>1 USD card</strong>.
+               Delete an existing card to issue a new one.
+            </p>
+         </div>
+      );
+   }
 
    return (
-      <form className={styles.createCardForm} onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
 
-         <label className={styles.label}>
-            PIN:
+         {/* Account slot usage summary */}
+         <div className={styles.slotsRow}>
+            {userAccounts.map(acc => {
+               const limit = LIMITS[acc.currency] ?? 1;
+               const used  = cardCountByAccount[acc.id] || 0;
+               const full  = used >= limit;
+               return (
+                  <div key={acc.id} className={`${styles.slot} ${full ? styles.slotFull : styles.slotFree}`}>
+                     <span className={styles.slotCur}>{CURRENCY_FLAGS[acc.currency]} {acc.currency}</span>
+                     <span className={styles.slotCount}>{used}/{limit}</span>
+                  </div>
+               );
+            })}
+         </div>
+
+         {/* Link to account */}
+         <div className={styles.field}>
+            <label className={styles.label}>Link to account</label>
+            <select
+               className={`${styles.input} ${errors.accountId ? styles.inputErr : ''}`}
+               {...register('accountId', { required: 'Select an account' })}
+            >
+               <option value="">Select account</option>
+               {availableAccounts.map(acc => (
+                  <option key={acc.id} value={acc.id}>
+                     {CURRENCY_FLAGS[acc.currency] ?? ''} {acc.currency} — {Number(acc.balance).toLocaleString('en-US', { minimumFractionDigits: 2 })} {acc.currency}
+                  </option>
+               ))}
+            </select>
+            {errors.accountId && <span className={styles.err}>{errors.accountId.message}</span>}
+         </div>
+
+         {/* PIN */}
+         <div className={styles.field}>
+            <label className={styles.label}>PIN</label>
             <input
-               className={styles.input}
-               type="text"
-               name="pin"
-               value={formData.pin}
-               onChange={handleInputChange}
-               required
+               className={`${styles.input} ${errors.pin ? styles.inputErr : ''}`}
+               type="password"
+               inputMode="numeric"
+               maxLength={4}
+               placeholder="4 digits"
+               {...register('pin', {
+                  required: 'PIN is required',
+                  pattern: { value: /^\d{4}$/, message: 'Exactly 4 digits' },
+               })}
             />
-         </label>
+            {errors.pin && <span className={styles.err}>{errors.pin.message}</span>}
+         </div>
 
-         <label className={styles.label}>
-            Card Category:
+         {/* Card type */}
+         <div className={styles.field}>
+            <label className={styles.label}>Card type</label>
             <select
-               className={styles.select}
-               name="category"
-               value={formData.category}
-               onChange={handleInputChange}
-               required
+               className={`${styles.input} ${errors.type ? styles.inputErr : ''}`}
+               {...register('type', { required: 'Select a card type' })}
             >
-               <option value="">Select Category</option>
-               <option value="debit">Debit Card</option>
-               <option value="credit">Credit Card</option>
+               <option value="">Select type</option>
+               <option value="VISA">Visa</option>
+               <option value="MASTERCARD">Mastercard</option>
             </select>
-         </label>
+            {errors.type && <span className={styles.err}>{errors.type.message}</span>}
+         </div>
 
-         <label className={styles.label}>
-            Card Type:
+         {/* Category */}
+         <div className={styles.field}>
+            <label className={styles.label}>Category</label>
             <select
-               className={styles.select}
-               name="type"
-               value={formData.type}
-               onChange={handleInputChange}
-               required
+               className={`${styles.input} ${errors.category ? styles.inputErr : ''}`}
+               {...register('category', { required: 'Select a category' })}
             >
-               <option value="">Select Type</option>
-               <option value="VISA">VISA</option>
-               <option value="MASTERCARD">MASTERCARD</option>
+               <option value="">Select category</option>
+               <option value="debit">Debit</option>
+               <option value="credit">Credit</option>
             </select>
-         </label>
+            {errors.category && <span className={styles.err}>{errors.category.message}</span>}
+         </div>
 
-         <label className={styles.label}>
-            Currency:
-            <select
-               className={styles.select}
-               name="currency"
-               value={formData.currency}
-               onChange={handleInputChange}
-               required
-            >
-               <option value="">Select Currency</option>
-               <option value="UAH">Ukrainian Hryvnia (UAH)</option>
-               <option value="USD">US Dollar (USD)</option>
-               <option value="EUR">Euro (EUR)</option>
-            </select>
-         </label>
-
-         <button className={styles.button} type="submit">Create Card</button>
+         <button className={styles.btn} type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Creating…' : 'Create card'}
+         </button>
       </form>
    );
 };

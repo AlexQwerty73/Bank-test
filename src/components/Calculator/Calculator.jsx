@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './calculator.module.css';
-import { useGetDepositApiQuery } from '../../redux/depositApi';
+import { useGetDepositApiQuery } from '../../store';
 
 export const Calculator = () => {
    const { data: depositData = {}, error: depositError } = useGetDepositApiQuery();
@@ -38,12 +38,8 @@ export const Calculator = () => {
       }
 
 
-      let interestRate = 0;
-      if (currency === 'UAH') {
-         interestRate = depositData?.UAH?.monthlyInterestRates[months];
-      } else {
-         interestRate = depositData?.USD?.monthlyInterestRates[months];
-      }
+      // Беремо ставку для обраної валюти (UAH, USD або EUR)
+      const interestRate = depositData?.[currency]?.monthlyInterestRates?.[months];
 
       if (!interestRate) {
          setResult('Please enter valid data.');

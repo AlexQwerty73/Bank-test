@@ -1,45 +1,59 @@
 .faq {
-   padding: 100px 20px;
+   padding: 80px 20px 100px;
    overflow: hidden;
 }
 
 .title {
-   font-size: 24px;
-   font-weight: bold;
-   color: #333;
-   margin-bottom: 20px;
+   font-size: 0.8rem;
+   font-weight: 700;
+   text-transform: uppercase;
+   letter-spacing: 0.1em;
+   color: #94A3B8;
+   margin-bottom: 40px;
 }
 
 .faqList {
    display: grid;
-   grid-gap: 20px;
+   grid-gap: 16px;
 }
 
 .dialog {
    display: flex;
    flex-direction: column;
    max-width: 70%;
-   margin: 20px auto;
+   margin: 12px auto;
 }
 
 .question {
-   transform: translate(-50%, 0);
+   transform: translate(-40px, 0);
 }
 
 .answer {
-   transform: translate(50%, 0);
+   transform: translate(40px, 0);
 }
 
 .cloud {
    opacity: 0;
-   background-color: #f0f0f0;
-   border-radius: 15px;
-   padding: 15px;
-   margin-bottom: 15px;
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-   font-size: 16px;
-   color: #333;
-   transition: .5s ease;
+   border-radius: 14px;
+   padding: 16px 20px;
+   margin-bottom: 10px;
+   font-size: 0.95rem;
+   line-height: 1.65;
+   transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Question — light neutral */
+.cloud.question {
+   background-color: #F1F5F9;
+   color: #334155;
+   border: 1px solid #E2E8F0;
+}
+
+/* Answer — light blue tint */
+.cloud.answer {
+   background-color: #EFF6FF;
+   color: #1E40AF;
+   border: 1px solid #BFDBFE;
 }
 
 .visible {

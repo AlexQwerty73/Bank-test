@@ -1,7 +1,21 @@
-.cards {
-   display: flex;
-   justify-content: center;
-   flex-wrap: wrap;
-   gap: 20px;
-   padding: 20px;
+.grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+   gap: 32px;
+   justify-items: center;
+}
+
+.cardLink {
+   display: block;
+   line-height: 0;
+   border-radius: 20px;
+   transition: transform 0.2s, filter 0.2s;
+}
+
+.cardLink:hover {
+   transform: translateY(-4px);
+}
+
+@media (max-width: 600px) {
+   .grid { gap: 20px; }
 }

@@ -1,39 +1,147 @@
-.createCardForm {
+.form {
+   display: flex;
+   flex-direction: column;
+   gap: 4px;
+   width: 100%;
    max-width: 400px;
-   margin: 50px auto;
-   padding: 20px;
-   border: 1px solid #ccc;
-   border-radius: 8px;
-   background-color: #fff;
+}
+
+.info {
+   color: #6B7280;
+   font-size: 0.9rem;
+}
+
+/* ── Slots summary ── */
+.slotsRow {
+   display: flex;
+   gap: 8px;
+   margin-bottom: 20px;
+}
+
+.slot {
+   flex: 1;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 2px;
+   padding: 8px 4px;
+   border-radius: 10px;
+   border: 1.5px solid;
+}
+
+.slotFree {
+   background: #F0FDF4;
+   border-color: #86EFAC;
+}
+
+.slotFull {
+   background: #FEF2F2;
+   border-color: #FCA5A5;
+}
+
+.slotCur {
+   font-size: 0.75rem;
+   font-weight: 700;
+   letter-spacing: 0.05em;
+   color: #374151;
+}
+
+.slotCount {
+   font-size: 0.68rem;
+   color: #6B7280;
+}
+
+/* ── Fields ── */
+.field {
+   display: flex;
+   flex-direction: column;
+   gap: 5px;
+   margin-bottom: 14px;
 }
 
 .label {
-   display: block;
-   margin-bottom: 10px;
+   font-size: 0.72rem;
+   font-weight: 700;
+   text-transform: uppercase;
+   letter-spacing: 0.09em;
+   color: #9CA3AF;
 }
 
-.input,
-.select {
-   width: 100%;
-   padding: 10px;
-   margin-bottom: 15px;
+.input {
+   padding: 11px 14px;
+   font-size: 0.95rem;
+   color: #111827;
+   background: #FFFFFF;
+   border: 1.5px solid #E5E7EB;
+   border-radius: 10px;
+   transition: border-color 0.18s, box-shadow 0.18s;
    box-sizing: border-box;
-   border: 1px solid #ccc;
-   border-radius: 4px;
-   font-size: 14px;
-}
-
-.button {
-   background-color: #4caf50;
    width: 100%;
-   color: #fff;
-   padding: 10px 15px;
-   border: none;
-   border-radius: 4px;
-   cursor: pointer;
-   font-size: 16px;
+   appearance: none;
 }
 
-.button:hover {
-   background-color: #45a049;
+.input:focus {
+   outline: none;
+   border-color: #4F46E5;
+   box-shadow: 0 0 0 3px rgba(79,70,229,0.12);
+}
+
+.inputErr { border-color: #EF4444; }
+.inputErr:focus {
+   border-color: #EF4444;
+   box-shadow: 0 0 0 3px rgba(239,68,68,0.12);
+}
+
+.err {
+   font-size: 0.78rem;
+   color: #EF4444;
+}
+
+/* ── Submit button ── */
+.btn {
+   width: 100%;
+   padding: 13px;
+   margin-top: 8px;
+   font-size: 0.95rem;
+   font-weight: 600;
+   letter-spacing: 0.01em;
+   color: #FFFFFF;
+   background: #4F46E5;
+   border: none;
+   border-radius: 10px;
+   cursor: pointer;
+   transition: background 0.18s, transform 0.15s, box-shadow 0.18s;
+   box-shadow: 0 2px 12px rgba(79,70,229,0.35);
+}
+
+.btn:hover { background: #4338CA; transform: translateY(-1px); box-shadow: 0 4px 20px rgba(79,70,229,0.45); }
+.btn:active { transform: translateY(0); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* ── Limit reached ── */
+.limitBox {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 10px;
+   padding: 40px 24px;
+   background: #FEF2F2;
+   border: 1.5px solid #FCA5A5;
+   border-radius: 16px;
+   text-align: center;
+   max-width: 400px;
+}
+
+.limitIcon { font-size: 2rem; }
+
+.limitTitle {
+   font-size: 1rem;
+   font-weight: 700;
+   color: #991B1B;
+}
+
+.limitText {
+   font-size: 0.875rem;
+   color: #B91C1C;
+   line-height: 1.6;
 }

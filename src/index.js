@@ -4,11 +4,10 @@ import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { store } from './redux/store';
+import { store } from './store/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-// alert('1 - переробити стилі, 2 -калькулятор кредитів/депозитів(у валюті різні %), 3 - більше перевірок, 4 - переказ грошей + на різні валюти, 5 - декомпозицію, 6 - адаптація, 7 - світла/темна тема, 8 - сторінка з курсами валют');
 
 root.render(
   <React.StrictMode>

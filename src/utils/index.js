@@ -1,5 +1,5 @@
 export * from './loadFromLocalStorage';
-export * from './seveToLocalStorage';
+export * from './saveToLocalStorage';
 export * from './removeKeyFromLocalStorage';
 export * from './convertYYYYMMDDToMMYY';
 export * from './convertToNumberCartFormat';
@@ -8,3 +8,5 @@ export * from './generateCVV';
 export * from './generateCardNumber';
 export * from './generateExpiryDate';
 export * from './findRecentData';
+export * from './formatDate';
+export * from './generateAccountNumber';

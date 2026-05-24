@@ -1,59 +1,64 @@
 import React, { useEffect, useRef } from 'react';
-import styles from './ExchangeRate.module.css';
 import Chart from 'chart.js/auto';
 
-const ExchangeRateChart = ({ history, currency, width = '700%', height = '300%' }) => {
-   const chartRef = useRef(null);
+const ExchangeRateChart = ({ history, currency, width = '100%', height = '300px' }) => {
+   // Використовуємо ref напряму на canvas — уникаємо конфліктів при кількох графіках на сторінці
+   const canvasRef = useRef(null);
+   const chartInstanceRef = useRef(null);
 
    useEffect(() => {
-      renderChart(history, currency);
+      if (!canvasRef.current || !history?.length) return;
+
+      // Знищуємо попередній екземпляр перед створенням нового
+      if (chartInstanceRef.current) {
+         chartInstanceRef.current.destroy();
+      }
+
+      chartInstanceRef.current = new Chart(canvasRef.current, {
+         type: 'line',
+         data: {
+            labels: history.map((entry) => entry.date),
+            datasets: [
+               {
+                  label: `${currency} — Buy`,
+                  data: history.map((entry) => entry.buy),
+                  borderColor: 'rgba(75, 192, 192, 1)',
+                  backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                  borderWidth: 2,
+                  fill: true,
+                  pointRadius: 3,
+               },
+               {
+                  label: `${currency} — Sell`,
+                  data: history.map((entry) => entry.sell),
+                  borderColor: 'rgba(255, 99, 132, 1)',
+                  backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                  borderWidth: 2,
+                  fill: true,
+                  pointRadius: 3,
+               },
+            ],
+         },
+         options: {
+            responsive: true,
+            maintainAspectRatio: false,
+         },
+      });
+
+      // Cleanup при розмонтуванні
+      return () => {
+         if (chartInstanceRef.current) {
+            chartInstanceRef.current.destroy();
+            chartInstanceRef.current = null;
+         }
+      };
    }, [history, currency]);
 
-   const renderChart = (history, currency) => {
-      const ctx = document.getElementById('exchangeRateChart');
-      if (ctx) {
-         if (chartRef.current) {
-            chartRef.current.destroy();
-         }
-
-         chartRef.current = new Chart(ctx, {
-            type: 'line',
-            data: {
-               labels: history.map((entry) => entry.date),
-               datasets: [
-                  {
-                     label: `${currency} - Buy Rate`,
-                     data: history.map((entry) => entry.buy),
-                     borderColor: 'rgba(75, 192, 192, 1)',
-                     borderWidth: 2,
-                     fill: false,
-                     pointRadius: 3,
-                  },
-                  {
-                     label: `${currency} - Sell Rate`,
-                     data: history.map((entry) => entry.sell),
-                     borderColor: 'rgba(255, 99, 132, 1)',
-                     borderWidth: 2,
-                     fill: false,
-                     pointRadius: 3,
-                  },
-               ],
-            },
-
-            options: {
-               scales: {
-                  xAxes: [{
-                     type: 'time',
-                     position: 'bottom',
-                  }],
-               },
-               aspectRatio: false,
-            },
-         });
-      }
-   };
-
-   return <canvas id="exchangeRateChart" width={width} height={height}></canvas>;
+   return (
+      <div style={{ width, height, position: 'relative' }}>
+         <canvas ref={canvasRef} />
+      </div>
+   );
 };
 
 export default ExchangeRateChart;

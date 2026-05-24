@@ -2,8 +2,8 @@ import React from 'react';
 import styles from './faq.module.css';
 import { useInView } from 'react-intersection-observer';
 
-export const FAQ = () => {
-   const faqItems = [
+// Поза компонентом — масив не ре-створюється при кожному рендері
+const FAQ_ITEMS = [
       {
          question: "How to open an account in your bank?",
          answer: "To open an account in our bank, you need to visit any branch with a passport and identification code (for legal entities) or identification number (for individuals). Our specialists will provide you with all the necessary information and fill out the required documents."
@@ -20,14 +20,15 @@ export const FAQ = () => {
          question: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet?",
          answer: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe sapiente commodi vel cum eaque harum non, eum et expedita sed cumque rerum error nam eligendi eius. Assumenda molestiae dolores illum! Adipisci ducimus perspiciatis ratione ipsam deleniti asperiores nostrum facilis saepe doloribus laboriosam rem iusto consequuntur enim cumque dignissimos, laudantium dolor quidem sapiente ea aliquid porro. Rem eveniet beatae itaque enim!"
       },
-   ];
+];
 
+export const FAQ = () => {
    return (
       <div className={styles.faq}>
          <h2 className={styles.title}>Frequently Asked Questions (FAQ)</h2>
          <div className={styles.faqList}>
-            {faqItems.map((item, index) => (
-               <FAQItem key={index} question={item.question} answer={item.answer} />
+            {FAQ_ITEMS.map((item) => (
+               <FAQItem key={item.question} question={item.question} answer={item.answer} />
             ))}
          </div>
       </div>

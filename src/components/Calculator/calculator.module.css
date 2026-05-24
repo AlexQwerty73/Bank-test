@@ -1,9 +1,12 @@
 .calculator {
-   background: whitesmoke;
+   background: #FFFFFF;
+   border: 1px solid #E2E8F0;
+   box-shadow: 0 4px 24px rgba(15, 23, 42, 0.07);
    padding: 50px;
-   border-radius: 30px;
+   border-radius: 16px;
    max-width: 1000px;
    margin: 50px auto;
+   color: #0F172A;
 }
 
 .calc_conainer {
@@ -18,7 +21,6 @@
    width: 45%;
 }
 
-
 .content {
    display: flex;
    flex-wrap: wrap;
@@ -28,8 +30,10 @@
 }
 
 .header {
-   font-size: 40px;
-   font-weight: bold;
+   font-size: 2rem;
+   font-weight: 700;
+   letter-spacing: -0.02em;
+   color: #0F172A;
    margin-bottom: 30px;
    margin-left: 30px;
 }
@@ -43,12 +47,15 @@
 .due_date,
 .select_input_currency_span {
    position: absolute;
-   color: rgba(0, 0, 0, 0.6);
-   font-size: 14px;
+   color: #94A3B8;
+   font-size: 11px;
+   font-weight: 600;
+   text-transform: uppercase;
+   letter-spacing: 0.06em;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outfer-spin-button {
+input[type="number"]::-webkit-outer-spin-button {
    -webkit-appearance: none;
    margin: 0;
 }
@@ -56,21 +63,23 @@ input[type="number"]::-webkit-outfer-spin-button {
 .number_input,
 .select_input,
 .input_range_box {
-
-   border: 1px solid rgb(0, 0, 0);
+   background: #F8FAFC;
+   border: 1px solid #E2E8F0;
+   color: #0F172A;
    height: 64px;
    border-radius: 10px;
    padding: 30px 20px 10px;
    font-size: 18px;
    width: 100%;
    margin: 20px 0;
+   transition: border-color 0.2s, box-shadow 0.2s;
 }
-
 
 .number_input:focus,
 .select_input:focus {
    outline: none;
-   border: 1px solid green;
+   border-color: #2563EB;
+   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .input_amount_span,
@@ -82,39 +91,38 @@ input[type="number"]::-webkit-outfer-spin-button {
 .input_currency_span {
    right: 20px;
    top: -7px;
+   color: #64748B;
 }
 
 .error {
-   color: red;
-   font-size: 14px;
+   color: #EF4444;
+   font-size: 12px;
    margin-top: 5px;
    position: absolute;
    bottom: -50px;
 }
 
-.checkbox_custom {
-   margin-left: 5px;
-}
-
 .input_range_box {
    position: relative;
-   background: white;
+   background: #F8FAFC;
 }
 
 .input_range_box::before {
    position: absolute;
    content: attr(data-min) ' mon.';
-   font-size: 12px;
+   font-size: 11px;
    bottom: -20px;
    left: 0;
+   color: #94A3B8;
 }
 
 .input_range_box::after {
    position: absolute;
    content: attr(data-max)' mon.';
-   font-size: 12px;
+   font-size: 11px;
    bottom: -20px;
    right: 0;
+   color: #94A3B8;
 }
 
 .due_date,
@@ -125,35 +133,33 @@ input[type="number"]::-webkit-outfer-spin-button {
 
 .due_date {
    top: 5px;
+   color: #94A3B8;
+   font-size: 11px;
 }
 
 .range_input {
    left: 0;
    bottom: -5px;
    width: 100%;
-   height: 0;
+   height: 4px;
    -webkit-appearance: none;
    appearance: none;
-   background: white;
+   background: #E2E8F0;
    outline: none;
+   border-radius: 2px;
 }
 
 .range_input::-webkit-slider-thumb {
    -webkit-appearance: none;
    appearance: none;
-   width: 15px;
-   height: 15px;
-   background: rgb(255, 255, 255);
-   border: 3.5px solid red;
+   width: 18px;
+   height: 18px;
+   background: #2563EB;
+   border: 2px solid #fff;
    border-radius: 50%;
    cursor: pointer;
-   margin-top: -10px;
+   box-shadow: 0 1px 4px rgba(37, 99, 235, 0.4);
 }
-
-
-
-
-
 
 .result_container {
    padding-left: 20px;
@@ -167,49 +173,60 @@ input[type="number"]::-webkit-outfer-spin-button {
 }
 
 .total h3 {
-   font-size: 24px;
+   font-size: 0.78rem;
+   font-weight: 600;
+   text-transform: uppercase;
+   letter-spacing: 0.08em;
+   color: #94A3B8;
+   margin-bottom: 6px;
 }
 
 .total h1 {
-   font-size: 40px;
+   font-size: 2.8rem;
+   font-weight: 700;
+   letter-spacing: -0.03em;
+   color: #0F172A;
+   margin-bottom: 10px;
 }
 
 .total label {
    margin-bottom: 20px;
    display: flex;
-   justify-content: center;
    align-items: center;
+   font-size: 0.9rem;
+   color: #64748B;
 }
 
 .checkbox_custom {
    margin-left: 10px;
-   width: 20px;
-   height: 20px;
+   width: 18px;
+   height: 18px;
    position: relative;
    appearance: none;
    cursor: pointer;
    outline: none;
    border-radius: 5px;
-   border: 2px solid #333;
+   border: 1.5px solid #CBD5E1;
    background-color: #fff;
-   transition: background-color 0.3s, border-color 0.3s;
+   transition: background-color 0.2s, border-color 0.2s;
    flex-shrink: 0;
 }
 
 .checkbox_custom:checked {
-   background-color: #333;
+   background-color: #2563EB;
+   border-color: #2563EB;
 }
 
 .checkbox_custom::after {
    content: '\2714';
-   font-size: 18px;
+   font-size: 11px;
    color: #fff;
    position: absolute;
    top: 50%;
    left: 50%;
    transform: translate(-50%, -50%);
    opacity: 0;
-   transition: opacity 0.3s;
+   transition: opacity 0.2s;
 }
 
 .checkbox_custom:checked::after {
@@ -217,26 +234,37 @@ input[type="number"]::-webkit-outfer-spin-button {
 }
 
 .hr {
+   border: none;
+   border-top: 1px solid #E2E8F0;
    margin-bottom: 20px;
 }
 
 .data_item {
-   margin-bottom: 10px;
+   margin-bottom: 14px;
 }
 
-.total label,
 .data_item p {
-   color: rgba(0, 0, 0, 0.6);
+   font-size: 0.75rem;
+   font-weight: 600;
+   text-transform: uppercase;
+   letter-spacing: 0.07em;
+   color: #94A3B8;
+   margin-bottom: 2px;
 }
 
-
+.data_item h3 {
+   font-size: 1rem;
+   font-weight: 500;
+   color: #1E293B;
+}
 
 @media (max-width: 768px) {
    .calculator {
-      padding: 20px;
+      padding: 24px;
       border-radius: 0;
       max-width: none;
       margin: 0;
+      box-shadow: none;
    }
 
    .calc_conainer {
@@ -249,7 +277,7 @@ input[type="number"]::-webkit-outfer-spin-button {
    }
 
    .header {
-      font-size: 30px;
+      font-size: 1.6rem;
       margin-left: 0;
    }
 
@@ -263,22 +291,8 @@ input[type="number"]::-webkit-outfer-spin-button {
       padding-left: 0;
    }
 
-   .total h3 {
-      font-size: 20px;
-   }
-
    .total h1 {
-      font-size: 32px;
-   }
-
-   .checkbox_custom {
-      margin-left: 5px;
-      /* width: 15px;
-      height: 15px; */
-   }
-
-   .data_item {
-      font-size: 18px;
+      font-size: 2rem;
    }
 
    .hr {

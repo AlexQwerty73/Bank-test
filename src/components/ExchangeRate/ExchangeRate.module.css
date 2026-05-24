@@ -2,18 +2,22 @@
    display: flex;
    justify-content: space-between;
    align-items: center;
-   padding: 20px;
-   background-color: #ffffff;
-   border-radius: 10px;
-   box-shadow: 0 2px 5px 2px rgba(0, 0, 0, 0.1);
+   padding: 32px;
+   background-color: #FFFFFF;
+   border: 1px solid #E2E8F0;
+   border-radius: 16px;
+   box-shadow: 0 2px 16px rgba(15, 23, 42, 0.06);
+   margin-bottom: 48px;
 }
 
 .exchangeRateTitle {
-   font-size: 24px;
-   color: #333;
-   margin-bottom: 10px;
-   text-decoration: underline;
-   font-weight: bold;
+   font-size: 0.78rem;
+   font-weight: 700;
+   color: #94A3B8;
+   text-transform: uppercase;
+   letter-spacing: 0.1em;
+   margin-bottom: 20px;
+   text-decoration: none;
 }
 
 .exchangeRateList {
@@ -22,46 +26,60 @@
 }
 
 .exchangeRateItem {
-   border-radius: 10px;
-   padding: 20px;
-   margin-bottom: 20px;
+   border: 1px solid #E2E8F0;
+   border-radius: 12px;
+   padding: 16px 20px;
+   margin-bottom: 12px;
    cursor: pointer;
-   transition: 0.3s ease;
-   max-width: 300px;
+   transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+   max-width: 280px;
+   background: #F8FAFC;
 }
 
 .exchangeRateItem:hover {
-   transform: translateY(-3px);
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   border-color: #BFDBFE;
+   box-shadow: 0 2px 12px rgba(37, 99, 235, 0.1);
+   transform: translateY(-2px);
 }
 
 .currencyPair {
-   font-size: 20px;
-   color: #333;
-   margin-bottom: 10px;
+   font-size: 1rem;
+   font-weight: 600;
+   color: #1E293B;
+   margin-bottom: 8px;
 }
 
 .exchangeRateValue {
-   color: #666;
-   margin-bottom: 5px;
+   color: #64748B;
+   font-size: 0.9rem;
+   margin-bottom: 4px;
 }
 
 .detailsLink {
+   display: inline-block;
+   margin-top: 12px;
    text-decoration: none;
-   color: #007bff;
-   font-size: 16px;
-   transition: color 0.3s ease;
+   color: #2563EB;
+   font-size: 0.875rem;
+   font-weight: 500;
+   transition: color 0.2s;
 }
 
 .detailsLink:hover {
-   color: #0056b3;
+   color: #1D4ED8;
+}
+
+.loadingMessage,
+.errorMessage {
+   color: #64748B;
+   text-align: center;
+   padding: 40px;
 }
 
 .rightPanel {
    flex: 1;
-   margin-left: 20px;
+   margin-left: 32px;
 }
-
 
 @media (max-width: 768px) {
    .exchangeRateContainer {
@@ -71,11 +89,11 @@
 
    .leftPanel {
       margin-bottom: 20px;
+      width: 100%;
    }
 
    .rightPanel {
       display: none;
-      margin-left: 0;
    }
 
    .exchangeRateItem {

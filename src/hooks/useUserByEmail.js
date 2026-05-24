@@ -1,4 +1,4 @@
-import { useGetUsersQuery } from "../redux";
+import { useGetUsersQuery } from "../store";
 
 export const useUserByEmail = (email) => {
    const { data: users } = useGetUsersQuery();

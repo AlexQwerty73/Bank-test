@@ -1,50 +1,71 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
-import { Layout } from './components/';
-import { CardPage, CardTransactionsPage, CardsPage, CreateCardPage, CreateUserPage, ExchangeRatePage, HomePage, LoginPage, NotFoundPage, RemittancePage, TransactionsCardsPage, UserProfilePage } from './pages';
+import { Layout, ProtectedRoute } from './components/';
+import {
+   AllTransactionsPage,
+   AuthPage,
+   CardPage,
+   CardTransactionsPage,
+   CardsPage,
+   CreateAccountPage,
+   CreateCardPage,
+   ExchangeRatePage,
+   HomePage,
+   NotFoundPage,
+   RemittancePage,
+   TransactionsCardsPage,
+   UserProfilePage,
+} from './pages';
 
 const App = () => {
-  return (
-    <div className="App">
+   return (
+      <div className="App">
+         <Routes>
 
-      <Routes>
+            {/* Публічні маршрути (без Header/Footer) */}
+            <Route path="/create-user" element={<AuthPage />} />
+            <Route path="/login" element={<AuthPage />} />
 
-        <Route path='/' element={<Layout />}>
+            {/* Редирект із /null/* на /login (якщо userId не заданий) */}
+            <Route path="/null/*" element={<Navigate to="/login" replace />} />
 
-          <Route index element={<HomePage />} />
-          <Route path='exchange-rate/' element={<ExchangeRatePage />} />
+            {/* Захищені маршрути з Layout */}
+            <Route element={<ProtectedRoute />}>
+               <Route path="/" element={<Layout />}>
 
-          <Route path=':userId/'>
+                  <Route index element={<HomePage />} />
+                  <Route path="exchange-rate/" element={<ExchangeRatePage />} />
 
-            <Route path='create-card/' element={<CreateCardPage />} />
-            <Route path='profile/' element={<UserProfilePage />} />
+                  <Route path=":userId/">
+                     <Route path="create-card/"    element={<CreateCardPage />} />
+                     <Route path="create-account/" element={<CreateAccountPage />} />
+                     <Route path="profile/"        element={<UserProfilePage />} />
 
-            <Route path='transactions/'>
-              <Route index element={<TransactionsCardsPage />} />
-              <Route path='remittance/' element={<RemittancePage />} />
-              <Route path=':cardNumber/' element={<CardTransactionsPage />} />
+                     <Route path="transactions/">
+                        <Route index element={<TransactionsCardsPage />} />
+                        <Route path="remittance/" element={<RemittancePage />} />
+                        <Route path=":accountId/" element={<CardTransactionsPage />} />
+                     </Route>
+
+                     <Route path="history/" element={<AllTransactionsPage />} />
+
+                     <Route path="cards/">
+                        <Route index element={<CardsPage />} />
+                        <Route path=":cardNumber/" element={<CardPage />} />
+                     </Route>
+
+                     {/* 404 для невідомих маршрутів під /:userId/ */}
+                     <Route path="*" element={<NotFoundPage />} />
+                  </Route>
+
+               </Route>
             </Route>
 
-            <Route path='cards/'>
-              <Route index element={<CardsPage />} />
-              <Route path=':cardNumber/' element={<CardPage />} />
-            </Route>
+            {/* Глобальний 404 */}
+            <Route path="*" element={<NotFoundPage />} />
 
-          </Route>
-
-        </Route>
-
-        <Route path='/'>
-          <Route path='create-user/' element={<CreateUserPage />} />
-          <Route path='login/' element={<LoginPage />} />
-          <Route path='null/*' element={<Navigate to='/login' />} />
-        </Route>
-
-        <Route path='*' element={<NotFoundPage />} />
-
-      </Routes>
-
-    </div>
-  );
-}
+         </Routes>
+      </div>
+   );
+};
 
 export default App;
