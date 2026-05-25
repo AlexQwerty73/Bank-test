@@ -5,11 +5,11 @@
    margin-top: auto;
 }
 
-/* ── Three-column grid ── */
+/* ── Four-column grid ── */
 .grid {
    display: grid;
-   grid-template-columns: 1.6fr 1fr 1fr;
-   gap: 48px;
+   grid-template-columns: 1.6fr 1fr 1fr 1fr;
+   gap: 40px;
    padding-bottom: 48px;
 }
 
@@ -126,17 +126,48 @@
    margin-bottom: 20px;
 }
 
+.bottomRow {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 16px;
+   flex-wrap: wrap;
+}
+
 .copy {
-   text-align: center;
    font-size: 0.8rem;
    color: #334155;
 }
 
+.legal {
+   display: flex;
+   align-items: center;
+   gap: 8px;
+}
+
+.legalLink {
+   font-size: 0.78rem;
+   color: #334155;
+   text-decoration: none;
+   transition: color 0.15s;
+}
+.legalLink:hover { color: #94A3B8; }
+
+.legalDot { color: #1E293B; font-size: 0.75rem; }
+
 /* ── Responsive ── */
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
+   .grid {
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 32px;
+   }
+   .brand { grid-column: 1 / -1; }
+}
+
+@media (max-width: 700px) {
    .grid {
       grid-template-columns: 1fr 1fr;
-      gap: 36px;
+      gap: 28px;
    }
    .brand { grid-column: 1 / -1; }
 }

@@ -1,0 +1,98 @@
+/* ════════════════════════════════════════
+   BACK TO TOP BUTTON
+   ════════════════════════════════════════ */
+.backToTop {
+   position: fixed;
+   bottom: 32px;
+   right: 32px;
+   width: 44px;
+   height: 44px;
+   background: #4F46E5;
+   color: #fff;
+   border: none;
+   border-radius: 12px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   cursor: pointer;
+   box-shadow: 0 4px 16px rgba(79,70,229,0.35);
+   transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+   z-index: 900;
+   animation: fadeInUp 0.22s ease;
+}
+.backToTop svg { width: 18px; height: 18px; }
+.backToTop:hover {
+   background: #4338CA;
+   transform: translateY(-2px);
+   box-shadow: 0 6px 20px rgba(79,70,229,0.48);
+}
+.backToTop:active { transform: translateY(0); }
+
+@keyframes fadeInUp {
+   from { opacity: 0; transform: translateY(14px); }
+   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ════════════════════════════════════════
+   EMAIL VERIFICATION BANNER
+   ════════════════════════════════════════ */
+.emailBanner {
+   background: #FFFBEB;
+   border-bottom: 1.5px solid #FDE68A;
+   padding: 10px 0;
+   position: sticky;
+   top: 0;
+   z-index: 800;
+}
+
+.emailBannerInner {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   flex-wrap: wrap;
+}
+
+.emailBannerIcon { font-size: 1.1rem; flex-shrink: 0; }
+
+.emailBannerText {
+   flex: 1;
+   font-size: 0.875rem;
+   color: #92400E;
+   min-width: 0;
+   line-height: 1.4;
+}
+
+.emailBannerResend {
+   font-size: 0.78rem;
+   font-weight: 600;
+   color: #B45309;
+   background: none;
+   border: 1.5px solid #FCD34D;
+   border-radius: 7px;
+   padding: 4px 12px;
+   cursor: pointer;
+   transition: background 0.15s;
+   white-space: nowrap;
+}
+.emailBannerResend:hover { background: #FEF3C7; }
+
+.emailBannerClose {
+   font-size: 0.85rem;
+   color: #D97706;
+   background: none;
+   border: none;
+   cursor: pointer;
+   padding: 4px 8px;
+   border-radius: 6px;
+   flex-shrink: 0;
+   line-height: 1;
+   opacity: 0.7;
+   transition: opacity 0.15s;
+}
+.emailBannerClose:hover { opacity: 1; }
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+   .backToTop { bottom: 20px; right: 16px; width: 40px; height: 40px; }
+   .emailBannerText { font-size: 0.8rem; }
+}

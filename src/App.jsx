@@ -1,4 +1,5 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
+import { ToastProvider } from './context';
 import { Layout, ProtectedRoute } from './components/';
 import {
    AllTransactionsPage,
@@ -10,22 +11,33 @@ import {
    CreateCardPage,
    DepositPage,
    ExchangeRatePage,
+   HelpPage,
    HomePage,
    NotFoundPage,
+   PrivacyPage,
    RemittancePage,
    SettingsPage,
+   TermsPage,
    TransactionsCardsPage,
    UserProfilePage,
 } from './pages';
 
 const App = () => {
    return (
+      <ToastProvider>
       <div className="App">
          <Routes>
 
             {/* Публічні маршрути (без Header/Footer) */}
             <Route path="/create-user" element={<AuthPage />} />
             <Route path="/login" element={<AuthPage />} />
+
+            {/* Публічні інформаційні сторінки */}
+            <Route path="/" element={<Layout />}>
+               <Route path="privacy" element={<PrivacyPage />} />
+               <Route path="terms"   element={<TermsPage />} />
+               <Route path="help"    element={<HelpPage />} />
+            </Route>
 
             {/* Редирект із /null/* на /login (якщо userId не заданий) */}
             <Route path="/null/*" element={<Navigate to="/login" replace />} />
@@ -69,6 +81,7 @@ const App = () => {
 
          </Routes>
       </div>
+      </ToastProvider>
    );
 };
 

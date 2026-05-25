@@ -9,6 +9,23 @@ import styles from './createCardForm.module.css';
 const MAX_PER_CATEGORY = 1; // per account per category
 const CURRENCY_FLAGS = { USD: '🇺🇸', EUR: '🇪🇺', UAH: '🇺🇦' };
 
+const CreateCardSkeleton = () => (
+   <div className={styles.skeleton}>
+      {/* Slot cards */}
+      <div className={styles.skSlotsRow}>
+         {[0, 1, 2].map(i => <div key={i} className={`${styles.sk} ${styles.skSlot}`} />)}
+      </div>
+      {/* 4 form fields */}
+      {[0, 1, 2, 3].map(i => (
+         <div key={i} className={styles.skField}>
+            <div className={`${styles.sk} ${styles.skLabel}`} />
+            <div className={`${styles.sk} ${styles.skInput}`} />
+         </div>
+      ))}
+      <div className={`${styles.sk} ${styles.skBtn}`} />
+   </div>
+);
+
 export const CreateCardForm = () => {
    const navigate    = useNavigate();
    const { userId }  = useParams();
@@ -77,7 +94,7 @@ export const CreateCardForm = () => {
       navigate(`/${userId}/cards`);
    };
 
-   if (cardsLoading || accountsLoading) return <p className={styles.info}>Loading…</p>;
+   if (cardsLoading || accountsLoading) return <CreateCardSkeleton />;
 
    // No accounts at all
    if (userAccounts.length === 0) {

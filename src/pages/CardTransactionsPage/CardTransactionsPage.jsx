@@ -5,9 +5,10 @@ import {
    useGetAccountByIdQuery,
    useGetCardsByUserIdQuery,
 } from '../../store';
-import { loadFromLocalStorage } from '../../utils';
+import { loadFromLocalStorage, formatDateTime, getSetting } from '../../utils';
 import { usePagination } from '../../hooks';
 import { Card, Pagination } from '../../components/commons';
+import { TransactionModal } from '../../components/TransactionModal';
 import styles from './CardTransactionsPage.module.css';
 
 const CURRENCY_FLAGS = { USD: '🇺🇸', EUR: '🇪🇺', UAH: '🇺🇦' };
@@ -20,16 +21,29 @@ const TYPE_LABEL = {
    withdrawal:          'Withdrawal',
 };
 
-function formatDateTime(iso) {
-   const d = new Date(iso);
-   return (
-      d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) +
-      ' · ' +
-      d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
-   );
-}
-
 const PAGE_SIZE = 10;
+
+const CardTxSkeleton = () => (
+   <div className={styles.page}>
+      <div className="container">
+         <div className={`${styles.sk} ${styles.skBackLink}`} />
+         <div className={`${styles.sk} ${styles.skHeader}`} />
+         <div className={styles.skListWrap}>
+            {[...Array(6)].map((_, i) => (
+               <div key={i} className={styles.skTxRow}>
+                  <div className={`${styles.sk} ${styles.skTxIcon}`} />
+                  <div className={styles.skTxMeta}>
+                     <div className={`${styles.sk} ${styles.skTxDesc}`}
+                          style={{ width: `${[75, 60, 80, 55, 70, 65][i]}%` }} />
+                     <div className={`${styles.sk} ${styles.skTxSub}`} />
+                  </div>
+                  <div className={`${styles.sk} ${styles.skTxAmount}`} />
+               </div>
+            ))}
+         </div>
+      </div>
+   </div>
+);
 
 export const CardTransactionsPage = () => {
    const { accountId } = useParams();
@@ -39,9 +53,12 @@ export const CardTransactionsPage = () => {
    const { data: transactions = [], isLoading: txLoading    } = useGetTransactionsByAccountIdQuery(accountId, { refetchOnMountOrArgChange: true });
    const { data: allCards = [],     isLoading: cardsLoading } = useGetCardsByUserIdQuery(userId);
 
-   const [copied,    setCopied]    = useState(false);
-   const [dirFilter, setDirFilter] = useState('all');
+   const [copied,     setCopied]     = useState(false);
+   const [dirFilter,  setDirFilter]  = useState('all');
    const [typeFilter, setTypeFilter] = useState('all');
+   const [selectedTx, setSelectedTx] = useState(null);
+
+   const hideBalances = getSetting('hideBalances', false);
 
    const isLoading   = accLoading || txLoading || cardsLoading;
    const linkedCards = allCards.filter(c => c.accountId === accountId);
@@ -67,6 +84,15 @@ export const CardTransactionsPage = () => {
       setPage, prevPage, nextPage, startIndex, endIndex,
    } = usePagination(filtered, PAGE_SIZE);
 
+   /* ── Monthly spending (out txs this calendar month) ── */
+   const monthlySpent = useMemo(() => {
+      const now   = new Date();
+      const start = new Date(now.getFullYear(), now.getMonth(), 1);
+      return transactions
+         .filter(tx => tx.direction === 'out' && new Date(tx.date) >= start)
+         .reduce((sum, tx) => sum + Number(tx.amount), 0);
+   }, [transactions]);
+
    /* ── Group current page by date ── */
    const grouped = useMemo(() => {
       const groups = {};
@@ -80,7 +106,7 @@ export const CardTransactionsPage = () => {
       return Object.entries(groups);
    }, [pageItems]);
 
-   if (isLoading) return <div className={styles.loading}>Loading…</div>;
+   if (isLoading) return <CardTxSkeleton />;
    if (!account)  return <div className={styles.loading}>Account not found.</div>;
 
    const handleCopy = () => {
@@ -95,6 +121,7 @@ export const CardTransactionsPage = () => {
    });
 
    return (
+      <>
       <div className={styles.page}>
          <div className="container">
 
@@ -130,8 +157,10 @@ export const CardTransactionsPage = () => {
                <div className={styles.balanceBlock}>
                   <div className={styles.balanceLabel}>Available balance</div>
                   <div className={styles.accountBalance}>
-                     {fmt(account.balance)}
-                     <span className={styles.balanceCurrency}>{account.currency}</span>
+                     {hideBalances
+                        ? <span className={styles.balanceHidden}>••••••</span>
+                        : <>{fmt(account.balance)}<span className={styles.balanceCurrency}>{account.currency}</span></>
+                     }
                   </div>
                </div>
             </div>
@@ -161,11 +190,34 @@ export const CardTransactionsPage = () => {
                      <span className={styles.sectionCount}>{linkedCards.length}</span>
                   </h2>
                   <div className={styles.cardsRow}>
-                     {linkedCards.map(card => (
-                        <Link key={card.id} to={`/${userId}/cards/${card.number}`} className={styles.cardLink}>
-                           <Card card={card} currency={account.currency} balance={account.balance} />
-                        </Link>
-                     ))}
+                     {linkedCards.map(card => {
+                        const limit = Number(card.spendingLimit ?? 0);
+                        const pct   = limit > 0 ? Math.min((monthlySpent / limit) * 100, 100) : 0;
+                        const over  = limit > 0 && monthlySpent > limit;
+                        return (
+                           <div key={card.id}>
+                              <Link to={`/${userId}/cards/${card.number}`} className={styles.cardLink}>
+                                 <Card card={card} currency={account.currency} balance={account.balance} />
+                              </Link>
+                              {limit > 0 && (
+                                 <div className={styles.limitBar}>
+                                    <div className={styles.limitBarHead}>
+                                       <span className={styles.limitLabel}>Monthly limit</span>
+                                       <span className={`${styles.limitValue} ${over ? styles.limitOver : ''}`}>
+                                          {fmt(monthlySpent)} / {fmt(limit)} {account.currency}
+                                       </span>
+                                    </div>
+                                    <div className={styles.limitTrack}>
+                                       <div
+                                          className={`${styles.limitFill} ${over ? styles.limitFillOver : ''}`}
+                                          style={{ width: `${pct}%` }}
+                                       />
+                                    </div>
+                                 </div>
+                              )}
+                           </div>
+                        );
+                     })}
                   </div>
                </section>
             )}
@@ -233,7 +285,7 @@ export const CardTransactionsPage = () => {
                            <div className={styles.dateLabel}>{date}</div>
                            <ul className={styles.list}>
                               {txs.map(tx => (
-                                 <li key={tx.id} className={styles.item}>
+                                 <li key={tx.id} className={styles.item} onClick={() => setSelectedTx(tx)} style={{ cursor: 'pointer' }}>
                                     <div className={`${styles.dirBadge} ${tx.direction === 'in' ? styles.dirIn : styles.dirOut}`}>
                                        {tx.direction === 'in' ? '↓' : '↑'}
                                     </div>
@@ -272,5 +324,11 @@ export const CardTransactionsPage = () => {
 
          </div>
       </div>
+
+      {selectedTx && (
+         <TransactionModal tx={selectedTx} onClose={() => setSelectedTx(null)} />
+      )}
+   </>
    );
 };
+

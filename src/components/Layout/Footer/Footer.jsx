@@ -44,6 +44,16 @@ export const Footer = () => {
                   </nav>
                </div>
 
+               {/* ── Legal / Support ── */}
+               <div className={styles.col}>
+                  <h4 className={styles.colTitle}>Company</h4>
+                  <nav className={styles.links}>
+                     <Link to="/help">Help & Support</Link>
+                     <Link to="/privacy">Privacy Policy</Link>
+                     <Link to="/terms">Terms of Service</Link>
+                  </nav>
+               </div>
+
                {/* ── Contact ── */}
                <div className={styles.col}>
                   <h4 className={styles.colTitle}>Contact</h4>
@@ -67,9 +77,16 @@ export const Footer = () => {
 
             <div className={styles.bottom}>
                <hr className={styles.divider} />
-               <p className={styles.copy}>
-                  © {new Date().getFullYear()} Bankify. All rights reserved.
-               </p>
+               <div className={styles.bottomRow}>
+                  <p className={styles.copy}>
+                     © {new Date().getFullYear()} Bankify. All rights reserved.
+                  </p>
+                  <div className={styles.legal}>
+                     <Link to="/privacy" className={styles.legalLink}>Privacy Policy</Link>
+                     <span className={styles.legalDot}>·</span>
+                     <Link to="/terms"   className={styles.legalLink}>Terms of Service</Link>
+                  </div>
+               </div>
             </div>
          </div>
       </footer>

@@ -56,6 +56,36 @@
 
 .loading { color: #6B7280; padding: 40px 0; text-align: center; font-size: 0.9rem; }
 
+/* ── Shimmer skeleton ── */
+@keyframes shimmer {
+   0%   { background-position: -600px 0; }
+   100% { background-position:  600px 0; }
+}
+.sk {
+   background: linear-gradient(90deg, #F3F4F6 25%, #E9EBEE 50%, #F3F4F6 75%);
+   background-size: 1200px 100%;
+   animation: shimmer 1.5s ease-in-out infinite;
+   border-radius: 8px;
+}
+.skRow {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   background: #fff;
+   border-radius: 16px;
+   padding: 20px 24px;
+   border: 1.5px solid #F3F4F6;
+   margin-bottom: 10px;
+}
+.skLeft  { display: flex; align-items: center; gap: 16px; }
+.skRight { display: flex; align-items: center; gap: 16px; }
+.skFlag  { width: 52px; height: 52px; border-radius: 14px; flex-shrink: 0; }
+.skLines { display: flex; flex-direction: column; gap: 8px; }
+.skName  { width: 160px; height: 16px; }
+.skNum   { width: 220px; height: 11px; border-radius: 4px; }
+.skBal   { width: 90px;  height: 22px; border-radius: 6px; }
+.skArrow { width: 20px;  height: 20px; border-radius: 4px; }
+
 /* ── Accounts list ────────────────────────────────────── */
 .list {
    display: flex;
@@ -151,6 +181,14 @@
    color: #9CA3AF;
 }
 
+.balanceHidden {
+   font-size: 1.4rem;
+   font-weight: 700;
+   letter-spacing: 0.12em;
+   color: #D1D5DB;
+   user-select: none;
+}
+
 .arrow {
    width: 20px;
    height: 20px;
@@ -185,6 +223,12 @@
    margin-top: 4px;
 }
 .emptyLink:hover { text-decoration: underline; }
+
+/* ── Compact mode ─────────────────────────────────────── */
+:global(.compact-mode) .accountRow  { padding: 12px 16px; }
+:global(.compact-mode) .flagWrap    { width: 40px; height: 40px; font-size: 1.25rem; }
+:global(.compact-mode) .balance     { font-size: 1.15rem; }
+:global(.compact-mode) .header      { margin-bottom: 16px; }
 
 /* ── Responsive ───────────────────────────────────────── */
 @media (max-width: 600px) {

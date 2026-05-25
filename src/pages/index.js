@@ -15,3 +15,6 @@ export * from './CreateAccountPage';
 export * from './AllTransactionsPage';
 export * from './DepositPage';
 export * from './SettingsPage';
+export * from './PrivacyPage';
+export * from './TermsPage';
+export * from './HelpPage';

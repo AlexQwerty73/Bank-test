@@ -7,6 +7,11 @@ const getMaskSetting = () => {
    catch { return true; }
 };
 
+const getHideBalances = () => {
+   try { return JSON.parse(localStorage.getItem('app_hideBalances') ?? 'null') ?? false; }
+   catch { return false; }
+};
+
 const Chip = () => (
    <svg width="38" height="28" viewBox="0 0 38 28" fill="none" aria-hidden="true">
       <rect width="38" height="28" rx="5" fill="#D4AF37" />
@@ -39,11 +44,14 @@ const isCardExpired = (expiryDate) => {
 };
 
 export const Card = ({ card, currency: currencyProp, balance }) => {
-   const { number, expiryDate, cvv, type, category } = card;
-   const currency   = currencyProp ?? card.currency ?? '';
-   const typeLower  = (type ?? 'visa').toLowerCase();
+   const { number, expiryDate, cvv, type, category, frozen } = card;
+   const currency    = currencyProp ?? card.currency ?? '';
+   const typeLower   = (type ?? 'visa').toLowerCase();
    const gradientCls = typeLower === 'visa' ? styles.visa : styles.mastercard;
-   const expired    = isCardExpired(expiryDate);
+   const expired     = isCardExpired(expiryDate);
+   const masking      = getMaskSetting();
+   const hideBalances = getHideBalances();
+   const displayNum   = masking ? maskNumber(number) : convertToNumberCartFormat(number);
 
    return (
       <div className={styles.cardWrap}>
@@ -54,6 +62,14 @@ export const Card = ({ card, currency: currencyProp, balance }) => {
 
                {/* Expired overlay */}
                {expired && <div className={styles.expiredOverlay}>EXPIRED</div>}
+
+               {/* Frozen overlay */}
+               {frozen && !expired && (
+                  <div className={styles.frozenOverlay}>
+                     <span className={styles.frozenIcon}>❄️</span>
+                     <span className={styles.frozenText}>FROZEN</span>
+                  </div>
+               )}
 
                <div className={styles.topRow}>
                   <span className={styles.brandName}>Bankify</span>
@@ -69,13 +85,16 @@ export const Card = ({ card, currency: currencyProp, balance }) => {
                   <Chip /><Nfc />
                </div>
 
-               <div className={styles.numberRow}>{maskNumber(number)}</div>
+               <div className={styles.numberRow}>{displayNum}</div>
 
                {balance != null && (
                   <div className={styles.balanceRow}>
                      <div className={styles.balanceLabel}>Available</div>
                      <div className={styles.balanceValue}>
-                        {fmt(balance)}{currency ? ` ${currency}` : ''}
+                        {hideBalances
+                           ? <span className={styles.balanceHidden}>••••••</span>
+                           : `${fmt(balance)}${currency ? ` ${currency}` : ''}`
+                        }
                      </div>
                   </div>
                )}
@@ -107,9 +126,7 @@ export const Card = ({ card, currency: currencyProp, balance }) => {
                   </div>
                </div>
                <div className={styles.backBottom}>
-                  <span className={styles.fullNumber}>
-                     {convertToNumberCartFormat(number)}
-                  </span>
+                  <span className={styles.fullNumber}>{displayNum}</span>
                   <span className={styles.categoryBadgeBack}>{category}</span>
                </div>
             </div>

@@ -455,6 +455,22 @@
    background: #F9FAFB;
 }
 
+.depCardUrgent {
+   border-color: #FCD34D !important;
+   box-shadow: 0 0 0 3px rgba(252,211,77,0.20);
+}
+
+.maturityBanner {
+   background: #FFFBEB;
+   border-bottom: 1px solid #FDE68A;
+   border-radius: 12px 12px 0 0;
+   padding: 10px 20px;
+   font-size: 0.82rem;
+   color: #92400E;
+   line-height: 1.45;
+   margin: -20px -20px 16px;
+}
+
 .depCardHead {
    display: flex;
    align-items: center;

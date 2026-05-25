@@ -1,22 +1,50 @@
 import React from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { useGetAccountsByUserIdQuery } from '../../store';
-import { loadFromLocalStorage } from '../../utils';
+import { loadFromLocalStorage, getSetting } from '../../utils';
 import styles from './TransactionsCardsPage.module.css';
 
 const CURRENCY_FLAGS = { USD: '🇺🇸', EUR: '🇪🇺', UAH: '🇺🇦' };
 const CURRENCY_NAMES = { USD: 'US Dollar', EUR: 'Euro', UAH: 'Ukrainian Hryvnia' };
 const CURRENCY_COLOR = { USD: '#059669', EUR: '#2563EB', UAH: '#D97706' };
 
+const AccountsSkeleton = () => (
+   <div className={styles.page}>
+      <div className="container">
+         <div className={styles.list}>
+            {[...Array(3)].map((_, i) => (
+               <div key={i} className={styles.skRow}>
+                  <div className={styles.skLeft}>
+                     <div className={`${styles.sk} ${styles.skFlag}`} />
+                     <div className={styles.skLines}>
+                        <div className={`${styles.sk} ${styles.skName}`} />
+                        <div className={`${styles.sk} ${styles.skNum}`}
+                             style={{ width: [220, 180, 200][i] }} />
+                     </div>
+                  </div>
+                  <div className={styles.skRight}>
+                     <div className={`${styles.sk} ${styles.skBal}`} />
+                     <div className={`${styles.sk} ${styles.skArrow}`} />
+                  </div>
+               </div>
+            ))}
+         </div>
+      </div>
+   </div>
+);
+
 export const TransactionsCardsPage = () => {
-   const { userId }  = useParams();
-   const localUserId = loadFromLocalStorage('userId');
+   const { userId }     = useParams();
+   const localUserId    = loadFromLocalStorage('userId');
+   const hideBalances   = getSetting('hideBalances', false);
 
    const { data: accounts = [], isLoading } = useGetAccountsByUserIdQuery(userId);
 
    if (userId !== localUserId) {
       return <Navigate to={`/${localUserId}/transactions`} replace />;
    }
+
+   if (isLoading) return <AccountsSkeleton />;
 
    return (
       <div className={styles.page}>
@@ -26,13 +54,11 @@ export const TransactionsCardsPage = () => {
             <div className={styles.header}>
                <div>
                   <h1 className={styles.title}>My Accounts</h1>
-                  {!isLoading && (
-                     <p className={styles.subtitle}>
-                        {accounts.length === 0
-                           ? 'No accounts yet'
-                           : `${accounts.length} ${accounts.length === 1 ? 'account' : 'accounts'} open`}
-                     </p>
-                  )}
+                  <p className={styles.subtitle}>
+                     {accounts.length === 0
+                        ? 'No accounts yet'
+                        : `${accounts.length} ${accounts.length === 1 ? 'account' : 'accounts'} open`}
+                  </p>
                </div>
                <div className={styles.headerActions}>
                   <Link to="remittance" className={styles.transferBtn}>
@@ -50,9 +76,7 @@ export const TransactionsCardsPage = () => {
                </div>
             </div>
 
-            {isLoading && <p className={styles.loading}>Loading accounts…</p>}
-
-            {!isLoading && accounts.length === 0 && (
+            {accounts.length === 0 && (
                <div className={styles.empty}>
                   <span>🏦</span>
                   <p>No accounts yet. Open your first account to get started.</p>
@@ -63,7 +87,7 @@ export const TransactionsCardsPage = () => {
             )}
 
             {/* ── Accounts list ── */}
-            {!isLoading && accounts.length > 0 && (
+            {accounts.length > 0 && (
                <div className={styles.list}>
                   {accounts.map(account => (
                      <Link
@@ -92,16 +116,22 @@ export const TransactionsCardsPage = () => {
                         {/* Right: balance + arrow */}
                         <div className={styles.accountRight}>
                            <div className={styles.balanceWrap}>
-                              <span
-                                 className={styles.balance}
-                                 style={{ color: CURRENCY_COLOR[account.currency] ?? '#111827' }}
-                              >
-                                 {Number(account.balance).toLocaleString('en-US', {
-                                    minimumFractionDigits: 2,
-                                    maximumFractionDigits: 2,
-                                 })}
-                              </span>
-                              <span className={styles.currency}>{account.currency}</span>
+                              {hideBalances ? (
+                                 <span className={styles.balanceHidden}>••••••</span>
+                              ) : (
+                                 <>
+                                    <span
+                                       className={styles.balance}
+                                       style={{ color: CURRENCY_COLOR[account.currency] ?? '#111827' }}
+                                    >
+                                       {Number(account.balance).toLocaleString('en-US', {
+                                          minimumFractionDigits: 2,
+                                          maximumFractionDigits: 2,
+                                       })}
+                                    </span>
+                                    <span className={styles.currency}>{account.currency}</span>
+                                 </>
+                              )}
                            </div>
                            <svg className={styles.arrow} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                               <path d="M7 5l5 5-5 5"/>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
-import { loadFromLocalStorage } from '../../utils';
+import { loadFromLocalStorage, formatDateTime } from '../../utils';
+import { useGetTransactionsByUserIdQuery, useGetUsersQuery, useUpdateUserMutation } from '../../store';
+import { useToast } from '../../context';
 import styles from './settingsPage.module.css';
 
 /* ── Storage helpers ─────────────────────────────────── */
@@ -14,6 +16,7 @@ const setSetting = (key, val) => localStorage.setItem(`app_${key}`, JSON.stringi
 const NAV = [
    { id: 'appearance',    icon: '🎨', label: 'Appearance'     },
    { id: 'privacy',       icon: '🔒', label: 'Privacy'         },
+   { id: 'security',      icon: '🛡️', label: 'Security'        },
    { id: 'notifications', icon: '🔔', label: 'Notifications'   },
    { id: 'regional',      icon: '🌐', label: 'Regional'        },
    { id: 'data',          icon: '💾', label: 'Data & Storage'  },
@@ -21,7 +24,7 @@ const NAV = [
    { id: 'roadmap',       icon: '🗺️', label: 'Roadmap'         },
 ];
 
-/* ── Roadmap data ────────────────────────────────────── */
+/* ── Roadmap data — only pending/partial items ────────── */
 const ROADMAP = [
    {
       section: 'Appearance',
@@ -32,39 +35,6 @@ const ROADMAP = [
             complexity: 'hard',
             effort: '2–3 days',
             note: 'Requires adding CSS custom properties (--color-bg, --color-text, etc.) across all ~30 module files and a ThemeContext provider.',
-         },
-         {
-            label: 'Compact layout',
-            status: 'planned',
-            complexity: 'medium',
-            effort: '4–6 h',
-            note: 'Add a CompactContext, read it in List/Card components, apply smaller padding via conditional CSS classes.',
-         },
-         {
-            label: 'Reduce motion',
-            status: 'partial',
-            complexity: 'easy',
-            effort: '1–2 h',
-            note: 'CSS var --motion-duration is already set. Need to replace hardcoded transition values in ~15 CSS files with var(--motion-duration, 0.3s).',
-         },
-      ],
-   },
-   {
-      section: 'Privacy',
-      items: [
-         {
-            label: 'Hide account balances',
-            status: 'planned',
-            complexity: 'medium',
-            effort: '3–5 h',
-            note: 'Create a PrivacyContext. Wrap balance values in a <Balance> component that reads context and shows •••• when enabled.',
-         },
-         {
-            label: 'Mask card numbers',
-            status: 'partial',
-            complexity: 'easy',
-            effort: '1 h',
-            note: 'Cards already show last 4 digits. Need to wire the setting to the CardData detail page to toggle full number visibility.',
          },
       ],
    },
@@ -112,49 +82,11 @@ const ROADMAP = [
             note: 'Need to integrate react-i18next, extract ~200+ hardcoded strings, create translation files (en, uk, de, fr, pl).',
          },
          {
-            label: 'Default currency',
-            status: 'planned',
-            complexity: 'easy',
-            effort: '1–2 h',
-            note: 'Read app_currency from localStorage in the deposit Calculator and AllTransactions summary. Simple context or prop.',
-         },
-         {
-            label: 'Date format',
-            status: 'planned',
-            complexity: 'easy',
-            effort: '2–3 h',
-            note: 'Create a formatDate(date) utility that reads app_dateFormat from localStorage and formats accordingly. Replace ~10 inline date formatters.',
-         },
-      ],
-   },
-   {
-      section: 'Data & Storage',
-      items: [
-         {
-            label: 'Export data (CSV)',
+            label: 'Currency converter',
             status: 'planned',
             complexity: 'medium',
-            effort: '4–8 h',
-            note: 'Can be done client-side: read transactions from Redux store, convert to CSV string, trigger a file download. No backend needed.',
-         },
-      ],
-   },
-   {
-      section: 'About',
-      items: [
-         {
-            label: 'Privacy Policy / Terms pages',
-            status: 'planned',
-            complexity: 'easy',
-            effort: '1–2 h',
-            note: 'Create static /privacy and /terms routes with markdown-rendered content.',
-         },
-         {
-            label: 'Help & Support page',
-            status: 'planned',
-            complexity: 'easy',
-            effort: '2–4 h',
-            note: 'FAQ-style page with contact form. Form submission requires a backend email endpoint.',
+            effort: '2–4h',
+            note: 'Inline converter widget using live exchange rates from the existing ExchangeRate data. Needs a rate-fetch hook and a conversion formula UI.',
          },
       ],
    },
@@ -266,6 +198,14 @@ const ActionRow = ({ icon, label, sub, btnLabel, onClick, danger, disabled, badg
 export const SettingsPage = () => {
    const { userId }      = useParams();
    const localStorUserId = loadFromLocalStorage('userId');
+   const toast           = useToast();
+
+   /* ── Transactions data (for CSV export) ── */
+   const { data: txData = [] } = useGetTransactionsByUserIdQuery(userId, { skip: !userId });
+
+   /* ── User data (for password change) ── */
+   const { data: userData }    = useGetUsersQuery(userId, { skip: !userId });
+   const [updateUser]          = useUpdateUserMutation();
 
    /* ── Settings state ── */
    const [darkMode,       setDarkMode]       = useState(() => getSetting('darkMode', false));
@@ -286,13 +226,25 @@ export const SettingsPage = () => {
    const [savedKey,      setSavedKey]      = useState(null);
    const [exportDone,    setExportDone]    = useState(false);
 
-   /* Apply reduced motion CSS var (this actually works) */
+   /* ── Security — change password ── */
+   const [curPwd,     setCurPwd]     = useState('');
+   const [newPwd,     setNewPwd]     = useState('');
+   const [confPwd,    setConfPwd]    = useState('');
+   const [pwdErr,     setPwdErr]     = useState('');
+   const [pwdLoading, setPwdLoading] = useState(false);
+   const [showCurPwd, setShowCurPwd] = useState(false);
+   const [showNewPwd, setShowNewPwd] = useState(false);
+
+   /* Reduced motion: CSS var + body class (live preview) */
    useEffect(() => {
-      document.documentElement.style.setProperty(
-         '--motion-duration',
-         reducedMotion ? '0.01s' : ''
-      );
+      document.documentElement.style.setProperty('--motion-duration', reducedMotion ? '0.01s' : '');
+      document.body.classList.toggle('reduce-motion', reducedMotion);
    }, [reducedMotion]);
+
+   /* Compact layout: body class (live preview) */
+   useEffect(() => {
+      document.body.classList.toggle('compact-mode', compactLayout);
+   }, [compactLayout]);
 
    /* ── All hooks above — redirect below ── */
    if (userId !== localStorUserId) {
@@ -314,6 +266,32 @@ export const SettingsPage = () => {
    };
 
    const handleExport = () => {
+      if (!txData.length) return;
+
+      const escape = (s) => `"${String(s ?? '').replace(/"/g, '""')}"`;
+      const header = ['Date', 'Type', 'Direction', 'Amount', 'Currency', 'Description', 'Counterparty'].join(',');
+      const rows   = txData.map(tx => [
+         escape(formatDateTime(tx.date)),
+         tx.type      ?? '',
+         tx.direction ?? '',
+         Number(tx.amount).toFixed(2),
+         tx.currency  ?? '',
+         escape(tx.description),
+         escape(tx.counterName),
+      ].join(','));
+
+      /* BOM (﻿) makes Excel open UTF-8 correctly */
+      const csv  = '﻿' + [header, ...rows].join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href     = url;
+      a.download = `bankify-transactions-${new Date().toISOString().slice(0, 10)}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
       setExportDone(true);
       setTimeout(() => setExportDone(false), 3000);
    };
@@ -343,20 +321,15 @@ export const SettingsPage = () => {
                />
                <ToggleRow
                   icon="📐" label="Compact layout"
-                  sub="Reduce spacing in lists and cards"
+                  sub="Reduce spacing in lists and cards for a denser view"
                   value={compactLayout}
                   onChange={persist('compactLayout', setCompactLayout)}
-                  disabled
-                  badge="soon"
-                  note="Compact styles are not applied yet. Your preference is saved."
                />
                <ToggleRow
                   icon="✨" label="Reduce motion"
-                  sub="Disable or shorten transitions and animations"
+                  sub="Disable animations and shorten transitions across the app"
                   value={reducedMotion}
                   onChange={persist('reducedMotion', setReducedMotion)}
-                  badge="partial"
-                  note="Shortens CSS transitions via --motion-duration variable. Not all animations respond yet."
                />
             </div>
          );
@@ -373,23 +346,166 @@ export const SettingsPage = () => {
 
                <ToggleRow
                   icon="👁" label="Hide account balances"
-                  sub="Replace all amounts with •••• across the app"
+                  sub="Replace balance amounts with •••• on account, card and transaction pages"
                   value={hideBalances}
                   onChange={persist('hideBalances', setHideBalances)}
-                  disabled
-                  badge="soon"
-                  note="Balance masking is not applied to the UI yet. Your preference is saved."
                />
                <ToggleRow
                   icon="💳" label="Mask card numbers"
-                  sub="Show only last 4 digits everywhere by default"
+                  sub="Show only last 4 digits on cards and in the card detail page"
                   value={hideCardNums}
                   onChange={persist('hideCardNums', setHideCardNums)}
-                  badge="partial"
-                  note="Card numbers are already masked by default. This toggle will control the card detail page in a future update."
                />
             </div>
          );
+
+         /* ──────────────────── SECURITY ──────────────────── */
+         case 'security': {
+            /* Password strength */
+            const strength = (() => {
+               if (!newPwd) return 0;
+               let s = 0;
+               if (newPwd.length >= 8)              s++;
+               if (/[A-Z]/.test(newPwd))            s++;
+               if (/[0-9]/.test(newPwd))            s++;
+               if (/[^A-Za-z0-9]/.test(newPwd))     s++;
+               return s;
+            })();
+            const strengthLabel = ['', 'Weak', 'Fair', 'Good', 'Strong'][strength];
+            const strengthCls   = [
+               '', styles.strengthWeak, styles.strengthFair,
+               styles.strengthGood, styles.strengthStrong,
+            ][strength];
+
+            const handleChangePwd = async (e) => {
+               e.preventDefault();
+               setPwdErr('');
+               const user = userData;
+               if (!user) { setPwdErr('Could not load your account. Try again.'); return; }
+               if (curPwd !== user.password) { setPwdErr('Current password is incorrect.'); return; }
+               if (newPwd.length < 6)        { setPwdErr('New password must be at least 6 characters.'); return; }
+               if (newPwd !== confPwd)        { setPwdErr('Passwords do not match.'); return; }
+               if (newPwd === curPwd)         { setPwdErr('New password must differ from current password.'); return; }
+               setPwdLoading(true);
+               try {
+                  await updateUser({ ...user, password: newPwd }).unwrap();
+                  toast.success('🔐 Password changed successfully');
+                  setCurPwd(''); setNewPwd(''); setConfPwd('');
+               } catch {
+                  setPwdErr('Failed to update password. Please try again.');
+                  toast.error('Password change failed');
+               } finally {
+                  setPwdLoading(false);
+               }
+            };
+
+            return (
+               <div className={styles.sectionContent}>
+                  <div className={styles.sectionHead}>
+                     <h2 className={styles.sectionTitle}>Security</h2>
+                     <p className={styles.sectionDesc}>
+                        Manage your login credentials and account security.
+                     </p>
+                  </div>
+
+                  <form className={styles.pwdForm} onSubmit={handleChangePwd} autoComplete="off">
+                     <h3 className={styles.pwdFormTitle}>Change password</h3>
+
+                     {/* Current password */}
+                     <div className={styles.pwdField}>
+                        <label className={styles.pwdLabel}>Current password</label>
+                        <div className={styles.pwdInputWrap}>
+                           <input
+                              className={styles.pwdInput}
+                              type={showCurPwd ? 'text' : 'password'}
+                              value={curPwd}
+                              onChange={e => { setCurPwd(e.target.value); setPwdErr(''); }}
+                              placeholder="Enter current password"
+                              autoComplete="current-password"
+                           />
+                           <button type="button" className={styles.pwdEye}
+                              onClick={() => setShowCurPwd(v => !v)}>
+                              {showCurPwd ? '🙈' : '👁'}
+                           </button>
+                        </div>
+                     </div>
+
+                     {/* New password */}
+                     <div className={styles.pwdField}>
+                        <label className={styles.pwdLabel}>New password</label>
+                        <div className={styles.pwdInputWrap}>
+                           <input
+                              className={styles.pwdInput}
+                              type={showNewPwd ? 'text' : 'password'}
+                              value={newPwd}
+                              onChange={e => { setNewPwd(e.target.value); setPwdErr(''); }}
+                              placeholder="Minimum 6 characters"
+                              autoComplete="new-password"
+                           />
+                           <button type="button" className={styles.pwdEye}
+                              onClick={() => setShowNewPwd(v => !v)}>
+                              {showNewPwd ? '🙈' : '👁'}
+                           </button>
+                        </div>
+                        {/* Strength meter */}
+                        {newPwd.length > 0 && (
+                           <div className={styles.strength}>
+                              <div className={styles.strengthBars}>
+                                 {[1,2,3,4].map(n => (
+                                    <div
+                                       key={n}
+                                       className={`${styles.strengthBar} ${n <= strength ? strengthCls : ''}`}
+                                    />
+                                 ))}
+                              </div>
+                              <span className={`${styles.strengthLabel} ${strengthCls}`}>{strengthLabel}</span>
+                           </div>
+                        )}
+                     </div>
+
+                     {/* Confirm password */}
+                     <div className={styles.pwdField}>
+                        <label className={styles.pwdLabel}>Confirm new password</label>
+                        <div className={styles.pwdInputWrap}>
+                           <input
+                              className={styles.pwdInput}
+                              type="password"
+                              value={confPwd}
+                              onChange={e => { setConfPwd(e.target.value); setPwdErr(''); }}
+                              placeholder="Repeat new password"
+                              autoComplete="new-password"
+                           />
+                           {confPwd && newPwd && (
+                              <span className={styles.pwdMatch}>
+                                 {confPwd === newPwd ? '✓' : '✕'}
+                              </span>
+                           )}
+                        </div>
+                     </div>
+
+                     {pwdErr && <p className={styles.pwdErr}>{pwdErr}</p>}
+
+                     <button
+                        type="submit"
+                        className={styles.pwdSubmit}
+                        disabled={pwdLoading || !curPwd || !newPwd || !confPwd}
+                     >
+                        {pwdLoading ? 'Saving…' : 'Change password'}
+                     </button>
+                  </form>
+
+                  <div className={styles.pwdHint}>
+                     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">
+                        <circle cx="8" cy="8" r="6.5"/><path d="M8 5v3.5M8 10.5h.01"/>
+                     </svg>
+                     <p>
+                        This is a demo app — passwords are stored in plain text in the JSON Server.
+                        Do not use a real password here.
+                     </p>
+                  </div>
+               </div>
+            );
+         }
 
          /* ──────────────────── NOTIFICATIONS ──────────────────── */
          case 'notifications': return (
@@ -458,21 +574,17 @@ export const SettingsPage = () => {
                />
                <SelectRow
                   icon="💱" label="Default currency"
-                  sub="Used in calculators and summary views"
+                  sub="Pre-selects currency in the deposit calculator"
                   value={currency}
                   options={[['UAH','🇺🇦 UAH — Ukrainian hryvnia'],['USD','🇺🇸 USD — US dollar'],['EUR','🇪🇺 EUR — Euro']]}
                   onChange={persist('currency', setCurrency)}
-                  disabled badge="soon"
-                  note="The deposit calculator uses all currencies. This will act as a default filter in a future update."
                />
                <SelectRow
                   icon="📅" label="Date format"
                   sub="How dates appear across the app"
                   value={dateFormat}
-                  options={[['DMY','DD/MM/YYYY — 24/05/2025'],['MDY','MM/DD/YYYY — 05/24/2025'],['YMD','YYYY-MM-DD — 2025-05-24']]}
+                  options={[['DMY','DD/MM/YYYY — 24/05/2026'],['MDY','MM/DD/YYYY — 05/24/2026'],['YMD','YYYY-MM-DD — 2026-05-24']]}
                   onChange={persist('dateFormat', setDateFormat)}
-                  disabled badge="soon"
-                  note="Dates are currently hardcoded to DD/MM/YYYY format. Custom format will apply globally in a future update."
                />
             </div>
          );
@@ -489,11 +601,10 @@ export const SettingsPage = () => {
 
                <ActionRow
                   icon="📦" label="Export my data"
-                  sub="Download all transactions and account info as CSV"
-                  btnLabel={exportDone ? '✓ Requested' : 'Export'}
+                  sub={txData.length ? `Download ${txData.length} transactions as CSV` : 'No transactions to export'}
+                  btnLabel={exportDone ? '✓ Downloaded' : 'Export CSV'}
                   onClick={handleExport}
-                  disabled badge="soon"
-                  note="CSV export requires a server-side endpoint. Not available in this demo build."
+                  disabled={!txData.length}
                />
 
                <Divider />
@@ -539,24 +650,29 @@ export const SettingsPage = () => {
 
                <div className={styles.aboutLinks}>
                   {[
-                     { icon: '📄', label: 'Privacy Policy',   sub: 'How we handle your data'           },
-                     { icon: '📋', label: 'Terms of Service',  sub: 'Rules and conditions of use'       },
-                     { icon: '🆘', label: 'Help & Support',    sub: 'Guides, FAQs and contact support'  },
-                     { icon: '🐛', label: 'Report a bug',      sub: 'Something broken? Let us know'     },
-                  ].map(({ icon, label, sub }) => (
-                     <div key={label} className={styles.aboutLinkRow}>
+                     { icon: '🆘', label: 'Help & Support',   sub: 'Guides, FAQs and contact support', to: '/help',    badge: null  },
+                     { icon: '📄', label: 'Privacy Policy',   sub: 'How we handle your data',          to: '/privacy', badge: null  },
+                     { icon: '📋', label: 'Terms of Service', sub: 'Rules and conditions of use',      to: '/terms',   badge: null  },
+                     { icon: '🐛', label: 'Report a bug',     sub: 'Something broken? Let us know',    to: null,       badge: 'soon'},
+                  ].map(({ icon, label, sub, to, badge: b }) => (
+                     <Link
+                        key={label}
+                        to={to ?? '#'}
+                        className={styles.aboutLinkRow}
+                        style={!to ? { pointerEvents: 'none', opacity: 0.6 } : {}}
+                     >
                         <span className={styles.rowIcon}>{icon}</span>
                         <div className={styles.rowBody}>
                            <div className={styles.rowLabelLine}>
                               <span className={styles.rowLabel}>{label}</span>
-                              <Badge type="soon" />
+                              {b && <Badge type={b} />}
                            </div>
                            <p className={styles.rowSub}>{sub}</p>
                         </div>
                         <svg className={styles.chevron} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
                            <path d="M8 5l5 5-5 5"/>
                         </svg>
-                     </div>
+                     </Link>
                   ))}
                </div>
 
@@ -572,7 +688,6 @@ export const SettingsPage = () => {
          /* ──────────────────── ROADMAP ──────────────────── */
          case 'roadmap': {
             const STATUS_CFG = {
-               done:    { label: 'Done',    cls: styles.rdStatusDone    },
                partial: { label: 'Partial', cls: styles.rdStatusPartial },
                planned: { label: 'Planned', cls: styles.rdStatusPlanned },
             };
@@ -583,9 +698,6 @@ export const SettingsPage = () => {
             };
 
             const totalItems   = ROADMAP.reduce((s, g) => s + g.items.length, 0);
-            const doneItems    = ROADMAP.reduce((s, g) => s + g.items.filter(i => i.status === 'done').length, 0);
-            const partialItems = ROADMAP.reduce((s, g) => s + g.items.filter(i => i.status === 'partial').length, 0);
-            const easyCount    = ROADMAP.reduce((s, g) => s + g.items.filter(i => i.complexity === 'easy').length, 0);
             const mediumCount  = ROADMAP.reduce((s, g) => s + g.items.filter(i => i.complexity === 'medium').length, 0);
             const hardCount    = ROADMAP.reduce((s, g) => s + g.items.filter(i => i.complexity === 'hard').length, 0);
 
@@ -594,25 +706,15 @@ export const SettingsPage = () => {
                   <div className={styles.sectionHead}>
                      <h2 className={styles.sectionTitle}>Implementation Roadmap</h2>
                      <p className={styles.sectionDesc}>
-                        All pending settings features ranked by complexity and effort.
+                        Pending features ranked by complexity and effort.
                      </p>
                   </div>
 
                   {/* Summary strip */}
                   <div className={styles.rdSummary}>
                      <div className={styles.rdSummaryItem}>
-                        <span className={styles.rdSummaryNum}>{totalItems - doneItems - partialItems}</span>
-                        <span className={styles.rdSummaryLabel}>Planned</span>
-                     </div>
-                     <div className={styles.rdSummarySep} />
-                     <div className={styles.rdSummaryItem}>
-                        <span className={styles.rdSummaryNum}>{partialItems}</span>
-                        <span className={styles.rdSummaryLabel}>Partial</span>
-                     </div>
-                     <div className={styles.rdSummarySep} />
-                     <div className={`${styles.rdSummaryItem} ${styles.rdSummaryEasy}`}>
-                        <span className={styles.rdSummaryNum}>{easyCount}</span>
-                        <span className={styles.rdSummaryLabel}>Easy</span>
+                        <span className={styles.rdSummaryNum}>{totalItems}</span>
+                        <span className={styles.rdSummaryLabel}>Pending</span>
                      </div>
                      <div className={styles.rdSummarySep} />
                      <div className={`${styles.rdSummaryItem} ${styles.rdSummaryMedium}`}>

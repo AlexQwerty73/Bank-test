@@ -95,3 +95,39 @@ a {
   max-width: 1200px;
   margin: 0 auto;
 }
+
+/* ══════════════════════════════════════════
+   REDUCE MOTION
+   Applies when OS setting OR app toggle is on
+   ══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body.reduce-motion *,
+body.reduce-motion *::before,
+body.reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* ══════════════════════════════════════════
+   COMPACT MODE
+   Applied via body.compact-mode class
+   ══════════════════════════════════════════ */
+body.compact-mode .container {
+  /* Container itself stays full-width */
+}
+
+/* Pages: reduce top/bottom padding */
+body.compact-mode [class*="page"] {
+  padding-top: 28px !important;
+  padding-bottom: 64px !important;
+}

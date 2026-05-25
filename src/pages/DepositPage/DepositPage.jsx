@@ -18,6 +18,14 @@ import styles from './depositPage.module.css';
 const fmt = (n, decimals = 2) =>
    Number(n).toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
 
+const VALID_CURRENCIES = ['UAH', 'USD', 'EUR'];
+const getDefaultCurrency = () => {
+   try {
+      const v = JSON.parse(localStorage.getItem('app_currency') ?? 'null');
+      return VALID_CURRENCIES.includes(v) ? v : 'UAH';
+   } catch { return 'UAH'; }
+};
+
 const CURRENCY_FLAGS = { USD: '🇺🇸', EUR: '🇪🇺', UAH: '🇺🇦' };
 const CURRENCY_COLOR = { USD: '#059669', EUR: '#2563EB', UAH: '#D97706' };
 
@@ -49,7 +57,7 @@ function progress(openedAt, months) {
    CALCULATOR PANEL
    ════════════════════════════════════════════════════════ */
 const Calculator = ({ depositData, accounts, userId, onOpened }) => {
-   const [currency, setCurrency] = useState('UAH');
+   const [currency, setCurrency] = useState(getDefaultCurrency);
    const [months,   setMonths]   = useState(12);
    const [amount,   setAmount]   = useState('');
    const [withTax,  setWithTax]  = useState(true);
@@ -387,9 +395,17 @@ const DepositCard = ({ dep, userId }) => {
    };
 
    const color = CURRENCY_COLOR[dep.currency] ?? '#4F46E5';
+   const nearMaturity = isActive && !isMatured && daysLeft > 0 && daysLeft <= 7;
 
    return (
-      <div className={`${styles.depCard} ${!isActive ? styles.depCardClosed : ''}`}>
+      <div className={`${styles.depCard} ${!isActive ? styles.depCardClosed : ''} ${nearMaturity ? styles.depCardUrgent : ''}`}>
+
+         {/* Near-maturity warning */}
+         {nearMaturity && (
+            <div className={styles.maturityBanner}>
+               🔔 <strong>Matures in {daysLeft} day{daysLeft !== 1 ? 's' : ''}</strong> — collect your funds soon to avoid missing the payout window.
+            </div>
+         )}
 
          {/* Header */}
          <div className={styles.depCardHead}>

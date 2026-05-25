@@ -59,6 +59,15 @@ export const cardsApi = createApi({
          }),
          invalidatesTags: (result, error, id) => [{ type: typeTag, id }, { type: typeTag, id: 'LIST' }],
       }),
+
+      patchCard: build.mutation({
+         query: ({ id, ...patch }) => ({
+            url: `${resource}/${id}`,
+            method: 'PATCH',
+            body: patch,
+         }),
+         invalidatesTags: (result, error, { id }) => [{ type: typeTag, id }, { type: typeTag, id: 'LIST' }],
+      }),
    }),
 });
 
@@ -70,4 +79,5 @@ export const {
    useGetCardsQuery,
    useUpdateCardMutation,
    useDeleteCardMutation,
+   usePatchCardMutation,
 } = cardsApi;

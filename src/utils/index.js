@@ -1,4 +1,5 @@
 export * from './loadFromLocalStorage';
+export * from './settings';
 export * from './saveToLocalStorage';
 export * from './removeKeyFromLocalStorage';
 export * from './convertYYYYMMDDToMMYY';

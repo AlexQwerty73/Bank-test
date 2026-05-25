@@ -65,6 +65,28 @@
    padding: 18px 22px 18px;
 }
 
+/* Frozen overlay */
+.frozenOverlay {
+   position: absolute;
+   inset: 0;
+   background: rgba(10, 60, 120, 0.72);
+   backdrop-filter: blur(3px);
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   gap: 8px;
+   border-radius: 20px;
+   z-index: 2;
+}
+.frozenIcon { font-size: 2rem; }
+.frozenText {
+   font-size: 1.1rem;
+   font-weight: 900;
+   letter-spacing: 0.25em;
+   color: rgba(255,255,255,0.85);
+}
+
 /* Expired dim overlay */
 .expiredOverlay {
    position: absolute;
@@ -166,6 +188,12 @@
    font-weight: 700;
    letter-spacing: 0.01em;
    color: rgba(255,255,255,0.93);
+}
+
+.balanceHidden {
+   letter-spacing: 0.12em;
+   color: rgba(255,255,255,0.55);
+   font-size: 0.95rem;
 }
 
 /* Bottom row */

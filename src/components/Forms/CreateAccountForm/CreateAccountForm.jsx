@@ -4,6 +4,16 @@ import { useAddAccountMutation, useGetAccountsByUserIdQuery } from '../../../sto
 import { generateAccountNumber, loadFromLocalStorage } from '../../../utils';
 import styles from './createAccountForm.module.css';
 
+const CreateAccountSkeleton = () => (
+   <div className={styles.skeleton}>
+      <div className={`${styles.sk} ${styles.skHint}`} />
+      {[0, 1, 2].map(i => (
+         <div key={i} className={`${styles.sk} ${styles.skOption}`} />
+      ))}
+      <div className={`${styles.sk} ${styles.skBtn}`} />
+   </div>
+);
+
 const ALL_CURRENCIES  = ['UAH', 'EUR', 'USD'];
 const CURRENCY_FLAGS  = { USD: '🇺🇸', EUR: '🇪🇺', UAH: '🇺🇦' };
 const CURRENCY_NAMES  = { USD: 'US Dollar', EUR: 'Euro', UAH: 'Ukrainian Hryvnia' };
@@ -44,7 +54,7 @@ export const CreateAccountForm = () => {
       navigate(`/${userId}/transactions`);
    };
 
-   if (accLoading) return <p className={styles.info}>Loading…</p>;
+   if (accLoading) return <CreateAccountSkeleton />;
 
    if (availableCurrencies.length === 0) {
       return (

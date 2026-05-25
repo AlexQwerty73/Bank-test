@@ -8,13 +8,24 @@ import {
    generateExpiryDate,
    loadFromLocalStorage,
 } from '../../utils';
-import { useUpdateCardMutation, useDeleteCardMutation, useGetAccountByIdQuery } from '../../store';
+import { useUpdateCardMutation, useDeleteCardMutation, useGetAccountByIdQuery, usePatchCardMutation } from '../../store';
+import { useToast } from '../../context';
 import { Card } from '../commons';
 
 const fmt = (n) =>
    Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 const isExpired = (date) => date && new Date(date) < new Date();
+
+const maskNumber = (raw = '') => {
+   const d = raw.replace(/\D/g, '');
+   return `•••• •••• •••• ${d.slice(-4)}`;
+};
+
+const getMaskSetting = () => {
+   try { return JSON.parse(localStorage.getItem('app_hideCardNums') ?? 'null') ?? true; }
+   catch { return true; }
+};
 
 /* ── Masked field row ── */
 const SecretRow = ({ label, value, isEditable, editValue, isEdit, isVisible, error,
@@ -64,15 +75,177 @@ const SecretRow = ({ label, value, isEditable, editValue, isEdit, isVisible, err
    </div>
 );
 
+/* ── PIN change modal ──────────────────────────────────── */
+const PinModal = ({ currentPin, onSave, onClose }) => {
+   const [step,       setStep]       = useState('verify'); // 'verify' | 'new'
+   const [curInput,   setCurInput]   = useState('');
+   const [newPin,     setNewPin]     = useState('');
+   const [confirmPin, setConfirmPin] = useState('');
+   const [err,        setErr]        = useState('');
+   const [showCur,    setShowCur]    = useState(false);
+   const [showNew,    setShowNew]    = useState(false);
+
+   const handleVerify = () => {
+      if (curInput !== String(currentPin)) { setErr('Incorrect current PIN'); return; }
+      setErr(''); setStep('new');
+   };
+
+   const handleSave = () => {
+      if (!/^\d{4}$/.test(newPin))   { setErr('New PIN must be exactly 4 digits'); return; }
+      if (newPin !== confirmPin)      { setErr('PINs do not match'); return; }
+      if (newPin === String(currentPin)) { setErr('New PIN must differ from current PIN'); return; }
+      onSave(newPin);
+   };
+
+   return (
+      <div className={styles.modalOverlay} onClick={onClose}>
+         <div className={styles.modal} onClick={e => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+               <h3 className={styles.modalTitle}>
+                  {step === 'verify' ? '🔐 Verify identity' : '🔑 Set new PIN'}
+               </h3>
+               <button className={styles.modalClose} onClick={onClose}>✕</button>
+            </div>
+
+            {step === 'verify' ? (
+               <>
+                  <p className={styles.modalSub}>Enter your current 4-digit PIN to continue.</p>
+                  <div className={styles.modalField}>
+                     <label className={styles.modalLabel}>Current PIN</label>
+                     <div className={styles.modalInputWrap}>
+                        <input
+                           className={styles.modalInput}
+                           type={showCur ? 'text' : 'password'}
+                           maxLength={4}
+                           value={curInput}
+                           onChange={e => { setCurInput(e.target.value.replace(/\D/g, '')); setErr(''); }}
+                           placeholder="••••"
+                           autoFocus
+                        />
+                        <button className={styles.modalEye} onClick={() => setShowCur(v => !v)}>
+                           {showCur ? '🙈' : '👁'}
+                        </button>
+                     </div>
+                  </div>
+                  {err && <p className={styles.modalErr}>{err}</p>}
+                  <div className={styles.modalActions}>
+                     <button className={styles.modalPrimary} onClick={handleVerify} disabled={curInput.length !== 4}>
+                        Continue
+                     </button>
+                     <button className={styles.modalGhost} onClick={onClose}>Cancel</button>
+                  </div>
+               </>
+            ) : (
+               <>
+                  <p className={styles.modalSub}>Choose a new 4-digit PIN.</p>
+                  <div className={styles.modalField}>
+                     <label className={styles.modalLabel}>New PIN</label>
+                     <div className={styles.modalInputWrap}>
+                        <input
+                           className={styles.modalInput}
+                           type={showNew ? 'text' : 'password'}
+                           maxLength={4}
+                           value={newPin}
+                           onChange={e => { setNewPin(e.target.value.replace(/\D/g, '')); setErr(''); }}
+                           placeholder="••••"
+                           autoFocus
+                        />
+                        <button className={styles.modalEye} onClick={() => setShowNew(v => !v)}>
+                           {showNew ? '🙈' : '👁'}
+                        </button>
+                     </div>
+                  </div>
+                  <div className={styles.modalField}>
+                     <label className={styles.modalLabel}>Confirm PIN</label>
+                     <div className={styles.modalInputWrap}>
+                        <input
+                           className={styles.modalInput}
+                           type="password"
+                           maxLength={4}
+                           value={confirmPin}
+                           onChange={e => { setConfirmPin(e.target.value.replace(/\D/g, '')); setErr(''); }}
+                           placeholder="••••"
+                        />
+                     </div>
+                  </div>
+                  {err && <p className={styles.modalErr}>{err}</p>}
+                  <div className={styles.modalActions}>
+                     <button
+                        className={styles.modalPrimary}
+                        onClick={handleSave}
+                        disabled={newPin.length !== 4 || confirmPin.length !== 4}
+                     >
+                        Save new PIN
+                     </button>
+                     <button className={styles.modalGhost} onClick={() => { setStep('verify'); setNewPin(''); setConfirmPin(''); setErr(''); }}>
+                        Back
+                     </button>
+                  </div>
+               </>
+            )}
+         </div>
+      </div>
+   );
+};
+
+/* ── Spending limit editor ─────────────────────────────── */
+const LimitEditor = ({ current, currency, onSave, onClose }) => {
+   const [val, setVal] = useState(current > 0 ? String(current) : '');
+   const [err, setErr] = useState('');
+
+   const handleSave = () => {
+      const n = parseFloat(val);
+      if (val !== '' && (isNaN(n) || n <= 0)) { setErr('Enter a positive amount or leave empty to remove the limit'); return; }
+      onSave(val === '' ? null : n);
+   };
+
+   return (
+      <div className={styles.modalOverlay} onClick={onClose}>
+         <div className={styles.modal} onClick={e => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+               <h3 className={styles.modalTitle}>💳 Monthly spending limit</h3>
+               <button className={styles.modalClose} onClick={onClose}>✕</button>
+            </div>
+            <p className={styles.modalSub}>
+               Set a maximum amount you can spend from this card per calendar month.
+               Leave empty to remove the limit.
+            </p>
+            <div className={styles.modalField}>
+               <label className={styles.modalLabel}>Limit amount {currency ? `(${currency})` : ''}</label>
+               <input
+                  className={styles.modalInput}
+                  type="number"
+                  min="1"
+                  step="1"
+                  placeholder="e.g. 5000"
+                  value={val}
+                  onChange={e => { setVal(e.target.value); setErr(''); }}
+                  autoFocus
+               />
+            </div>
+            {err && <p className={styles.modalErr}>{err}</p>}
+            <div className={styles.modalActions}>
+               <button className={styles.modalPrimary} onClick={handleSave}>
+                  {val === '' ? 'Remove limit' : 'Set limit'}
+               </button>
+               <button className={styles.modalGhost} onClick={onClose}>Cancel</button>
+            </div>
+         </div>
+      </div>
+   );
+};
+
 export const CardData = ({ card }) => {
    const { userId } = useParams();
    const navigate   = useNavigate();
    const localUserId = loadFromLocalStorage('userId');
+   const toast      = useToast();
 
-   const { number, expiryDate, cvv, type, pin, category, accountId } = card;
+   const { number, expiryDate, cvv, type, pin, category, accountId, frozen, spendingLimit } = card;
 
    const { data: account } = useGetAccountByIdQuery(accountId, { skip: !accountId });
    const [updateCard, { isLoading: updating }] = useUpdateCardMutation();
+   const [patchCard]                           = usePatchCardMutation();
    const [deleteCard, { isLoading: deleting }] = useDeleteCardMutation();
 
    /* ── UI state ── */
@@ -82,6 +255,13 @@ export const CardData = ({ card }) => {
    const [fieldError, setFieldError] = useState({ cvv: '', pin: '' });
    const [copied,    setCopied]    = useState(false);
    const [confirmAction, setConfirmAction] = useState(null); // 'delete' | 'reissue'
+   const [showPinModal,   setShowPinModal]   = useState(false);
+   const [showLimitModal, setShowLimitModal] = useState(false);
+   const [freezing,       setFreezing]       = useState(false);
+
+   /* ── Card number masking ── */
+   const maskingEnabled    = getMaskSetting();
+   const [isNumberVisible, setIsNumberVisible] = useState(!maskingEnabled);
 
    const expired = isExpired(expiryDate);
 
@@ -136,7 +316,9 @@ export const CardData = ({ card }) => {
       if (confirmAction === action) {
          setConfirmAction(null);
          if (action === 'delete') {
-            deleteCard(card.id).then(() => navigate(`/${localUserId}/cards`));
+            deleteCard(card.id)
+               .then(() => { toast.success('Card deleted'); navigate(`/${localUserId}/cards`); })
+               .catch(() => toast.error('Delete failed'));
          }
          if (action === 'reissue') {
             updateCard({
@@ -144,13 +326,50 @@ export const CardData = ({ card }) => {
                number:     generateCardNumber(),
                cvv:        generateCVV(),
                expiryDate: generateExpiryDate(),
-            }).then(() => navigate(`/${localUserId}/cards`));
+            })
+               .then(() => { toast.success('Card re-issued'); navigate(`/${localUserId}/cards`); })
+               .catch(() => toast.error('Re-issue failed'));
          }
       } else {
          setConfirmAction(action);
          setTimeout(() => setConfirmAction(null), 5000);
       }
-   }, [confirmAction, card, deleteCard, updateCard, navigate, localUserId]);
+   }, [confirmAction, card, deleteCard, updateCard, navigate, localUserId, toast]);
+
+   /* ── Freeze / unfreeze ── */
+   const handleFreeze = async () => {
+      setFreezing(true);
+      try {
+         await patchCard({ id: card.id, frozen: !frozen }).unwrap();
+         toast.success(frozen ? '✅ Card unfrozen' : '❄️ Card frozen');
+      } catch {
+         toast.error('Failed to update card status');
+      } finally {
+         setFreezing(false);
+      }
+   };
+
+   /* ── PIN change ── */
+   const handlePinSave = async (newPin) => {
+      try {
+         await patchCard({ id: card.id, pin: newPin }).unwrap();
+         toast.success('🔑 PIN changed successfully');
+         setShowPinModal(false);
+      } catch {
+         toast.error('Failed to change PIN');
+      }
+   };
+
+   /* ── Spending limit ── */
+   const handleLimitSave = async (limit) => {
+      try {
+         await patchCard({ id: card.id, spendingLimit: limit }).unwrap();
+         toast.success(limit === null ? '✅ Spending limit removed' : `💳 Limit set to ${limit} ${account?.currency ?? ''}`);
+         setShowLimitModal(false);
+      } catch {
+         toast.error('Failed to update spending limit');
+      }
+   };
 
    /* Format expiry */
    const expiryFormatted = expiryDate
@@ -158,6 +377,7 @@ export const CardData = ({ card }) => {
       : '—';
 
    return (
+      <>
       <div className={styles.page}>
 
          {/* Back link */}
@@ -179,10 +399,32 @@ export const CardData = ({ card }) => {
                </p>
 
                {/* Status */}
-               <div className={`${styles.statusBadge} ${expired ? styles.statusExpired : styles.statusActive}`}>
+               <div className={`${styles.statusBadge} ${
+                  expired ? styles.statusExpired
+                  : frozen ? styles.statusFrozen
+                  : styles.statusActive
+               }`}>
                   <span className={styles.statusDot} />
-                  {expired ? 'Expired' : 'Active'}
+                  {expired ? 'Expired' : frozen ? 'Frozen' : 'Active'}
                </div>
+
+               {/* Freeze button */}
+               {!expired && (
+                  <button
+                     className={`${styles.freezeBtn} ${frozen ? styles.freezeBtnActive : ''}`}
+                     onClick={handleFreeze}
+                     disabled={freezing}
+                     title={frozen ? 'Unfreeze card' : 'Freeze card'}
+                  >
+                     {freezing ? (
+                        <><span className={styles.spinner}/> {frozen ? 'Unfreezing…' : 'Freezing…'}</>
+                     ) : frozen ? (
+                        <>🌡️ Unfreeze card</>
+                     ) : (
+                        <>❄️ Freeze card</>
+                     )}
+                  </button>
+               )}
             </div>
 
             {/* ── Right: details ── */}
@@ -198,13 +440,25 @@ export const CardData = ({ card }) => {
                {/* ── Info rows ── */}
                <div className={styles.rows}>
 
-                  {/* Number + copy */}
+                  {/* Number + reveal + copy */}
                   <div className={styles.row}>
                      <span className={styles.rowLabel}>Number</span>
                      <div className={styles.rowRight}>
                         <span className={styles.rowText} style={{ fontFamily: 'monospace', letterSpacing: '0.06em' }}>
-                           {convertToNumberCartFormat(number)}
+                           {isNumberVisible ? convertToNumberCartFormat(number) : maskNumber(number)}
                         </span>
+                        <div className={styles.rowActions}>
+                           <button
+                              className={styles.iconBtn}
+                              onClick={() => setIsNumberVisible(v => !v)}
+                              title={isNumberVisible ? 'Hide number' : 'Reveal number'}
+                           >
+                              {isNumberVisible
+                                 ? <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M17.94 10A9.9 9.9 0 0 1 10 17 9.9 9.9 0 0 1 2.06 10 9.9 9.9 0 0 1 10 3a9.9 9.9 0 0 1 7.94 7z"/><circle cx="10" cy="10" r="3"/></svg>
+                                 : <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M2 2l16 16M6.7 6.7A7 7 0 0 0 3.1 10 9.9 9.9 0 0 0 10 17c1.6 0 3-.4 4.3-1.1M8.1 4.2A9 9 0 0 1 10 4a9.9 9.9 0 0 1 7.9 6 9.8 9.8 0 0 1-2.4 3.5"/></svg>
+                              }
+                           </button>
+                        </div>
                         <button className={styles.copyBtn} onClick={handleCopy} title="Copy card number">
                            {copied
                               ? <><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><polyline points="2 8 6 12 14 4"/></svg> Copied</>
@@ -238,6 +492,26 @@ export const CardData = ({ card }) => {
                      </div>
                   </div>
 
+                  {/* Spending limit */}
+                  <div className={styles.row}>
+                     <span className={styles.rowLabel}>Monthly limit</span>
+                     <div className={styles.rowRight}>
+                        <span className={styles.rowText}>
+                           {spendingLimit > 0
+                              ? <strong>{fmt(spendingLimit)} {account?.currency ?? ''}</strong>
+                              : <span style={{ color: '#9CA3AF', fontStyle: 'italic' }}>No limit</span>
+                           }
+                        </span>
+                        <button
+                           className={styles.iconBtn}
+                           onClick={() => setShowLimitModal(true)}
+                           title="Set spending limit"
+                        >
+                           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M14.7 3.3a1 1 0 0 1 2 2L7 15l-4 1 1-4 10.7-8.7z"/></svg>
+                        </button>
+                     </div>
+                  </div>
+
                   {/* CVV */}
                   <SecretRow
                      label="CVV"
@@ -255,22 +529,26 @@ export const CardData = ({ card }) => {
                      onEditChange={val => setEditData(p => ({ ...p, cvv: val }))}
                   />
 
-                  {/* PIN */}
-                  <SecretRow
-                     label="PIN"
-                     value={pin}
-                     isEditable
-                     editValue={editData.pin}
-                     isEdit={isEdit.pin}
-                     isVisible={isVisible.pin}
-                     error={fieldError.pin}
-                     maxLen={4}
-                     hint="1234"
-                     onEdit={() => handleEdit('pin')}
-                     onCancel={() => handleCancelEdit('pin')}
-                     onToggleVisible={() => handleToggleVisible('pin')}
-                     onEditChange={val => setEditData(p => ({ ...p, pin: val }))}
-                  />
+                  {/* PIN — reveal only + modal change */}
+                  <div className={styles.row}>
+                     <span className={styles.rowLabel}>PIN</span>
+                     <div className={styles.rowRight}>
+                        <span className={styles.rowText}>
+                           {isVisible.pin ? pin : '••••'}
+                        </span>
+                        <div className={styles.rowActions}>
+                           <button className={styles.iconBtn} onClick={() => handleToggleVisible('pin')} title={isVisible.pin ? 'Hide' : 'Show'}>
+                              {isVisible.pin
+                                 ? <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M17.94 10A9.9 9.9 0 0 1 10 17 9.9 9.9 0 0 1 2.06 10 9.9 9.9 0 0 1 10 3a9.9 9.9 0 0 1 7.94 7z"/><circle cx="10" cy="10" r="3"/></svg>
+                                 : <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M2 2l16 16M6.7 6.7A7 7 0 0 0 3.1 10 9.9 9.9 0 0 0 10 17c1.6 0 3-.4 4.3-1.1M8.1 4.2A9 9 0 0 1 10 4a9.9 9.9 0 0 1 7.9 6 9.8 9.8 0 0 1-2.4 3.5"/></svg>
+                              }
+                           </button>
+                           <button className={styles.iconBtn} onClick={() => setShowPinModal(true)} title="Change PIN">
+                              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M14.7 3.3a1 1 0 0 1 2 2L7 15l-4 1 1-4 10.7-8.7z"/></svg>
+                           </button>
+                        </div>
+                     </div>
+                  </div>
                </div>
 
                {/* ── Linked account quick links ── */}
@@ -334,5 +612,25 @@ export const CardData = ({ card }) => {
 
          </div>
       </div>
+
+      {/* ── PIN change modal ── */}
+      {showPinModal && (
+         <PinModal
+            currentPin={pin}
+            onSave={handlePinSave}
+            onClose={() => setShowPinModal(false)}
+         />
+      )}
+
+      {/* ── Spending limit modal ── */}
+      {showLimitModal && (
+         <LimitEditor
+            current={Number(spendingLimit ?? 0)}
+            currency={account?.currency}
+            onSave={handleLimitSave}
+            onClose={() => setShowLimitModal(false)}
+         />
+      )}
+   </>
    );
 };

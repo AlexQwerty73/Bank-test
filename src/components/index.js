@@ -19,3 +19,4 @@ export * from './ExchangeRatesSection';
 export * from './FAQ';
 export * from './CardsTransactionList';
 export * from './Forms';
+export * from './TransactionModal';

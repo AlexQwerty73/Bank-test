@@ -3,7 +3,32 @@ import { useParams, Link } from 'react-router-dom';
 import { useGetTransactionsByUserIdQuery, useGetAccountsByUserIdQuery } from '../../store';
 import { usePagination } from '../../hooks';
 import { Pagination } from '../../components/commons';
+import { TransactionModal } from '../../components/TransactionModal';
 import styles from './allTransactionsPage.module.css';
+
+/* ── Skeleton ─────────────────────────────────────────── */
+const WIDTHS = [[72, 55, 80], [60, 45, 70], [85, 50, 65]];
+const AllTxSkeleton = () => (
+   <div className={styles.list}>
+      {[0, 1, 2].map(g => (
+         <div key={g} className={styles.skGroup}>
+            <div className={styles.skDateBar}>
+               <div className={`${styles.sk} ${styles.skDateLabel}`} />
+            </div>
+            {WIDTHS[g].map((w, i) => (
+               <div key={i} className={styles.skTxRow}>
+                  <div className={`${styles.sk} ${styles.skTxIcon}`} />
+                  <div className={styles.skTxMeta}>
+                     <div className={`${styles.sk} ${styles.skTxDesc}`} style={{ width: `${w}%` }} />
+                     <div className={`${styles.sk} ${styles.skTxSub}`} />
+                  </div>
+                  <div className={`${styles.sk} ${styles.skTxAmt}`} />
+               </div>
+            ))}
+         </div>
+      ))}
+   </div>
+);
 
 /* ── Helpers ─────────────────────────────────────────── */
 const fmt = (n, cur = '') =>
@@ -39,13 +64,13 @@ const CURRENCY_FLAGS = { USD: '🇺🇸', EUR: '🇪🇺', UAH: '🇺🇦' };
 const PAGE_SIZE_OPTIONS = [10, 20, 50];
 
 /* ── Single row ─────────────────────────────────────── */
-const TxRow = ({ tx }) => {
+const TxRow = ({ tx, onOpen }) => {
    const isIn  = tx.direction === 'in';
    const date  = new Date(tx.date);
    const day   = date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
    const time  = date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
    return (
-      <div className={styles.txRow}>
+      <div className={styles.txRow} onClick={() => onOpen(tx)} title="View details">
          <div className={styles.txIcon}>{TYPE_ICON[tx.type] ?? '💳'}</div>
          <div className={styles.txMeta}>
             <span className={styles.txDesc}>
@@ -74,6 +99,9 @@ export const AllTransactionsPage = () => {
 
    const { data: allTxs   = [], isLoading: txLoad  } = useGetTransactionsByUserIdQuery(userId, { refetchOnMountOrArgChange: true });
    const { data: accounts = [], isLoading: accLoad } = useGetAccountsByUserIdQuery(userId, { refetchOnMountOrArgChange: true });
+
+   /* ── Modal state ── */
+   const [selectedTx, setSelectedTx] = useState(null);
 
    /* ── Filter state ── */
    const [accountFilter, setAccountFilter] = useState('all');
@@ -176,6 +204,7 @@ export const AllTransactionsPage = () => {
    };
 
    return (
+      <>
       <div className={styles.page}>
          <div className="container">
 
@@ -312,7 +341,7 @@ export const AllTransactionsPage = () => {
 
             {/* ── Content ── */}
             {isLoading ? (
-               <div className={styles.empty}>Loading…</div>
+               <AllTxSkeleton />
             ) : grouped.length === 0 ? (
                <div className={styles.empty}>
                   <span>🔍</span>
@@ -326,7 +355,7 @@ export const AllTransactionsPage = () => {
                         <div key={date} className={styles.group}>
                            <div className={styles.groupDate}>{date}</div>
                            <div className={styles.groupRows}>
-                              {txs.map(tx => <TxRow key={tx.id} tx={tx} />)}
+                              {txs.map(tx => <TxRow key={tx.id} tx={tx} onOpen={setSelectedTx} />)}
                            </div>
                         </div>
                      ))}
@@ -348,5 +377,10 @@ export const AllTransactionsPage = () => {
 
          </div>
       </div>
+
+      {selectedTx && (
+         <TransactionModal tx={selectedTx} onClose={() => setSelectedTx(null)} />
+      )}
+      </>
    );
 };

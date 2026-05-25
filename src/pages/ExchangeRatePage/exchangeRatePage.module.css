@@ -1,0 +1,81 @@
+/* ── Shimmer animation ── */
+@keyframes shimmer {
+   0%   { background-position: -600px 0; }
+   100% { background-position: 600px 0; }
+}
+
+.sk {
+   background: linear-gradient(90deg, #F3F4F6 25%, #E9EBEE 50%, #F3F4F6 75%);
+   background-size: 1200px 100%;
+   animation: shimmer 1.5s ease-in-out infinite;
+   border-radius: 8px;
+}
+
+/* ── Skeleton layout ── */
+.skPage {
+   padding: 40px 0 80px;
+}
+
+.skTitleRow {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin-bottom: 28px;
+   flex-wrap: wrap;
+   gap: 12px;
+}
+
+.skTitle { width: 220px; height: 36px; border-radius: 10px; }
+.skBtn   { width: 180px; height: 42px; border-radius: 10px; }
+
+/* 6-card grid (matches ExchangeRatesSection .pairsGrid) */
+.skGrid {
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   gap: 12px;
+   margin-bottom: 24px;
+}
+
+@media (max-width: 680px) { .skGrid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 420px) { .skGrid { grid-template-columns: 1fr; } }
+
+.skCard {
+   background: #fff;
+   border: 1.5px solid #F3F4F6;
+   border-radius: 14px;
+   padding: 16px;
+   display: flex;
+   flex-direction: column;
+   gap: 8px;
+}
+
+.skFlag      { width: 48px;  height: 20px; border-radius: 6px; }
+.skPairName  { width: 90px;  height: 14px; }
+.skRate      { width: 70px;  height: 22px; border-radius: 6px; }
+.skDelta     { width: 55px;  height: 12px; }
+
+/* Detail panel */
+.skDetail {
+   width: 100%;
+   height: 480px;
+   border-radius: 16px;
+   background: #fff;
+   border: 1.5px solid #F3F4F6;
+   overflow: hidden;
+   position: relative;
+}
+
+.skDetail::after {
+   content: '';
+   display: block;
+   width: 100%;
+   height: 100%;
+   background: linear-gradient(90deg, #F3F4F6 25%, #E9EBEE 50%, #F3F4F6 75%);
+   background-size: 1200px 100%;
+   animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@media (max-width: 600px) {
+   .skPage { padding: 28px 0 60px; }
+   .skDetail { height: 320px; }
+}
